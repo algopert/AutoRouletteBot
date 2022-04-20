@@ -494,8 +494,8 @@ def startProcess():
                   '\033[93m', f"{cur_cdt} - {conditions[_g_title][cur_cdt]}", "\033[0m")
             # gameField.wait_key('a')
 
-            # if ppp == i:
-            #     continue  # option.....
+            if ppp == i:
+                continue  # option.....
             ppp = i
 
             #  Logic in the Game ##########################################################

@@ -225,7 +225,7 @@ class Browser:
             self.single_item(f'(//div[@class="controls-panel__chip-panel"])').find_elements(By.TAG_NAME, "svg")[_index].click()
         except Exception as e:
             return False
-        time.sleep(1)
+        time.sleep(0.3)
         return True
     def close_time_limit_and_confirm(self):
         time_limit_modal = self.single_item('(//div[@class="session-modals"])')
