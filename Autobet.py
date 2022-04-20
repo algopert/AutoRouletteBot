@@ -508,8 +508,10 @@ def startProcess():
             # if gameMode != 'BACKTEST':
             time.sleep(2)
             gameField.close_page()
+            
             # if gameMode != 'BACKTEST':
             time.sleep(2)
+            gameField.close_time_limit_and_confirm()
             break
 
         bar.index = 0
