@@ -212,6 +212,7 @@ def bet_to_roulette(_amount, _key):
     pre_idx = -1
     # print(chip_list)
     print("\t   The balance went from  $", balance, "to  $", end='')
+    time.sleep(2)
     while True:  # bet to normal
         _not_betted = True
         for i in range(len(chip_list)):
@@ -232,7 +233,7 @@ def bet_to_roulette(_amount, _key):
 
         if _not_betted:
             break
-    time.sleep(0.5)
+    time.sleep(2)
     print(balance)
     # quit()
 
