@@ -315,7 +315,7 @@ def play_roulette(_g_title, _cur_key):
         new_num = games[_g_title][-1]
         print(f"\n\t    New number is ", end='')
         print_color_text([new_num])
-        if not exist_condition(_g_title, _cur_key) and new_num > 0:
+        if (not new_num in condition_list[_cur_key]) and new_num > 0:
             profit = bet_amount - lost - zero_bet_amount
             total_profit += profit
             print(f"\n\t🚨 Won with {new_num}")
