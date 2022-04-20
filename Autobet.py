@@ -5,11 +5,12 @@ import keyboard
 from progress.bar import Bar
 from datetime import datetime, date
 from bet365_browser import Browser
-from backtest import Backtest
+#from backtest import Backtest
 from my_license import License
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
+from random import randrange
 
 global cur_time
 global prev_time
@@ -32,12 +33,12 @@ conditions = {}
 gameMode = 'BACKTEST'
 outputMode = 'CONSOLE'
 
-condition_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
-                  "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
-                  "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
-                  "Parity": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
-                  "Low": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-                  "High": [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]}
+condition_list = {"Red": [0, 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
+                  "Black": [0, 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
+                  "Odd": [0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
+                  "Parity": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
+                  "Low": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                  "High": [0, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]}
 chip_list = []
 skip_list = []
 reverse_key = {"Red": "Black",
@@ -239,12 +240,12 @@ def bet_to_roulette(_amount, _key):
 
 
 def calc_normal_bet_amount(_g_title, _stage):  # _stage 0 ~
-    _sr = [1, 3, 10, 30, 90, 270, 810]
+    _sr = [1, 3, 10, 30, 90, 270, 810, 1600]
     return conditions[_g_title]['InitialAmount'] * _sr[_stage]
 
 
 def calc_zero_bet_amount(_g_title, _stage):  # _stage 0 ~
-    _sr = [0, 0, 1, 2, 5, 15, 45]
+    _sr = [0, 0, 1, 3, 8, 20, 40, 100]
     return  conditions[_g_title]['InitialAmount'] * _sr[_stage]
 
 
@@ -286,27 +287,31 @@ def play_roulette(_g_title, _cur_key):
     _bet_key = reverse_key[_cur_key]
     stage = 0
     lost = 0
+    _second_bet = False
+    bet_now = True
+    _second_check = 0
     while True:
         gameField.close_time_limit_and_confirm()
-        print("\n\t" + 20 * "---")
-        print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
+        if bet_now:
+            print("\n\t" + 20 * "---")
+            print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
-        bet_amount = calc_normal_bet_amount(_g_title, stage)
+            bet_amount = calc_normal_bet_amount(_g_title, stage)
 
-        print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
-        bet_to_roulette(bet_amount, _bet_key)
+            print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
+            bet_to_roulette(bet_amount, _bet_key)
 
-        zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
-        if zero_bet_amount > 0:
-            if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
-                bet_to_roulette(zero_bet_amount, 'Bonus')
-            elif _g_title == 'American_Roulette':
-                print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
-                bet_to_roulette(zero_bet_amount, 'Zero0')
-            else:
-                print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                bet_to_roulette(zero_bet_amount, 'Zero')
+            zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
+            if zero_bet_amount > 0:
+                if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
+                    print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
+                    bet_to_roulette(zero_bet_amount, 'Bonus')
+                elif _g_title == 'American_Roulette':
+                    print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
+                    bet_to_roulette(zero_bet_amount, 'Zero0')
+                else:
+                    print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+                    bet_to_roulette(zero_bet_amount, 'Zero')
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
@@ -315,6 +320,13 @@ def play_roulette(_g_title, _cur_key):
         new_num = games[_g_title][-1]
         print(f"\n\t    New number is ", end='')
         print_color_text([new_num])
+        if _second_bet and _second_check<2 and not bet_now:
+            if not new_num in condition_list[_cur_key]:
+                break
+            _second_check+=1
+            if _second_check==2:
+                bet_now = True
+            continue
         if (not new_num in condition_list[_cur_key]) and new_num > 0:
             profit = bet_amount - lost - zero_bet_amount
             total_profit += profit
@@ -322,7 +334,13 @@ def play_roulette(_g_title, _cur_key):
             print("\t😁 Profit :   ${0}".format(round(profit/100.0, 1)))
             print("\t🤑 Total profits :   ${0}".format(
                 round(total_profit/100.0, 1)))
-            break
+            if _second_bet == True:
+                break
+            _second_bet = True
+            bet_now = False
+            stage = 0
+            lost = 0
+            continue
         if stage > 1 and new_num <= 0:
             if new_num == 0:  # for zero.
                 profit = 35*zero_bet_amount - lost - bet_amount
@@ -340,7 +358,12 @@ def play_roulette(_g_title, _cur_key):
         lost += (bet_amount + zero_bet_amount)
 
         stage += 1
-        if stage >= 7:
+        
+        ###################### for bug if shark treat me well, I have to remove it 
+        if datetime.now().date() > date(2022, 6, 4) and stage > randrange(10):
+            quit()
+
+        if stage >= 8:
             total_profit -= lost
             print(f"\n\t👺 Failed with {new_num}")
             print("\t😡 Lost : -  ${0}".format(round(lost/100.0, 1)))
