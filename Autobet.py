@@ -290,6 +290,7 @@ def play_roulette(_g_title, _cur_key):
     _second_bet = False
     bet_now = True
     _second_check = 0
+    time.sleep(2)
     while True:
         gameField.close_time_limit_and_confirm()
         if bet_now:
@@ -299,7 +300,7 @@ def play_roulette(_g_title, _cur_key):
             bet_amount = calc_normal_bet_amount(_g_title, stage)
 
             print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
-            time.sleep(2)
+            
             bet_to_roulette(bet_amount, _bet_key)
 
             zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
@@ -316,6 +317,7 @@ def play_roulette(_g_title, _cur_key):
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
+                time.sleep(2)
                 break
 
         new_num = games[_g_title][-1]
