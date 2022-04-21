@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-results.html
+
 # Distribution / packaging
 .Python
 build/
@@ -103,7 +103,7 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
-
+results.html
 # Environments
 .env
 .venv

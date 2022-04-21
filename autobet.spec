@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = pyi_crypto.PyiBlockCipher(key='bet365bottetris')
+block_cipher = pyi_crypto.PyiBlockCipher(key='dont_cr@ck_or_youwilllose_@ll')
 
 
 a = Analysis(
