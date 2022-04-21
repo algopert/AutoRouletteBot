@@ -293,11 +293,7 @@ def play_roulette(_g_title, _cur_key):
     _second_bet = False
     bet_now = True
     _second_check = 0
-<<<<<<< HEAD
-    time.sleep(2)
-=======
     gameField.close_reality_check()
->>>>>>> ab295cad0da1df06951b57861b1d462fdb4da422
     while True:
         if bet_now:
             print("\n\t" + 20 * "---")
@@ -323,11 +319,7 @@ def play_roulette(_g_title, _cur_key):
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
-<<<<<<< HEAD
-                time.sleep(2)
-=======
                 time.sleep(1)
->>>>>>> ab295cad0da1df06951b57861b1d462fdb4da422
                 break
 
         new_num = games[_g_title][-1]
