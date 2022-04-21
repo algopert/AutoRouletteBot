@@ -286,13 +286,14 @@ def play_roulette(_g_title, _cur_key):
     _bet_key = reverse_key[_cur_key]
     stage = 0
     lost = 0
+    time.sleep(2)
     while True:
         gameField.close_time_limit_and_confirm()
         print("\n\t" + 20 * "---")
         print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
         bet_amount = calc_normal_bet_amount(_g_title, stage)
-        time.sleep(2)
+        
         print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
         bet_to_roulette(bet_amount, _bet_key)
 
@@ -304,12 +305,13 @@ def play_roulette(_g_title, _cur_key):
             elif _g_title == 'American_Roulette':
                 print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
                 bet_to_roulette(zero_bet_amount, 'Zero0')
-            else:
-                print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                bet_to_roulette(zero_bet_amount, 'Zero')
+        
+            print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+            bet_to_roulette(zero_bet_amount, 'Zero')
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
+                time.sleep(2)
                 break
 
         new_num = games[_g_title][-1]
