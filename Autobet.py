@@ -6,7 +6,7 @@ from progress.bar import Bar
 from datetime import datetime, date
 from bet365_browser import Browser
 from backtest import Backtest
-from my_license import License
+# from my_license import License
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
@@ -49,31 +49,31 @@ reverse_key = {"Red": "Black",
                }
 
 
-try:
-    _license =  License()
-    dev_key = _license.generate_device_uuid_hash()
-    with open('./License/device.key', 'w') as f:
-        f.write(dev_key)
-    print(dev_key)
-except:
-    print("It doesn't exist license folder!!!, please create the folder named with 'license'")
-    print("\nQ: press to continue...")
-    while True:
-        if keyboard.is_pressed("q"):
-            break
-    quit()
+# try:
+#     _license =  License()
+#     dev_key = _license.generate_device_uuid_hash()
+#     with open('./License/device.key', 'w') as f:
+#         f.write(dev_key)
+#     print(dev_key)
+# except:
+#     print("It doesn't exist license folder!!!, please create the folder named with 'license'")
+#     print("\nQ: press to continue...")
+#     while True:
+#         if keyboard.is_pressed("q"):
+#             break
+#     quit()
     
-try:    
-    with open('./License/license.key', 'r') as f:
-        lic_key = f.read()
-        print('lic key = ', lic_key)
-except:
-    print("It doesn't exist license file!, please buy the license key!!")
-    print("\nQ: press to continue...")
-    while True:
-        if keyboard.is_pressed("q"):
-            break
-    quit()
+# try:    
+#     with open('./License/license.key', 'r') as f:
+#         lic_key = f.read()
+#         print('lic key = ', lic_key)
+# except:
+#     print("It doesn't exist license file!, please buy the license key!!")
+#     print("\nQ: press to continue...")
+#     while True:
+#         if keyboard.is_pressed("q"):
+#             break
+#     quit()
 
 path_history = './history'
 Path(path_history).mkdir(parents=True, exist_ok=True)
@@ -212,7 +212,7 @@ def bet_to_roulette(_amount, _key):
     pre_idx = -1
     # print(chip_list)
     print("\t   The balance went from  $", balance, "to  $", end='')
-    time.sleep(2)
+    # time.sleep(2)
     while True:  # bet to normal
         _not_betted = True
         for i in range(len(chip_list)):
@@ -233,7 +233,7 @@ def bet_to_roulette(_amount, _key):
 
         if _not_betted:
             break
-    time.sleep(2)
+    # time.sleep(2)
     print(balance)
     # quit()
 
@@ -292,7 +292,7 @@ def play_roulette(_g_title, _cur_key):
         print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
         bet_amount = calc_normal_bet_amount(_g_title, stage)
-
+        time.sleep(2)
         print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
         bet_to_roulette(bet_amount, _bet_key)
 
@@ -366,11 +366,11 @@ def correct_initial_amount(_g_title):
         conditions[_g_title]['InitialAmount'] = conditions['Default']['InitialAmount']
 
 
-def check_expiration_time():
-    if _license.find_expiration_day(lic_key) > _license.getOnlineUTCTime():
-        return True
-    else:
-        return False
+# def check_expiration_time():
+#     if _license.find_expiration_day(lic_key) > _license.getOnlineUTCTime():
+#         return True
+#     else:
+#         return False
     
 def save_history_data(_g_title, numbers, cnt):
     global filenames
@@ -413,9 +413,9 @@ def startProcess():
         ltcnt = gameField.refresh_lobby_table()  # Item count of Lobby Table
         bar.max = ltcnt
         # print(f"Total game's count is   : {ltcnt}")
-        if gameMode != 'BACKTEST':
-            if not check_expiration_time():
-                quit()
+        # if gameMode != 'BACKTEST':
+        #     if not check_expiration_time():
+        #         quit()
             
         for i in range(ltcnt):
             bar.next()
