@@ -51,9 +51,9 @@ class Backtest:
 
         _data.reverse()
         self.pos_update_cnt[index] += 1
-        if self.pos_update_cnt[index] > 5 + randrange(3):
-            self.pos_list[index] += 1
-            self.pos_update_cnt[index] = 0
+        # if self.pos_update_cnt[index] > 5:# + randrange(3):
+        self.pos_list[index] += 1
+        self.pos_update_cnt[index] = 0
 
         return _data
 

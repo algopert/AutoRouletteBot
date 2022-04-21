@@ -2,7 +2,7 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> SIMULATION </gameMode>
+    <gameMode> BACKTEST </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
