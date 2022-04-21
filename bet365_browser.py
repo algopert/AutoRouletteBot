@@ -155,7 +155,7 @@ class Browser:
         return len(self.lobby_table)
 
     def join_roulette(self, index):
-        self.close_time_limit_and_confirm()
+        self.close_reality_check()
         try:
             element = self.multi_items('//div[@class="lobby-table__container"]')[index].find_element(By.XPATH, './../../..')
             
@@ -227,7 +227,7 @@ class Browser:
             return False
         time.sleep(0.1)
         return True
-    def close_time_limit_and_confirm(self):
+    def close_reality_check(self):
         
         try:
             time_limit_modal = self.single_item('(//div[@class="session-modals"])')

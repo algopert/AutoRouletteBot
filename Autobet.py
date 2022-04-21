@@ -224,12 +224,12 @@ def bet_to_roulette(_amount, _key):
             
             if pre_idx != _idx:
                 gameField.select_chip(_idx)
-                gameField.close_time_limit_and_confirm()
+                gameField.close_reality_check()
                 pre_idx = _idx
             _not_betted = False
             # 
             gameField.click_key(_key)
-            gameField.close_time_limit_and_confirm()
+            gameField.close_reality_check()
             # print(f"clicked {_key}")
             _amount -= chip_list[_idx]
             break
@@ -296,7 +296,7 @@ def play_roulette(_g_title, _cur_key):
 <<<<<<< HEAD
     time.sleep(2)
 =======
-    gameField.close_time_limit_and_confirm()
+    gameField.close_reality_check()
 >>>>>>> ab295cad0da1df06951b57861b1d462fdb4da422
     while True:
         if bet_now:
@@ -444,7 +444,7 @@ def startProcess():
     ppp = -1
     while True:
         read_conditions()
-        gameField.close_time_limit_and_confirm()
+        gameField.close_reality_check()
         gameField.switch_tabs()
         ltcnt = gameField.refresh_lobby_table()  # Item count of Lobby Table
         bar.max = ltcnt
@@ -548,7 +548,7 @@ def startProcess():
             
             # if gameMode != 'BACKTEST':
             time.sleep(2)
-            gameField.close_time_limit_and_confirm()
+            gameField.close_reality_check()
             break
 
         bar.index = 0
