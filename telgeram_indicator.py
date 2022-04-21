@@ -1,9 +1,7 @@
-import os
 import time
-import keyboard
 
 from progress.bar import Bar
-from datetime import datetime, date
+
 # from bet365_browser import Browser
 from backtest import Backtest
 import xml.etree.ElementTree as ET
@@ -11,14 +9,8 @@ from time import gmtime, strftime
 from pathlib import Path
 import telegram
 
-global cur_time
-global prev_time
-
 global skip_list
-global essen_list
-global total_profit
-global chip_list
-global exp_date
+
 
 CHANNEL_ID = '-1001677576245'
 TOKEN = '5396266988:AAHcr6YcHYFN0NEO_rGlZjXe02QbaS7mlbw'
@@ -140,9 +132,6 @@ def exist_condition(_g_title, _key):
         play_status[_g_title]["condition"] = None
         play_status[_g_title]["stage"] = 0
         play_status[_g_title]["series"] = []
-        
-    
-    
 
     cnt = conditions[_g_title][_key]
     glen = len(games[_g_title])
@@ -282,7 +271,7 @@ def startProcess():
     gameField.open()
 
     bar = Bar('Processing')
-    ppp = -1
+    
     while True:
         read_conditions()
         gameField.close_time_limit_and_confirm()
@@ -301,7 +290,6 @@ def startProcess():
                 continue
 
             if roul_title == "No name":
-                # print(roul_title)
                 print("No name! index is : {0}".format(i))
                 continue
 
@@ -314,12 +302,8 @@ def startProcess():
                 break
 
             if(numbers == "failed"):  # you can divide the read_condition functions to 2 part or check this part!!! error must be occured!
-                # kill_app()
                 skip_list.append(roul_title)
-                # print(" Skip {0}".format(roul_title))
                 continue
-
-            # end of while
 
             try:
                 games[_g_title]  # if the _g_title is new
@@ -348,11 +332,6 @@ def startProcess():
             new_num = games[_g_title][-1]
             save_history_data(_g_title, numbers, xx)
             
-            # play_status[_g_title] = {}
-            # play_status[_g_title]["flag"] = False
-            # play_status[_g_title]["condition"] = None
-            # play_status[_g_title]["stage"] = 0
-            # play_status[_g_title]["series"] = []
             
             cur_cdt = find_repetition(_g_title)
             
@@ -365,8 +344,6 @@ def startProcess():
                 print('\n'+15*"-----")
                 send_first_message(_g_title, cur_cdt)
                 print('\n'+15*"-----")
-
-                
                 continue
                 
             if play_status[_g_title]["flag"]:
@@ -376,7 +353,6 @@ def startProcess():
 
                 if new_num in condition_list[pre_cdt]:
                     continue
-                
                 
                 if  new_num > 0:
                     print('\n'+15*"-----")
@@ -391,7 +367,6 @@ def startProcess():
                     send_middle_message(_g_title, play_status[_g_title]["condition"])
                     play_status[_g_title]["stage"] = 0
                     play_status[_g_title]["series"]= []
-                    
 
         bar.index = 0
 
@@ -400,9 +375,3 @@ def startProcess():
 
 if __name__ == "__main__":
     startProcess()
-    # txt = "1, 2, -1, 5"
-
-    # # x = txt.replace('-1', 'B')
-
-    # # print(x)
-    # quit()
