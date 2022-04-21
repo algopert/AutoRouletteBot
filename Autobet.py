@@ -221,13 +221,15 @@ def bet_to_roulette(_amount, _key):
             if chip_list[_idx] > _amount or chip_list[_idx] == 0:
                 continue
             # print(f"clicked chip{chip_list[_idx]}")
-            gameField.close_time_limit_and_confirm()
+            
             if pre_idx != _idx:
                 gameField.select_chip(_idx)
+                gameField.close_time_limit_and_confirm()
                 pre_idx = _idx
             _not_betted = False
-            gameField.close_time_limit_and_confirm()
+            # 
             gameField.click_key(_key)
+            gameField.close_time_limit_and_confirm()
             # print(f"clicked {_key}")
             _amount -= chip_list[_idx]
             break
@@ -262,6 +264,7 @@ def play_roulette(_g_title, _cur_key):
         xx = numbers_propagation(games[_g_title], numbers)
         # print("xx is ", xx)
         if xx > 0:
+            time.sleep(2)
             break
 
     if not exist_condition(_g_title, _cur_key):
@@ -290,9 +293,12 @@ def play_roulette(_g_title, _cur_key):
     _second_bet = False
     bet_now = True
     _second_check = 0
+<<<<<<< HEAD
     time.sleep(2)
+=======
+    gameField.close_time_limit_and_confirm()
+>>>>>>> ab295cad0da1df06951b57861b1d462fdb4da422
     while True:
-        gameField.close_time_limit_and_confirm()
         if bet_now:
             print("\n\t" + 20 * "---")
             print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
@@ -317,7 +323,11 @@ def play_roulette(_g_title, _cur_key):
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
+<<<<<<< HEAD
                 time.sleep(2)
+=======
+                time.sleep(1)
+>>>>>>> ab295cad0da1df06951b57861b1d462fdb4da422
                 break
 
         new_num = games[_g_title][-1]
