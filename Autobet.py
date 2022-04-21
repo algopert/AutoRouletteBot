@@ -310,9 +310,9 @@ def play_roulette(_g_title, _cur_key):
                 elif _g_title == 'American_Roulette':
                     print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
                     bet_to_roulette(zero_bet_amount, 'Zero0')
-                else:
-                    print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                    bet_to_roulette(zero_bet_amount, 'Zero')
+                
+                print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+                bet_to_roulette(zero_bet_amount, 'Zero')
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
