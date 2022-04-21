@@ -2,7 +2,7 @@ import time
 
 from progress.bar import Bar
 
-# from bet365_browser import Browser
+from bet365_browser import Browser
 from backtest import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
@@ -211,10 +211,10 @@ def send_first_message(_g_title, _cur_cdt):
     _title = _g_title.replace('_', ' ')
     txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Found Repeation: {text_key[_cur_cdt]}-{conditions[_g_title][_cur_cdt]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
 
-    # try:
-    #     bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
-    # except:
-    #     print("try again(request telegram1)")
+    try:
+        bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
+    except:
+        print("try again(request telegram1)")
     print(txt)
     time.sleep(0.5)
     
@@ -227,10 +227,10 @@ def send_second_message(_g_title, _cur_cdt):
     _cur_series = _cur_series.replace('-1', 'B')
     _title = _g_title.replace('_', ' ')
     txt = f"🏁 Finished - {_title}\n📊 Current Series : {_cur_series}\n👀 Repeation was: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
-    # try:
-    #     bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
-    # except:
-    #     print("try again(request telegram1)")
+    try:
+        bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
+    except:
+        print("try again(request telegram1)")
     print(txt)
     time.sleep(0.5)
     
@@ -246,10 +246,10 @@ def send_middle_message(_g_title, _cur_cdt):
         _hit = '0'
     
     txt = f"👉 - {_title}\n🤑 Wow, You are Lucky! Ball hitted the {_hit}\n📊 Current Series : {_cur_series}\n👀 Repeation is: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n❗ Bet with initial amount on {reverse_key[_cur_cdt]}"
-    # try:
-    #     bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
-    # except:
-    #     print("try again(request telegram1)")
+    try:
+        bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
+    except:
+        print("try again(request telegram1)")
     print(txt)
     time.sleep(0.5)
   
