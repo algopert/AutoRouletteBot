@@ -264,7 +264,7 @@ def play_roulette(_g_title, _cur_key):
         xx = numbers_propagation(games[_g_title], numbers)
         # print("xx is ", xx)
         if xx > 0:
-            time.sleep(2)
+            time.sleep(2.5)
             break
 
     if not exist_condition(_g_title, _cur_key):
@@ -319,7 +319,7 @@ def play_roulette(_g_title, _cur_key):
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
-                time.sleep(1)
+                time.sleep(2.5)
                 break
 
         new_num = games[_g_title][-1]
