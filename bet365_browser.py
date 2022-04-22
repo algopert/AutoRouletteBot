@@ -225,7 +225,7 @@ class Browser:
             self.single_item(f'(//div[@class="controls-panel__chip-panel"])').find_elements(By.TAG_NAME, "svg")[_index].click()
         except Exception as e:
             return False
-        time.sleep(0.1)
+        time.sleep(0.3)
         return True
     def close_reality_check(self):
         
@@ -265,7 +265,7 @@ class Browser:
         # for key in _cls_name.keys():
         try:
             self.single_item('(//div[@class="roulette-game-area__main-digital-table"])').find_element(By.CLASS_NAME, _cls_name[_key]).click()
-            time.sleep(0.1)
+            time.sleep(0.3)
             # print(f"click {_key}")
             # print(item)
         except Exception as e:
