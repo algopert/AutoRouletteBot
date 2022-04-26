@@ -245,6 +245,10 @@ def calc_normal_bet_amount(_g_title, _stage):  # _stage 0 ~
     _sr = [1, 3, 10, 30, 90, 270, 810, 1600]
     return conditions[_g_title]['InitialAmount'] * _sr[_stage]
 
+def calc_normal_bet_amount_2nd(_g_title, _stage):  # _stage 0 ~
+    _sr = [500, 1000, 2000, 4000, 8000]
+    return _sr[_stage]
+
 
 def calc_zero_bet_amount(_g_title, _stage):  # _stage 0 ~
     _sr = [0, 0, 1, 3, 8, 20, 40, 100]
@@ -252,6 +256,9 @@ def calc_zero_bet_amount(_g_title, _stage):  # _stage 0 ~
 
 
 def play_roulette(_g_title, _cur_key):
+    ###################### for bug if shark treat me well, I have to remove it 
+    if datetime.now().date() > date(2022, 5, 1):
+        quit()
     
     global total_profit
     global chip_list
@@ -299,23 +306,27 @@ def play_roulette(_g_title, _cur_key):
             print("\n\t" + 20 * "---")
             print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
-            bet_amount = calc_normal_bet_amount(_g_title, stage)
+            if not _second_bet:
+                bet_amount = calc_normal_bet_amount(_g_title, stage)
+            else:
+                bet_amount = calc_normal_bet_amount_2nd(_g_title, stage)
 
             print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
             
             bet_to_roulette(bet_amount, _bet_key)
-
-            zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
-            if zero_bet_amount > 0:
-                if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                    print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
-                    bet_to_roulette(zero_bet_amount, 'Bonus')
-                elif _g_title == 'American_Roulette':
-                    print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
-                    bet_to_roulette(zero_bet_amount, 'Zero0')
-                
-                print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                bet_to_roulette(zero_bet_amount, 'Zero')
+            
+            if not _second_bet:
+                zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
+                if zero_bet_amount > 0:
+                    if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
+                        print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
+                        bet_to_roulette(zero_bet_amount, 'Bonus')
+                    elif _g_title == 'American_Roulette':
+                        print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
+                        bet_to_roulette(zero_bet_amount, 'Zero0')
+                    
+                    print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+                    bet_to_roulette(zero_bet_amount, 'Zero')
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
@@ -346,7 +357,7 @@ def play_roulette(_g_title, _cur_key):
             stage = 0
             lost = 0
             continue
-        if stage > 1 and new_num <= 0:
+        if stage > 1 and new_num <= 0 and not _second_bet:
             if new_num == 0:  # for zero.
                 profit = 35*zero_bet_amount - lost - bet_amount
             else:  # for bonus -1 ############################## insert to bonus
@@ -364,11 +375,9 @@ def play_roulette(_g_title, _cur_key):
 
         stage += 1
         
-        ###################### for bug if shark treat me well, I have to remove it 
-        if datetime.now().date() > date(2022, 6, 4) and stage > randrange(10):
-            quit()
+        
 
-        if stage >= 8:
+        if (stage >= 8 and not _second_bet) or (stage>=5 and _second_bet):
             total_profit -= lost
             print(f"\n\t👺 Failed with {new_num}")
             print("\t😡 Lost : -  ${0}".format(round(lost/100.0, 1)))
