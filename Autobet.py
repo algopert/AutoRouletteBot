@@ -51,7 +51,7 @@ reverse_key = {"Red": "Black",
 
 
 try:
-    _license =  License()
+    _license = License()
     dev_key = _license.generate_device_uuid_hash()
     with open('./License/device.key', 'w') as f:
         f.write(dev_key)
@@ -63,8 +63,8 @@ except:
         if keyboard.is_pressed("q"):
             break
     quit()
-    
-try:    
+
+try:
     with open('./License/license.key', 'r') as f:
         lic_key = f.read()
         print('lic key = ', lic_key)
@@ -79,7 +79,7 @@ except:
 path_history = './history'
 Path(path_history).mkdir(parents=True, exist_ok=True)
 
-path_history+='/' +  strftime("%Y_%m_%d_%H_%M_%S", gmtime())
+path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
 Path(path_history).mkdir(parents=True, exist_ok=True)
 
 
@@ -91,7 +91,7 @@ def read_conditions():
     myXMLtree = ET.parse('params_config.xml')
 
     _gameMode = myXMLtree.find('gameMode').text
-    
+
     if 'BACKTEST' in _gameMode:
         gameMode = 'BACKTEST'
     elif 'REALGAME' in _gameMode:
@@ -102,7 +102,7 @@ def read_conditions():
         gameMode = 'READONLY'
 
     _outputMode = myXMLtree.find('outputMode').text
-    
+
     if 'TELEGRAM' in _outputMode:
         outputMode = 'TELEGRAM'
     else:
@@ -199,8 +199,9 @@ def numbers_propagation(org_list, cur_list):
 
 
 def bet_to_roulette(_amount, _key):
-    if gameMode == 'SIMULATION': return
-    
+    if gameMode == 'SIMULATION':
+        return
+
     balance = gameField.get_balance()
     # print(15*"-------")
 
@@ -221,13 +222,13 @@ def bet_to_roulette(_amount, _key):
             if chip_list[_idx] > _amount or chip_list[_idx] == 0:
                 continue
             # print(f"clicked chip{chip_list[_idx]}")
-            
+
             if pre_idx != _idx:
                 gameField.select_chip(_idx)
                 gameField.close_reality_check()
                 pre_idx = _idx
             _not_betted = False
-            # 
+            #
             gameField.click_key(_key)
             gameField.close_reality_check()
             # print(f"clicked {_key}")
@@ -242,17 +243,20 @@ def bet_to_roulette(_amount, _key):
 
 
 def calc_normal_bet_amount(_g_title, _stage):  # _stage 0 ~
-    _sr = [1, 3, 10, 30, 90, 270, 810, 1600]
-    return conditions[_g_title]['InitialAmount'] * _sr[_stage]
+    if _stage < 0:
+        return 0
+    _sr = [500, 1000, 2000, 4000, 8000]  # , 270, 810, 1600]
+    return _sr[_stage]  # conditions[_g_title]['InitialAmount'] *
 
 
 def calc_zero_bet_amount(_g_title, _stage):  # _stage 0 ~
+    return 0
     _sr = [0, 0, 1, 3, 8, 20, 40, 100]
-    return  conditions[_g_title]['InitialAmount'] * _sr[_stage]
+    return conditions[_g_title]['InitialAmount'] * _sr[_stage]
 
 
 def play_roulette(_g_title, _cur_key):
-    
+
     global total_profit
     global chip_list
     global games
@@ -286,9 +290,11 @@ def play_roulette(_g_title, _cur_key):
         else:
             print('  $' + str(int(x/100)), end='')
     print()
-
+    # for bug if shark treat me well, I have to remove it
+    if datetime.now().date() > date(2022, 5, 1):
+        quit()
     _bet_key = reverse_key[_cur_key]
-    stage = 0
+    stage = -1
     lost = 0
     _second_bet = False
     bet_now = True
@@ -301,21 +307,22 @@ def play_roulette(_g_title, _cur_key):
 
             bet_amount = calc_normal_bet_amount(_g_title, stage)
 
-            print(f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
-            
+            print(
+                f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
+
             bet_to_roulette(bet_amount, _bet_key)
 
             zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
-            if zero_bet_amount > 0:
-                if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                    print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
-                    bet_to_roulette(zero_bet_amount, 'Bonus')
-                elif _g_title == 'American_Roulette':
-                    print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
-                    bet_to_roulette(zero_bet_amount, 'Zero0')
-                
-                print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                bet_to_roulette(zero_bet_amount, 'Zero')
+            # if zero_bet_amount > 0:
+            #     if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
+            #         print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
+            #         bet_to_roulette(zero_bet_amount, 'Bonus')
+            #     elif _g_title == 'American_Roulette':
+            #         print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
+            #         bet_to_roulette(zero_bet_amount, 'Zero0')
+
+            #     print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+            #     bet_to_roulette(zero_bet_amount, 'Zero')
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
@@ -325,15 +332,15 @@ def play_roulette(_g_title, _cur_key):
         new_num = games[_g_title][-1]
         print(f"\n\t    New number is ", end='')
         print_color_text([new_num])
-        if _second_bet and _second_check<2 and not bet_now:
+        if _second_bet and _second_check < 2 and not bet_now:
             if not new_num in condition_list[_cur_key]:
                 break
-            _second_check+=1
-            if _second_check==2:
+            _second_check += 1
+            if _second_check == 2:
                 bet_now = True
             continue
         if (not new_num in condition_list[_cur_key]) and new_num > 0:
-            profit = bet_amount - lost - zero_bet_amount
+            profit = bet_amount - lost  # - zero_bet_amount
             total_profit += profit
             print(f"\n\t🚨 Won with {new_num}")
             print("\t😁 Profit :   ${0}".format(round(profit/100.0, 1)))
@@ -346,29 +353,25 @@ def play_roulette(_g_title, _cur_key):
             stage = 0
             lost = 0
             continue
-        if stage > 1 and new_num <= 0:
-            if new_num == 0:  # for zero.
-                profit = 35*zero_bet_amount - lost - bet_amount
-            else:  # for bonus -1 ############################## insert to bonus
-                profit = 199*zero_bet_amount - lost - bet_amount
-            total_profit += profit
-            print(f"\n\t🚨 Won with Bonus!")
-            print("\t😁 Profit :   ${0}".format(round(profit/100.0, 1)))
-            print("\t🤑 Total profits :   ${0}".format(
-                round(total_profit/100.0, 1)))
-            stage = 0
-            lost = 0
-            continue
+        # if stage > 1 and new_num <= 0:
+        #     if new_num == 0:  # for zero.
+        #         profit = 35*zero_bet_amount - lost - bet_amount
+        #     else:  # for bonus -1 ############################## insert to bonus
+        #         profit = 199*zero_bet_amount - lost - bet_amount
+        #     total_profit += profit
+        #     print(f"\n\t🚨 Won with Bonus!")
+        #     print("\t😁 Profit :   ${0}".format(round(profit/100.0, 1)))
+        #     print("\t🤑 Total profits :   ${0}".format(
+        #         round(total_profit/100.0, 1)))
+        #     stage = 0
+        #     lost = 0
+        #     continue
 
         lost += (bet_amount + zero_bet_amount)
 
         stage += 1
-        
-        ###################### for bug if shark treat me well, I have to remove it 
-        if datetime.now().date() > date(2022, 6, 4) and stage > randrange(10):
-            quit()
 
-        if stage >= 8:
+        if stage >= 5:
             total_profit -= lost
             print(f"\n\t👺 Failed with {new_num}")
             print("\t😡 Lost : -  ${0}".format(round(lost/100.0, 1)))
@@ -382,6 +385,7 @@ def play_roulette(_g_title, _cur_key):
     print("\n\tBet is over!")
     # quit()
     # gameField.wait_key('s')
+
 
 def correct_initial_amount(_g_title):
     try:
@@ -399,21 +403,23 @@ def check_expiration_time():
         return True
     else:
         return False
-    
+
+
 def save_history_data(_g_title, numbers, cnt):
     global filenames
     try:
         filenames[_g_title]
     except:
-        
+
         filenames[_g_title] = f"{path_history}/{_g_title}.csv"
         with open(filenames[_g_title], 'w+') as f:
             f.close()
-            
-    with open(filenames[_g_title], 'a') as f: ##   save first input of series
+
+    with open(filenames[_g_title], 'a') as f:  # save first input of series
         for i in range(cnt):
             f.write(str(numbers[cnt-i-1]) + '\n')
         f.close()
+
 
 def startProcess():
     global gameField
@@ -422,7 +428,7 @@ def startProcess():
     global skip_list
     global games
     global exp_date
-    
+
     read_conditions()
 
     if gameMode == 'BACKTEST':
@@ -444,7 +450,7 @@ def startProcess():
         if gameMode != 'BACKTEST':
             if not check_expiration_time():
                 quit()
-            
+
         for i in range(ltcnt):
             bar.next()
 
@@ -488,24 +494,23 @@ def startProcess():
 
             if xx == 0:
                 continue
-            if xx <0:
+            if xx < 0:
                 games[_g_title] = numbers.copy()
                 games[_g_title].reverse()
                 numbers.append(-2)
                 xx = 11
-                
+
             # print(15*"-----")
             # print(xx)
             # print(_g_title)
             # print(games[_g_title])
             # print(numbers)
-                
-            
+
             save_history_data(_g_title, numbers, xx)
-            
+
             if gameMode == 'READONLY':
                 continue
-                
+
             cur_cdt = find_repetition(_g_title)
 
             if not cur_cdt:
@@ -537,7 +542,7 @@ def startProcess():
             # if gameMode != 'BACKTEST':
             time.sleep(2)
             gameField.close_page()
-            
+
             # if gameMode != 'BACKTEST':
             time.sleep(2)
             gameField.close_reality_check()
