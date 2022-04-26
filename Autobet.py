@@ -4,13 +4,20 @@ import keyboard
 
 from progress.bar import Bar
 from datetime import datetime, date
-from bet365_browser import Browser
-#from backtest import Backtest
+#from bet365_browser import Browser
+from backtest import Backtest
 from my_license import License
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
 from random import randrange
+import telegram
+global bot
+global TOKEN
+
+bot = telegram.Bot(token='5132523958:AAH81rTLyDa2Xm_1ifEbA_qzFF8shk5oYL0')
+
+bot.sendMessage(chat_id='1863767894 ', text='‼️ CONFIGURAR ROBÔ 🤖 ')
 
 global cur_time
 global prev_time
@@ -247,7 +254,7 @@ def calc_normal_bet_amount(_g_title, _stage):  # _stage 0 ~
 
 def calc_normal_bet_amount_2nd(_g_title, _stage):  # _stage 0 ~
     _sr = [500, 1000, 2000, 4000, 8000]
-    return _sr[_stage]
+    return _sr[_stage]*100
 
 
 def calc_zero_bet_amount(_g_title, _stage):  # _stage 0 ~
