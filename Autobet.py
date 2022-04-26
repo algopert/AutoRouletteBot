@@ -4,8 +4,8 @@ import keyboard
 
 from progress.bar import Bar
 from datetime import datetime, date
-#from bet365_browser import Browser
-from backtest import Backtest
+from bet365_browser import Browser
+#from backtest import Backtest
 from my_license import License
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
