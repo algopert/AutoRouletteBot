@@ -1,12 +1,7 @@
-import os
 import time
-import keyboard
-
 from progress.bar import Bar
-from datetime import datetime, date
-from bet365_browser import Browser
-from backtest import Backtest
-# from my_license import License
+import bet365_browser #import Browser
+import backtest #import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
@@ -58,7 +53,7 @@ class AutoBet:
         else:
             self.gameMode = 'READONLY'
 
-        _outputMode = myXMLtree.find('self.outputMode').text
+        _outputMode = myXMLtree.find('outputMode').text
 
         if 'TELEGRAM' in _outputMode:
             self.outputMode = 'TELEGRAM'
@@ -327,9 +322,9 @@ class AutoBet:
         self.read_conditions()
 
         if self.gameMode == 'BACKTEST':
-            self.gameField = Backtest()
+            self.gameField = backtest.Backtest()
         else:
-            self.gameField = Browser()
+            self.gameField = bet365_browser.Browser()
 
         self.gameField.open()
 
@@ -449,5 +444,6 @@ class AutoBet:
         bar.finish()
 
 
-if __name__ == "__main__":
-    startProcess()
+
+# _autobet = AutoBet()
+# _autobet.startProcess()
