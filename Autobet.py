@@ -4,7 +4,7 @@ import keyboard
 
 from progress.bar import Bar
 from datetime import datetime, date
-from bet365_browser import Browser
+import bet365_browser
 from backtest import Backtest
 # from my_license import License
 import xml.etree.ElementTree as ET
@@ -402,7 +402,7 @@ def startProcess():
     if gameMode == 'BACKTEST':
         gameField = Backtest()
     else:
-        gameField = Browser()
+        gameField = bet365_browser.Browser()
 
     gameField.open()
 
