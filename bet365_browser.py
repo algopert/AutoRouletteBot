@@ -155,7 +155,7 @@ class Browser:
         return len(self.lobby_table)
 
     def join_roulette(self, index):
-        self.close_time_limit_and_confirm()
+        self.close_reality_check()
         try:
             element = self.multi_items('//div[@class="lobby-table__container"]')[index].find_element(By.XPATH, './../../..')
             
@@ -203,7 +203,7 @@ class Browser:
                 _chips_list.append(val)
         except Exception as e:
             return None
-        time.sleep(0.3)
+        time.sleep(0.1)
         
         res = []
         for _chip in _chips_list:
@@ -227,31 +227,23 @@ class Browser:
             return False
         time.sleep(0.3)
         return True
-    def close_time_limit_and_confirm(self):
-        time_limit_modal = self.single_item('(//div[@class="session-modals"])')
-        if time_limit_modal:
-            time.sleep(0.3)
-            # print("Session time limit modal found!")
-            # print(time_limit_modal)
-            try:
-                time_limit_modal.find_elements(By.TAG_NAME, "button")[1].click()
-                time.sleep(0.3)
-                print("session modal close")
-            except:
-                pass
+    def close_reality_check(self):
+        try:
+            time_limit_modal = self.single_item('(//div[@class="session-modals"])')
+            time_limit_modal.find_elements(By.TAG_NAME, "button")[1].click()
+            # time.sleep(0.3)
+            print(">>>>>>>>>>>>>>>   Reality check modal is closed")
+        except:
+            pass
         
-        inactivity = self.single_item('(//div[@class="game-modals"])')
-        if inactivity:
-            time.sleep(0.3)
-            # print("Session inactivity modal found!")
-            # print(inactivity)
-            try:
-                inactivity.find_elements(By.TAG_NAME, "button")[0].click()
-                time.sleep(0.3)
-                print("inactivity modal close")
-            except:
-                pass
-        # print("close_time_limit_and_confirm")
+        
+        try:
+            inactivity = self.single_item('(//div[@class="game-modals"])')
+            inactivity.find_elements(By.TAG_NAME, "button")[0].click()
+            # time.sleep(0.3)
+            print(">>>>>>>>>>>>>>>   Inactivity modal is closed")
+        except:
+            pass
         
         
         
@@ -272,7 +264,7 @@ class Browser:
         # for key in _cls_name.keys():
         try:
             self.single_item('(//div[@class="roulette-game-area__main-digital-table"])').find_element(By.CLASS_NAME, _cls_name[_key]).click()
-            time.sleep(0.2)
+            time.sleep(0.3)
             # print(f"click {_key}")
             # print(item)
         except Exception as e:

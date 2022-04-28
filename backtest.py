@@ -114,7 +114,7 @@ class Backtest:
         while True:
             if keyboard.is_pressed(_key):
                 break
-    def close_time_limit_and_confirm(self):
+    def close_reality_check(self):
         pass
     def get_chip_reference(self):
         _chips_list = [None,

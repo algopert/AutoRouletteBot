@@ -164,13 +164,15 @@ class AutoBet:
                 if self.chip_list[_idx] > _amount or self.chip_list[_idx] == 0:
                     continue
                 # print(f"clicked chip{self.chip_list[_idx]}")
-                self.gameField.close_time_limit_and_confirm()
+                # self.gameField.close_reality_check()
                 if pre_idx != _idx:
                     self.gameField.select_chip(_idx)
+                    self.gameField.close_reality_check()
                     pre_idx = _idx
                 _not_betted = False
-                self.gameField.close_time_limit_and_confirm()
+                # self.gameField.close_reality_check()
                 self.gameField.click_key(_key)
+                self.gameField.close_reality_check()
                 # print(f"clicked {_key}")
                 _amount -= self.chip_list[_idx]
                 break
@@ -183,22 +185,28 @@ class AutoBet:
 
     def calc_normal_bet_amount(self, _g_title, _stage):  # _stage 0 ~
         _sr = [1, 3, 10, 30, 90, 270, 810]
+        # _sr = [1, 3, 10, 30, 90, 270, 810, 1600] for shark
         return self.conditions[_g_title]['InitialAmount'] * _sr[_stage]
+
+    def calc_normal_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
+        _sr = [500, 1000, 2000, 4000, 8000]
+        return _sr[_stage]*100
 
     def calc_zero_bet_amount(self, _g_title, _stage):  # _stage 0 ~
         _sr = [0, 0, 1, 2, 5, 15, 45]
+        # _sr = [0, 0, 1, 3, 8, 20, 40, 100] for shark
         return self.conditions[_g_title]['InitialAmount'] * _sr[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
-
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
         while True:  # waiting for appearing another one number!
             numbers = self.gameField.get_numbers_from_game()
             # print("---------------------",numbers)
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",self.games[_g_title])
+            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
             xx = self.numbers_propagation(self.games[_g_title], numbers)
             # print("xx is ", xx)
             if xx > 0:
+                time.sleep(2.5)
                 break
 
         if not self.exist_condition(_g_title, _cur_key):
@@ -206,13 +214,13 @@ class AutoBet:
             return
         print("\tThe bot decided to bet with Number :  ", end='')
         self.print_color_text([self.games[_g_title][-1]])
-        self.chip_list = self.gameField.get_chip_reference()
-        if not self.chip_list:
-            print('Faied to update self.chip_list!')
+        chip_list = self.gameField.get_chip_reference()
+        if not chip_list:
+            print('Faied to update chip_list!')
             return
 
         print('\tChip list updated :', end='')
-        for x in self.chip_list:
+        for x in chip_list:
             if x == 0:
                 continue
             if x < 100:
@@ -224,56 +232,79 @@ class AutoBet:
         _bet_key = self.reverse_key[_cur_key]
         stage = 0
         lost = 0
-        time.sleep(2)
+        _second_bet = False
+        bet_now = True
+        _second_check = 0
+        self.gameField.close_reality_check()
         while True:
-            self.gameField.close_time_limit_and_confirm()
-            print("\n\t" + 20 * "---")
-            print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
+            if bet_now:
+                print("\n\t" + 20 * "---")
+                print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
-            bet_amount = self.calc_normal_bet_amount(_g_title, stage)
+                if not _second_bet:
+                    bet_amount = self.calc_normal_bet_amount(_g_title, stage)
+                else:
+                    bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
 
-            print(
-                f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
-            self.bet_to_roulette(bet_amount, _bet_key)
+                print(
+                    f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
 
-            zero_bet_amount = self.calc_zero_bet_amount(_g_title, stage)
-            if zero_bet_amount > 0:
-                if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                    print(f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
-                    self.bet_to_roulette(zero_bet_amount, 'Bonus')
-                elif _g_title == 'American_Roulette':
-                    print(f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
-                    self.bet_to_roulette(zero_bet_amount, 'Zero0')
+                self.bet_to_roulette(bet_amount, _bet_key)
 
-                print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                self.bet_to_roulette(zero_bet_amount, 'Zero')
+                if not _second_bet:
+                    zero_bet_amount = self.calc_zero_bet_amount(_g_title, stage)
+                    if zero_bet_amount > 0:
+                        if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
+                            print(
+                                f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
+                            self.bet_to_roulette(zero_bet_amount, 'Bonus')
+                        elif _g_title == 'American_Roulette':
+                            print(
+                                f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
+                            self.bet_to_roulette(zero_bet_amount, 'Zero0')
+
+                        print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+                        self.bet_to_roulette(zero_bet_amount, 'Zero')
 
             while True:
                 if self.numbers_propagation(self.games[_g_title], self.gameField.get_numbers_from_game()) > 0:
-                    time.sleep(2)
+                    time.sleep(2.5)
                     break
 
             new_num = self.games[_g_title][-1]
             print(f"\n\t    New number is ", end='')
             self.print_color_text([new_num])
+            if _second_bet and _second_check < 2 and not bet_now:
+                if not new_num in self.condition_list[_cur_key]:
+                    break
+                _second_check += 1
+                if _second_check == 2:
+                    bet_now = True
+                continue
             if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
                 profit = bet_amount - lost - zero_bet_amount
                 self.total_profit += profit
-                print(f"\n\t🚨 Won with {new_num}")
-                print("\t😁 Profit :   ${0}".format(round(profit/100.0, 1)))
-                print("\t🤑 Total profits :   ${0}".format(
-                    round(self.total_profit/100.0, 1)))
-                break
-            if stage > 1 and new_num <= 0:
+                msg = f"\n\t🚨 Won with {new_num}\n" + "\t😁 Profit :   ${0}\n".format(round(
+                    profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
+                print(msg)
+                # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+
+                if _second_bet == True:
+                    break
+                _second_bet = True
+                bet_now = False
+                stage = 0
+                lost = 0
+                continue
+            if stage > 1 and new_num <= 0 and not _second_bet:
                 if new_num == 0:  # for zero.
                     profit = 35*zero_bet_amount - lost - bet_amount
                 else:  # for bonus -1 ############################## insert to bonus
                     profit = 199*zero_bet_amount - lost - bet_amount
                 self.total_profit += profit
-                print(f"\n\t🚨 Won with Bonus!")
-                print("\t😁 Profit :   ${0}".format(round(profit/100.0, 1)))
-                print("\t🤑 Total profits :   ${0}".format(
-                    round(self.total_profit/100.0, 1)))
+                msg = f"\n\t🚨 Won with Bonus!\n" + "\t😁 Profit :   ${0}\n".format(round(profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
+                print(msg)
+                # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
                 stage = 0
                 lost = 0
                 continue
@@ -281,17 +312,22 @@ class AutoBet:
             lost += (bet_amount + zero_bet_amount)
 
             stage += 1
-            if stage >= 7:
+
+            if (stage >= 8 and not _second_bet) or (stage >= 5 and _second_bet):
                 self.total_profit -= lost
-                print(f"\n\t👺 Failed with {new_num}")
-                print("\t😡 Lost : -  ${0}".format(round(lost/100.0, 1)))
-                print("\t👿 Total profit:   ${0}".format(
-                    round(self.total_profit/100.0, 1)))
+                msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+                print(msg)
+                # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
                 stage = 0
                 lost = 0
                 continue
+            # gameField.wait_key('a')
 
         print("\n\tBet is over!")
+        # quit()
+        # gameField.wait_key('s')
+
+    
 
     def correct_initial_amount(self, _g_title):
         try:
@@ -332,7 +368,7 @@ class AutoBet:
         ppp = -1
         while True:
             self.read_conditions()
-            self.gameField.close_time_limit_and_confirm()
+            self.gameField.close_reality_check()
             self.gameField.switch_tabs()
             ltcnt = self.gameField.refresh_lobby_table()  # Item count of Lobby Table
             bar.max = ltcnt
@@ -436,7 +472,7 @@ class AutoBet:
 
                 # if self.gameMode != 'BACKTEST':
                 time.sleep(2)
-                self.gameField.close_time_limit_and_confirm()
+                self.gameField.close_reality_check()
                 break
 
             bar.index = 0

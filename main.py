@@ -1,5 +1,5 @@
-import autobet 
+import Autobet 
 
 if __name__ == "__main__":
-    _autobet = autobet.AutoBet()
+    _autobet = Autobet.AutoBet()
     _autobet.startProcess()
