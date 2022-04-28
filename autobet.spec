@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 
-block_cipher = pyi_crypto.PyiBlockCipher(key='tetris1013@')
+block_cipher = pyi_crypto.PyiBlockCipher(key='tetris1013')
 
 
 a = Analysis(

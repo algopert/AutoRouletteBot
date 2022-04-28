@@ -1,16 +1,16 @@
-import os
+#import os
 import time
 import keyboard
 
 from progress.bar import Bar
 from datetime import datetime, date
 from bet365_browser import Browser
-#from backtest import Backtest
+from backtest import Backtest
 from my_license import License
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
-from random import randrange
+#from random import randrange
 import telegram
 global bot
 global TOKEN
@@ -313,6 +313,7 @@ def play_roulette(_g_title, _cur_key):
     _second_check = 0
     gameField.close_reality_check()
     while True:
+        bet_amount = 0
         if bet_now:
             print("\n\t" + 20 * "---")
             print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
@@ -326,7 +327,7 @@ def play_roulette(_g_title, _cur_key):
                 f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
 
             bet_to_roulette(bet_amount, _bet_key)
-
+            #print("betting here-----------------", bet_amount,_bet_key)
             if not _second_bet:
                 zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
                 if zero_bet_amount > 0:
@@ -350,15 +351,16 @@ def play_roulette(_g_title, _cur_key):
         new_num = games[_g_title][-1]
         print(f"\n\t    New number is ", end='')
         print_color_text([new_num])
-        if _second_bet and _second_check < 2 and not bet_now:
+        if _second_bet and _second_check < 3 and not bet_now:
             if not new_num in condition_list[_cur_key]:
                 break
             _second_check += 1
-            if _second_check == 2:
+            if _second_check == 3:
                 bet_now = True
             continue
         if (not new_num in condition_list[_cur_key]) and new_num > 0:
             profit = bet_amount - lost - zero_bet_amount
+            
             total_profit += profit
             msg = f"\n\t🚨 Won with {new_num}\n" + "\t😁 Profit :   ${0}\n".format(round(
                 profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(total_profit/100.0, 1))
