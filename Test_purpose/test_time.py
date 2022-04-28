@@ -136,18 +136,24 @@
 # print(round(1000.0,1))
 
 
-import sys
-from termcolor import colored, cprint
+# import sys
+# from termcolor import colored, cprint
  
-text = colored('Hello, World!', 'red', attrs=['reverse', 'blink'])
-print(text)
-cprint('Hello, World!', 'green', 'on_red')
+# text = colored('Hello, World!', 'red', attrs=['reverse', 'blink'])
+# print(text)
+# cprint('Hello, World!', 'green', 'on_red')
  
-print_red_on_cyan = lambda x: cprint(x, 'red', 'on_cyan')
-print_red_on_cyan('Hello, World!')
-print_red_on_cyan('Hello, Universe!')
+# print_red_on_cyan = lambda x: cprint(x, 'red', 'on_cyan')
+# print_red_on_cyan('Hello, World!')
+# print_red_on_cyan('Hello, Universe!')
  
-for i in range(10):
-    cprint(i, 'magenta', end=' ')
+# for i in range(10):
+#     cprint(i, 'magenta', end=' ')
  
-cprint("Attention!", 'red', attrs=['bold'], file=sys.stderr)
+# cprint("Attention!", 'red', attrs=['bold'], file=sys.stderr)
+
+import re
+
+text = "  1, 3, 10, 30, 90, 270, 810 "
+sr = [int(s) for s in re.findall(r'\b\d+\b', text)]
+print(sr)

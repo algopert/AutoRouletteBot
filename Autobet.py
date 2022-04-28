@@ -1,10 +1,11 @@
 import time
 from progress.bar import Bar
-import bet365_browser #import Browser
-import backtest #import Backtest
+import bet365_browser  # import Browser
+import backtest  # import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
+import re
 
 
 class AutoBet:
@@ -17,11 +18,11 @@ class AutoBet:
         self.gameMode = 'BACKTEST'
         self.outputMode = 'CONSOLE'
         self.condition_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
-                                    "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
-                                    "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
-                                    "Parity": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
-                                    "Low": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-                                    "High": [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]}
+                               "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
+                               "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
+                               "Parity": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
+                               "Low": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                               "High": [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]}
         self.chip_list = []
         self.skip_list = []
         self.reverse_key = {"Red": "Black",
@@ -39,7 +40,7 @@ class AutoBet:
         Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
     def read_conditions(self):
-        
+
         myXMLtree = ET.parse('params_config.xml')
 
         _gameMode = myXMLtree.find('gameMode').text
@@ -60,7 +61,8 @@ class AutoBet:
         else:
             self.outputMode = 'CONSOLE'
 
-        self.skip_list = myXMLtree.find('SkipList').text.replace(' ', '').split(',')
+        self.skip_list = myXMLtree.find(
+            'SkipList').text.replace(' ', '').split(',')
         # print("skip list ", self.skip_list)
         ############       Read parameters       ###############
         params = myXMLtree.find('Parameters')
@@ -70,6 +72,39 @@ class AutoBet:
             for item in child:
                 # print("\t", item.tag, item.text)
                 self.conditions[child.tag][item.tag] = int(item.text)
+
+        self.bet_normal_amount_1st = [int(s) for s in re.findall(
+            r'\b\d+\b', myXMLtree.find('_1st_stage_sr').text)]
+        self.bet_zero_amount_1st = [int(s) for s in re.findall(
+            r'\b\d+\b', myXMLtree.find('_1st_stage_00').text)]
+        self.bet_normal_amount_2nd = [int(s) for s in re.findall(
+            r'\b\d+\b', myXMLtree.find('_2nd_stage_sr').text)]
+        self.bet_zero_amount_2nd = [int(s) for s in re.findall(
+            r'\b\d+\b', myXMLtree.find('_2nd_stage_00').text)]
+        self.skip_cnt_2nd_stage = int(myXMLtree.find('SkipCount2').text)
+
+        self.max_round_1st = len(self.bet_normal_amount_1st)
+        if self.max_round_1st != len(self.bet_zero_amount_1st):
+            print("Mismatched bet amount of 1st stage!!!")
+            quit()
+
+        self.max_round_2nd = len(self.bet_normal_amount_2nd)
+        if self.max_round_2nd != len(self.bet_zero_amount_2nd):
+            print("Mismatched bet amount of 2nd stage!!!")
+            quit()
+
+
+        if myXMLtree.find('FlagIncludeZero').text.replace(' ', '')=='YES':
+            self.flag_zero_include = True
+        else:
+            self.flag_zero_include = False
+        # print(self.bet_normal_amount_1st)
+        # print(self.bet_zero_amount_1st)
+        # print(self.bet_normal_amount_2nd)
+        # print(self.bet_zero_amount_2nd)
+
+        # print(self.skip_cnt_2nd_stage)
+        # quit()
 
     def print_color_text(self, _list):
         for dd in _list:
@@ -100,13 +135,16 @@ class AutoBet:
             qq = self.games[_g_title][-1-i]
             if qq in self.condition_list[_key]:
                 continue
+            if (qq==0 or qq==-1) and self.flag_zero_include:
+                continue
             flag_found = False
             break
         if flag_found:
             return _key
         return None
 
-    def find_repetition(self, _g_title):  # if the repetition exists, return key : eg: "Red"
+    # if the repetition exists, return key : eg: "Red"
+    def find_repetition(self, _g_title):
         for key in self.condition_list.keys():
             if self.exist_condition(_g_title, key) != None:
                 return key
@@ -183,19 +221,17 @@ class AutoBet:
         print(balance)
         # quit()
 
-    def calc_normal_bet_amount(self, _g_title, _stage):  # _stage 0 ~
-        _sr = [1, 3, 10, 30, 90, 270, 810]
-        # _sr = [1, 3, 10, 30, 90, 270, 810, 1600] for shark
-        return self.conditions[_g_title]['InitialAmount'] * _sr[_stage]
+    def calc_normal_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
+        return self.conditions[_g_title]['InitialAmount'] * self.bet_normal_amount_1st[_stage]
 
     def calc_normal_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
-        _sr = [500, 1000, 2000, 4000, 8000]
-        return _sr[_stage]*100
+        return self.conditions[_g_title]['InitialAmount'] * self.bet_normal_amount_2nd[_stage]
 
     def calc_zero_bet_amount(self, _g_title, _stage):  # _stage 0 ~
-        _sr = [0, 0, 1, 2, 5, 15, 45]
-        # _sr = [0, 0, 1, 3, 8, 20, 40, 100] for shark
-        return self.conditions[_g_title]['InitialAmount'] * _sr[_stage]
+        return self.conditions[_g_title]['InitialAmount'] * self.bet_zero_amount_1st[_stage]
+
+    def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
+        return self.conditions[_g_title]['InitialAmount'] * self.bet_zero_amount_2nd[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
@@ -239,12 +275,15 @@ class AutoBet:
         while True:
             if bet_now:
                 print("\n\t" + 20 * "---")
-                print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
+                print('\033[96m' +
+                      f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
                 if not _second_bet:
-                    bet_amount = self.calc_normal_bet_amount(_g_title, stage)
+                    bet_amount = self.calc_normal_bet_amount_1st(
+                        _g_title, stage)
                 else:
-                    bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
+                    bet_amount = self.calc_normal_bet_amount_2nd(
+                        _g_title, stage)
 
                 print(
                     f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
@@ -252,19 +291,24 @@ class AutoBet:
                 self.bet_to_roulette(bet_amount, _bet_key)
 
                 if not _second_bet:
-                    zero_bet_amount = self.calc_zero_bet_amount(_g_title, stage)
-                    if zero_bet_amount > 0:
-                        if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                            print(
-                                f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
-                            self.bet_to_roulette(zero_bet_amount, 'Bonus')
-                        elif _g_title == 'American_Roulette':
-                            print(
-                                f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
-                            self.bet_to_roulette(zero_bet_amount, 'Zero0')
+                    zero_bet_amount = self.calc_zero_bet_amount(
+                        _g_title, stage)
+                else:
+                    zero_bet_amount = self.calc_zero_bet_amount_2nd(
+                        _g_title, stage)
+                if zero_bet_amount > 0:
+                    if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
+                        print(
+                            f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
+                        self.bet_to_roulette(zero_bet_amount, 'Bonus')
+                    elif _g_title == 'American_Roulette':
+                        print(
+                            f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
+                        self.bet_to_roulette(zero_bet_amount, 'Zero0')
 
-                        print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                        self.bet_to_roulette(zero_bet_amount, 'Zero')
+                    print(
+                        f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+                    self.bet_to_roulette(zero_bet_amount, 'Zero')
 
             while True:
                 if self.numbers_propagation(self.games[_g_title], self.gameField.get_numbers_from_game()) > 0:
@@ -274,11 +318,11 @@ class AutoBet:
             new_num = self.games[_g_title][-1]
             print(f"\n\t    New number is ", end='')
             self.print_color_text([new_num])
-            if _second_bet and _second_check < 2 and not bet_now:
+            if _second_bet and _second_check < self.skip_cnt_2nd_stage and not bet_now:
                 if not new_num in self.condition_list[_cur_key]:
                     break
                 _second_check += 1
-                if _second_check == 2:
+                if _second_check == self.skip_cnt_2nd_stage:
                     bet_now = True
                 continue
             if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
@@ -302,7 +346,8 @@ class AutoBet:
                 else:  # for bonus -1 ############################## insert to bonus
                     profit = 199*zero_bet_amount - lost - bet_amount
                 self.total_profit += profit
-                msg = f"\n\t🚨 Won with Bonus!\n" + "\t😁 Profit :   ${0}\n".format(round(profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
+                msg = f"\n\t🚨 Won with Bonus!\n" + "\t😁 Profit :   ${0}\n".format(round(
+                    profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
                 stage = 0
@@ -313,9 +358,10 @@ class AutoBet:
 
             stage += 1
 
-            if (stage >= 8 and not _second_bet) or (stage >= 5 and _second_bet):
+            if (stage >= self.max_round_1st and not _second_bet) or (stage >= self.max_round_2nd and _second_bet):
                 self.total_profit -= lost
-                msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+                msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(
+                    lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
                 stage = 0
@@ -327,8 +373,6 @@ class AutoBet:
         # quit()
         # gameField.wait_key('s')
 
-    
-
     def correct_initial_amount(self, _g_title):
         try:
             self.conditions[_g_title]
@@ -338,7 +382,6 @@ class AutoBet:
             self.conditions[_g_title]['InitialAmount']
         except:
             self.conditions[_g_title]['InitialAmount'] = self.conditions['Default']['InitialAmount']
-
 
     def save_history_data(self, _g_title, numbers, cnt):
         try:
@@ -455,9 +498,9 @@ class AutoBet:
                       '\033[93m', f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}", "\033[0m")
                 # self.gameField.wait_key('a')
 
-                if ppp == i:
-                    continue  # option.....
-                ppp = i
+                # if ppp == i:
+                #     continue  # option.....
+                # ppp = i
 
                 #  Logic in the Game ##########################################################
                 self.gameField.join_roulette(i)
@@ -478,7 +521,6 @@ class AutoBet:
             bar.index = 0
 
         bar.finish()
-
 
 
 # _autobet = AutoBet()
