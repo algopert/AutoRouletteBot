@@ -312,6 +312,9 @@ def play_roulette(_g_title, _cur_key):
     bet_now = True
     _second_check = 0
     gameField.close_reality_check()
+    _2nd_wait_cnt = 3
+    if _cur_key == "Red" or _cur_key=="Black":
+        _2nd_wait_cnt = 4
     while True:
         bet_amount = 0
         if bet_now:
@@ -351,11 +354,11 @@ def play_roulette(_g_title, _cur_key):
         new_num = games[_g_title][-1]
         print(f"\n\t    New number is ", end='')
         print_color_text([new_num])
-        if _second_bet and _second_check < 3 and not bet_now:
+        if _second_bet and _second_check < _2nd_wait_cnt and not bet_now:
             if not new_num in condition_list[_cur_key]:
                 break
             _second_check += 1
-            if _second_check == 3:
+            if _second_check == _2nd_wait_cnt:
                 bet_now = True
             continue
         if (not new_num in condition_list[_cur_key]) and new_num > 0:
