@@ -92,7 +92,11 @@ class AutoBet:
         if self.max_round_2nd != len(self.bet_zero_amount_2nd):
             print("Mismatched bet amount of 2nd stage!!!")
             quit()
-
+        
+        if myXMLtree.find('_2nd_bet_flag').text.replace(' ', '')=='YES':
+            self.flag_2nd_bet = True
+        else:
+            self.flag_2nd_bet = False
 
         if myXMLtree.find('FlagIncludeZero').text.replace(' ', '')=='YES':
             self.flag_zero_include = True
@@ -339,14 +343,17 @@ class AutoBet:
                     profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
-
-                if _second_bet == True:
+                if self.flag_2nd_bet:
+                    if _second_bet == True:
+                        break
+                    _second_bet = True
+                    bet_now = False
+                    stage = 0
+                    lost = 0
+                    continue
+                else:
                     break
-                _second_bet = True
-                bet_now = False
-                stage = 0
-                lost = 0
-                continue
+                
             if stage > 1 and new_num <= 0 and not _second_bet:
                 if new_num == 0:  # for zero.
                     profit = 35*zero_bet_amount - lost - bet_amount
