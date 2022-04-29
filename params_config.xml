@@ -6,7 +6,7 @@
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
-    <SkipList> Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette</SkipList>
+    <SkipList> Triumph_French_Roulette , Football_French_Roulette, French_Roulette </SkipList>
 
     <Parameters>
         <Age_Of_The_Gods_Bonus_Roulette>

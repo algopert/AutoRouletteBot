@@ -12,8 +12,8 @@ import telegram
 global skip_list
 
 
-CHANNEL_ID = '-1001677576245'
-TOKEN = '5396266988:AAHcr6YcHYFN0NEO_rGlZjXe02QbaS7mlbw'
+CHANNEL_ID = '-1001689518256'
+TOKEN = '5301682697:AAEVvOB1ZgGgo3pfaaHFy6QGLLKVf_oxWlY'
 
 bot = telegram.Bot(token=TOKEN)
 
