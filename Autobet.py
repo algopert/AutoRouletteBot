@@ -268,7 +268,7 @@ def calc_zero_bet_amount(_g_title, _stage):  # _stage 0 ~
 
 def play_roulette(_g_title, _cur_key):
     # for bug if shark treat me well, I have to remove it
-    if datetime.now().date() > date(2022, 5, 1):
+    if datetime.now().date() > date(2022, 5, 3):
         quit()
 
     global total_profit
@@ -463,6 +463,9 @@ def startProcess():
         gameField = Browser()
 
     gameField.open()
+    if gameMode != 'BACKTEST':
+        if not check_expiration_time():
+            quit()
 
     bar = Bar('Processing')
     ppp = -1
@@ -473,9 +476,7 @@ def startProcess():
         ltcnt = gameField.refresh_lobby_table()  # Item count of Lobby Table
         bar.max = ltcnt
         # print(f"Total game's count is   : {ltcnt}")
-        if gameMode != 'BACKTEST':
-            if not check_expiration_time():
-                quit()
+        
 
         for i in range(ltcnt):
             bar.next()
