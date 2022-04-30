@@ -8,6 +8,8 @@ from pathlib import Path
 import re
 
 
+import telegram
+
 class AutoBet:
     def __init__(self):
         self.total_profit = 0
@@ -38,6 +40,10 @@ class AutoBet:
 
         self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
         Path(self.path_history).mkdir(parents=True, exist_ok=True)
+        
+        self.CHANNEL_ID = '-1001531528873'
+        self.telegram_bot = telegram.Bot(token='5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k')
+
 
     def read_conditions(self):
 
@@ -208,10 +214,11 @@ class AutoBet:
                 _idx = len(self.chip_list) - 1 - i
                 if self.chip_list[_idx] > _amount or self.chip_list[_idx] == 0:
                     continue
-                # print(f"clicked chip{self.chip_list[_idx]}")
+                
                 # self.gameField.close_reality_check()
                 if pre_idx != _idx:
                     self.gameField.select_chip(_idx)
+                    # print(f"clicked chip{self.chip_list[_idx]}")
                     self.gameField.close_reality_check()
                     pre_idx = _idx
                 _not_betted = False
@@ -251,6 +258,7 @@ class AutoBet:
             # print("xx is ", xx)
             if xx > 0:
                 time.sleep(2.5)
+                self.save_history_data(_g_title, numbers, xx)
                 break
 
         if not self.exist_condition(_g_title, _cur_key):
@@ -260,14 +268,14 @@ class AutoBet:
         
         print("\tThe bot decided to bet with Number :  " + self.change_color_text([self.games[_g_title][-1]]))
         
-        chip_list = self.gameField.get_chip_reference()
-        if not chip_list:
+        self.chip_list = self.gameField.get_chip_reference()
+        if not self.chip_list:
             print('Faied to update chip_list!')
             return
 
         
         _txt = '\tChip list updated :' 
-        for x in chip_list:
+        for x in self.chip_list:
             if x == 0:
                 continue
             if x < 100:
@@ -311,10 +319,12 @@ class AutoBet:
                     if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
                         print(
                             f"\t 🙏  Betting to \033[93m$Bonus, {zero_bet_amount/100.0}\033[0m")
+                        lost += zero_bet_amount
                         self.bet_to_roulette(zero_bet_amount, 'Bonus')
                     elif _g_title == 'American_Roulette':
                         print(
                             f"\t 🙏  Betting to \033[93mZero2, ${zero_bet_amount/100.0}\033[0m")
+                        lost += zero_bet_amount
                         self.bet_to_roulette(zero_bet_amount, 'Zero0')
 
                     print(
@@ -322,8 +332,10 @@ class AutoBet:
                     self.bet_to_roulette(zero_bet_amount, 'Zero')
 
             while True:
-                if self.numbers_propagation(self.games[_g_title], self.gameField.get_numbers_from_game()) > 0:
+                xx =  self.numbers_propagation(self.games[_g_title], self.gameField.get_numbers_from_game())
+                if xx> 0:
                     time.sleep(2.5)
+                    self.save_history_data(_g_title, numbers, xx)
                     break
 
             new_num = self.games[_g_title][-1]
@@ -342,7 +354,11 @@ class AutoBet:
                 msg = f"\n\t🚨 Won with {new_num}\n" + "\t😁 Profit :   ${0}\n".format(round(
                     profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
-                # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                try:
+                    self.telegram_bot.sendMessage(chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                except:
+                    print("telegram error!")
                 if self.flag_2nd_bet:
                     if _second_bet == True:
                         break
@@ -363,7 +379,11 @@ class AutoBet:
                 msg = f"\n\t🚨 Won with Bonus!\n" + "\t😁 Profit :   ${0}\n".format(round(
                     profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
-                # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                try:
+                    self.telegram_bot.sendMessage(chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                except:
+                    print("telegram error!")
                 stage = 0
                 lost = 0
                 continue
@@ -377,7 +397,11 @@ class AutoBet:
                 msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(
                     lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
-                # bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                try:
+                    self.telegram_bot.sendMessage(chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                except:
+                    print("telegram error!")
                 stage = 0
                 lost = 0
                 continue

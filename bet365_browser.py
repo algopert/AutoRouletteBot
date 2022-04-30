@@ -225,6 +225,7 @@ class Browser:
             self.single_item(f'(//div[@class="controls-panel__chip-panel"])').find_elements(By.TAG_NAME, "svg")[_index].click()
         except Exception as e:
             return False
+        # print("select chip ok")
         time.sleep(0.3)
         return True
     def close_reality_check(self):
