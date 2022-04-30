@@ -568,6 +568,7 @@ def startProcess():
 
             # if gameMode != 'BACKTEST':
             time.sleep(2)
+            gameField.close_reality_check()
             gameField.close_page()
 
             # if gameMode != 'BACKTEST':
