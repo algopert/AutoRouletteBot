@@ -246,6 +246,14 @@ class Browser:
         except:
             pass
         
+        try:
+            inactivity = self.single_item('(//div[@class="toaster-modals"])')
+            inactivity.find_elements(By.TAG_NAME, "button")[0].click()
+            # time.sleep(0.3)
+            print(">>>>>>>>>>>>>>>   Toaster modal is closed")
+        except:
+            pass
+        
         
         
     def click_key(self, _key):

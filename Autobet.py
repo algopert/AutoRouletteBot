@@ -332,7 +332,8 @@ class AutoBet:
                     self.bet_to_roulette(zero_bet_amount, 'Zero')
 
             while True:
-                xx =  self.numbers_propagation(self.games[_g_title], self.gameField.get_numbers_from_game())
+                numbers = self.gameField.get_numbers_from_game()
+                xx =  self.numbers_propagation(self.games[_g_title], numbers)
                 if xx> 0:
                     time.sleep(2.5)
                     self.save_history_data(_g_title, numbers, xx)
@@ -548,6 +549,8 @@ class AutoBet:
 
                 # if self.gameMode != 'BACKTEST':
                 time.sleep(2)
+                self.gameField.close_reality_check()
+                time.sleep(1)
                 self.gameField.close_page()
 
                 # if self.gameMode != 'BACKTEST':
