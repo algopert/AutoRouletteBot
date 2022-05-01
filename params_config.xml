@@ -7,7 +7,7 @@
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
     <SkipList> Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, Mega_Fire_Blaze_Roulette_Live</SkipList>
-    
+
     <_1st_stage_sr>   1, 3, 10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr>
     <_1st_stage_00>   0, 0,  1,  2,  5,  10,  25 ,  50,  100,  220 </_1st_stage_00>
     <!-- <_1st_stage_sr>   10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr>
@@ -26,7 +26,6 @@
             <Parity> 7 </Parity>
             <Low> 7 </Low>
             <High> 7 </High>
-            <InitialAmount> 50 </InitialAmount>
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
@@ -36,7 +35,6 @@
             <Parity> 9 </Parity>
             <Low> 9 </Low>
             <High> 9 </High>
-            <InitialAmount> 50 </InitialAmount>
         </American_Roulette>
 
         <Auto_Roulette>
@@ -72,14 +70,14 @@
             <Low> 12 </Low>
             <High> 12 </High>
         </Deutsches_Roulette>
-        <Football_French_Roulette></Football_French_Roulette>
+
         <Football_Roulette>
             <Red> 8 </Red>
             <Black> 8 </Black>
             <Odd> 9 </Odd>
             <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Low> 10 </Low>
+            <High> 10 </High>
         </Football_Roulette>
         <French_Roulette>
             <Red> 8 </Red>
@@ -97,7 +95,6 @@
             <Parity> 8 </Parity>
             <Low> 8 </Low>
             <High> 8 </High>
-            <InitialAmount> 50 </InitialAmount>
         </Greek_Quantum_Roulette>
 
         <Greek_Roulette>
@@ -125,7 +122,6 @@
             <Parity> 9 </Parity>
             <Low> 9 </Low>
             <High> 9 </High>
-            <InitialAmount> 50 </InitialAmount>
         </Mega_Fire_Blaze_Roulette_Live>
 
         <Prestige_Roulette>
@@ -135,18 +131,15 @@
             <Parity> 8 </Parity>
             <Low> 8 </Low>
             <High> 8 </High>
-            <InitialAmount> 50 </InitialAmount>
         </Prestige_Roulette>
 
         <Quantum_Auto_Roulette>
-            <Red> 10 </Red>
-            <Black> 10 </Black>
-            <Odd> 10 </Odd>
-            <Parity> 10 </Parity>
-            <Low> 10 </Low>
-            <High> 10 </High>
-
-            <InitialAmount> 50 </InitialAmount>
+            <Red> 12 </Red>
+            <Black> 12 </Black>
+            <Odd> 12 </Odd>
+            <Parity> 12 </Parity>
+            <Low> 12 </Low>
+            <High> 12 </High>
         </Quantum_Auto_Roulette>
 
         <Quantum_Roulette_Italiana>
@@ -156,8 +149,6 @@
             <Parity> 8 </Parity>
             <Low> 8 </Low>
             <High> 8 </High>
-
-            <InitialAmount> 50 </InitialAmount>
         </Quantum_Roulette_Italiana>
 
         <Quantum_Roulette_Live>
@@ -169,24 +160,24 @@
             <High> 12 </High>
         </Quantum_Roulette_Live>
         <Roleta_Brasileira>
-            <Red> 8 </Red>
-            <Black> 8 </Black>
-            <Odd> 8 </Odd>
-            <Parity> 8 </Parity>
-            <Low> 8 </Low>
-            <High> 8 </High>
-        </Roleta_Brasileira>
-        <Roulette_Italiana>
             <Red> 10 </Red>
             <Black> 10 </Black>
-            <Odd> 10 </Odd>
-            <Parity> 10 </Parity>
+            <Odd> 9 </Odd>
+            <Parity> 9 </Parity>
+            <Low> 9 </Low>
+            <High> 9 </High>
+        </Roleta_Brasileira>
+        <Roulette_Italiana>
+            <Red> 9 </Red>
+            <Black>9 </Black>
+            <Odd> 9 </Odd>
+            <Parity> 9 </Parity>
             <Low> 10 </Low>
             <High> 10 </High>
         </Roulette_Italiana>
         <Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
+            <Red> 10 </Red>
+            <Black> 10 </Black>
             <Odd> 10 </Odd>
             <Parity> 10 </Parity>
             <Low> 12 </Low>
@@ -195,18 +186,18 @@
         <Speed_Auto_Roulette>
             <Red> 11 </Red>
             <Black> 11 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 8 </Low>
-            <High> 8 </High>
+            <Odd> 11 </Odd>
+            <Parity> 11 </Parity>
+            <Low> 11 </Low>
+            <High> 11 </High>
         </Speed_Auto_Roulette>
         <Speed_Roulette>
-            <Red> 10 </Red>
-            <Black> 10 </Black>
-            <Odd> 10 </Odd>
-            <Parity> 10 </Parity>
-            <Low> 10 </Low>
-            <High>10 </High>
+            <Red> 12 </Red>
+            <Black> 12</Black>
+            <Odd> 12 </Odd>
+            <Parity> 12 </Parity>
+            <Low> 12 </Low>
+            <High>12 </High>
         </Speed_Roulette>
         <Spread_Bet_Roulette>
             <Red> 9 </Red>
@@ -224,10 +215,8 @@
             <Parity> 10 </Parity>
             <Low> 9 </Low>
             <High> 9 </High>
-            <InitialAmount> 50 </InitialAmount>
         </Super_Spin_Roulette>
 
-        <Triumph_French_Roulette></Triumph_French_Roulette>
         <Triumph_Roulette>
             <Red> 9 </Red>
             <Black> 9 </Black>
@@ -245,17 +234,15 @@
             <High> 9 </High>
         </Turkish_Roulette>
         <UK_Roulette>
-            <Red> 8 </Red>
-            <Black> 8 </Black>
-            <Odd> 8 </Odd>
-            <Parity> 8 </Parity>
-            <Low> 8 </Low>
-            <High> 8 </High>
+            <Red> 9 </Red>
+            <Black> 9 </Black>
+            <Odd> 9 </Odd>
+            <Parity> 9 </Parity>
+            <Low> 9 </Low>
+            <High> 9 </High>
         </UK_Roulette>
 
-        <Who_Wants_To_Be_a_Millionaire_Roulette>
-            <InitialAmount> 50 </InitialAmount>
-        </Who_Wants_To_Be_a_Millionaire_Roulette>
+        <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
 
         <Default>
             <Red> 10 </Red>
@@ -268,7 +255,6 @@
             <InitialZeroAmount>50</InitialZeroAmount>
         </Default>
     </Parameters>
-
 
 
 </metadata>
