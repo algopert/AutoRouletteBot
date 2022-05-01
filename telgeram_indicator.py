@@ -228,7 +228,7 @@ def save_history_data(_g_title, numbers, cnt):
         
         
 def send_first_message(_g_title, _cur_cdt, _level):
-    _cur_series = str(games[_g_title]).strip("[]")
+    _cur_series = str(games[_g_title][:15]).strip("[]")
     _cur_series = _cur_series.replace('-1,', 'B,')
     _title = _g_title.replace('_', ' ')
     txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Found Repeation: {text_key[_cur_cdt]}-{conditions[_g_title][_cur_cdt][_level]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
@@ -246,7 +246,7 @@ def send_first_message(_g_title, _cur_cdt, _level):
 def send_second_message(_g_title, _cur_cdt, _level):
     _moves = str(play_status[_g_title]["series"][_level]).strip("[]")
     _moves = _moves.replace('-1', 'B')
-    _cur_series = str(games[_g_title]).strip("[]")
+    _cur_series = str(games[_g_title][:15]).strip("[]")
     _cur_series = _cur_series.replace('-1', 'B')
     _title = _g_title.replace('_', ' ')
     txt = f"🏁 Finished - {_title}\n📊 Current Series : {_cur_series}\n👀 Repeation was: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
@@ -262,7 +262,7 @@ def send_second_message(_g_title, _cur_cdt, _level):
 def send_middle_message(_g_title, _cur_cdt, _level):
     _moves = str(play_status[_g_title]["series"][_level]).strip("[]")
     _moves = _moves.replace('-1', 'B')
-    _cur_series = str(games[_g_title]).strip("[]")
+    _cur_series = str(games[_g_title][:15]).strip("[]")
     _cur_series = _cur_series.replace('-1', 'B')
     _title = _g_title.replace('_', ' ')
     if games[_g_title][-1] < 0:
