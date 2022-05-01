@@ -205,7 +205,8 @@ class AutoBet:
 
         pre_idx = -1
         # print(self.chip_list)
-        _text = "\t   The balance went from  $" + str(balance) + " to  $"
+
+        print("\t   The balance is \033[93m$" + str(balance) + '\033[0m')
         # print(, end='')
         # time.sleep(2)
         while True:  # bet to normal
@@ -232,8 +233,8 @@ class AutoBet:
             if _not_betted:
                 break
         # time.sleep(2)
-        _text += str(balance)
-        print(_text)
+        
+        
         # quit()
 
     def calc_normal_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
@@ -243,10 +244,10 @@ class AutoBet:
         return self.conditions[_g_title]['InitialAmount'] * self.bet_normal_amount_2nd[_stage]
 
     def calc_zero_bet_amount(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['InitialAmount'] * self.bet_zero_amount_1st[_stage]
+        return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_1st[_stage]
 
     def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['InitialAmount'] * self.bet_zero_amount_2nd[_stage]
+        return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
@@ -419,8 +420,10 @@ class AutoBet:
             self.conditions[_g_title] = {}
         try:
             self.conditions[_g_title]['InitialAmount']
+            self.conditions[_g_title]['InitialZeroAmount']
         except:
             self.conditions[_g_title]['InitialAmount'] = self.conditions['Default']['InitialAmount']
+            self.conditions[_g_title]['InitialZeroAmount'] = self.conditions['Default']['InitialZeroAmount']
 
     def save_history_data(self, _g_title, numbers, cnt):
         try:

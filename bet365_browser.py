@@ -229,30 +229,39 @@ class Browser:
         time.sleep(0.3)
         return True
     def close_reality_check(self):
-        try:
-            time_limit_modal = self.single_item('(//div[@class="session-modals"])')
-            time_limit_modal.find_elements(By.TAG_NAME, "button")[1].click()
-            # time.sleep(0.3)
-            print(">>>>>>>>>>>>>>>   Reality check modal is closed")
-        except:
-            pass
-        
-        
-        try:
-            inactivity = self.single_item('(//div[@class="game-modals"])')
-            inactivity.find_elements(By.TAG_NAME, "button")[0].click()
-            # time.sleep(0.3)
-            print(">>>>>>>>>>>>>>>   Inactivity modal is closed")
-        except:
-            pass
-        
-        try:
-            inactivity = self.single_item('(//div[@class="toaster-modals"])')
-            inactivity.find_elements(By.TAG_NAME, "button")[0].click()
-            # time.sleep(0.3)
-            print(">>>>>>>>>>>>>>>   Toaster modal is closed")
-        except:
-            pass
+        while True:
+            flag_close = False
+            try:
+                time_limit_modal = self.single_item('(//div[@class="session-modals"])')
+                time_limit_modal.find_elements(By.TAG_NAME, "button")[1].click()
+                # time.sleep(0.3)
+                print(">>>>>>>>>>>>>>>   Reality check modal is closed")
+                flag_close = True
+            except:
+                pass
+            
+            
+            try:
+                inactivity = self.single_item('(//div[@class="game-modals"])')
+                inactivity.find_elements(By.TAG_NAME, "button")[0].click()
+                # time.sleep(0.3)
+                print(">>>>>>>>>>>>>>>   Inactivity modal is closed")
+                flag_close = True
+            except:
+                pass
+            
+            try:
+                inactivity = self.single_item('(//div[@class="toaster-modals"])')
+                inactivity.find_elements(By.TAG_NAME, "button")[0].click()
+                # time.sleep(0.3)
+                print(">>>>>>>>>>>>>>>   Toaster modal is closed")
+                flag_close = True
+            except:
+                pass
+            if flag_close:
+                time.sleep(1)
+                continue
+            break
         
         
         
