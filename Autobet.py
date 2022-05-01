@@ -235,6 +235,7 @@ class AutoBet:
         # time.sleep(2)
         
         
+        
         # quit()
 
     def calc_normal_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
