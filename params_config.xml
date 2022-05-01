@@ -2,7 +2,7 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> READONLY </gameMode>
+    <gameMode> REALGAME </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
@@ -10,8 +10,10 @@
     
     <_1st_stage_sr>   1, 3, 10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr>
     <_1st_stage_00>   0, 0,  1,  2,  5,  10,  25 ,  50,  100,  220 </_1st_stage_00>
+    <!-- <_1st_stage_sr>   10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr>
+    <_1st_stage_00>   1,  2,  5,  10,  25 ,  50,  100,  220 </_1st_stage_00> -->
     <_2nd_bet_flag> YESNO </_2nd_bet_flag>
-    <_2nd_stage_sr> 100, 200, 400, 800, 1600 </_2nd_stage_sr>
+    <_2nd_stage_sr> 10, 20, 40, 80, 160 </_2nd_stage_sr>
     <_2nd_stage_00>   0,   0,  0,  0,  0  </_2nd_stage_00>
     <SkipCount2> 3 </SkipCount2>
     <FlagIncludeZero> YESNo </FlagIncludeZero>
@@ -175,10 +177,10 @@
             <High> 8 </High>
         </Roleta_Brasileira>
         <Roulette_Italiana>
-            <Red> 9 </Red>
-            <Black>9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
+            <Red> 10 </Red>
+            <Black> 10 </Black>
+            <Odd> 10 </Odd>
+            <Parity> 10 </Parity>
             <Low> 10 </Low>
             <High> 10 </High>
         </Roulette_Italiana>
