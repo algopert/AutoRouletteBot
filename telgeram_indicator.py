@@ -11,9 +11,11 @@ import telegram
 
 global skip_list
 
-
-CHANNEL_ID = '-1001689518256'
-TOKEN = '5301682697:AAEVvOB1ZgGgo3pfaaHFy6QGLLKVf_oxWlY'
+CHANNEL_ID = {}
+CHANNEL_ID['gold'] = '-1001689518256'
+CHANNEL_ID['silver'] = '-1001627327757'
+CHANNEL_ID['bronze'] = '-1001628795108'
+TOKEN = '5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k'
 
 bot = telegram.Bot(token=TOKEN)
 
@@ -93,9 +95,13 @@ def read_conditions():
     for child in params:
         # print(child.tag)
         conditions[child.tag] = {}
+        
         for item in child:
             # print("\t", item.tag, item.text)
-            conditions[child.tag][item.tag] = int(item.text)
+            conditions[child.tag][item.tag] = {}
+            conditions[child.tag][item.tag]['gold'] = int(item.text)
+            conditions[child.tag][item.tag]['silver'] = int(item.text) - 2
+            conditions[child.tag][item.tag]['bronze'] = int(item.text) - 4
 
 
 def print_color_text(_list):
@@ -111,7 +117,7 @@ def print_color_text(_list):
     print()
 
 
-def exist_condition(_g_title, _key):
+def exist_condition(_g_title, _key, _level):
     global condition_list
     global conditions
     global games
@@ -122,18 +128,34 @@ def exist_condition(_g_title, _key):
     try:
         conditions[_g_title][_key]
     except:
-        conditions[_g_title][_key] = conditions['Default'][_key]
+        conditions[_g_title][_key] = {}
+        conditions[_g_title][_key]['gold'] = conditions['Default'][_key]['gold']
+        conditions[_g_title][_key]['silver'] = conditions['Default'][_key]['silver']
+        conditions[_g_title][_key]['bronze'] = conditions['Default'][_key]['bronze']
         
     try:
         play_status[_g_title]
     except:
         play_status[_g_title] = {}
-        play_status[_g_title]["flag"] = False
-        play_status[_g_title]["condition"] = None
-        play_status[_g_title]["stage"] = 0
-        play_status[_g_title]["series"] = []
+        play_status[_g_title]["flag"] = {}
+        play_status[_g_title]["flag"]['gold'] = False
+        play_status[_g_title]["flag"]['silver'] = False
+        play_status[_g_title]["flag"]['bronze'] = False
+        play_status[_g_title]["condition"] = {}
+        play_status[_g_title]["condition"]['gold'] = None
+        play_status[_g_title]["condition"]['silver'] = None
+        play_status[_g_title]["condition"]['bronze'] = None
+        
+        play_status[_g_title]["stage"] = {}
+        play_status[_g_title]["stage"]['gold'] = 0
+        play_status[_g_title]["stage"]['silver'] = 0
+        play_status[_g_title]["stage"]['bronze'] = 0
+        play_status[_g_title]["series"] = {}
+        play_status[_g_title]["series"]['gold'] = []
+        play_status[_g_title]["series"]['silver'] = []
+        play_status[_g_title]["series"]['bronze'] = []
 
-    cnt = conditions[_g_title][_key]
+    cnt = conditions[_g_title][_key][_level]
     glen = len(games[_g_title])
     if cnt > glen:
         return None
@@ -150,11 +172,11 @@ def exist_condition(_g_title, _key):
     return None
 
 
-def find_repetition(_g_title):  # if the repetition exists, return key : eg: "Red"
+def find_repetition(_g_title, _level):  # if the repetition exists, return key : eg: "Red"
     global condition_list
     global conditions
     for key in condition_list.keys():
-        if exist_condition(_g_title, key) != None:
+        if exist_condition(_g_title, key, _level) != None:
             return key
     return None
 
@@ -205,37 +227,40 @@ def save_history_data(_g_title, numbers, cnt):
         f.close()
         
         
-def send_first_message(_g_title, _cur_cdt):
+def send_first_message(_g_title, _cur_cdt, _level):
     _cur_series = str(games[_g_title]).strip("[]")
     _cur_series = _cur_series.replace('-1,', 'B,')
     _title = _g_title.replace('_', ' ')
-    txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Found Repeation: {text_key[_cur_cdt]}-{conditions[_g_title][_cur_cdt]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
-
-    try:
-        bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
-    except:
-        print("try again(request telegram1)")
+    txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Found Repeation: {text_key[_cur_cdt]}-{conditions[_g_title][_cur_cdt][_level]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
+    if gameMode == "REALGAME":
+        try:
+            bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
+        except:
+            print("try again(request telegram1)")
+    print(f"----------->  {_level}")
     print(txt)
     time.sleep(0.5)
     
 
 
-def send_second_message(_g_title, _cur_cdt):
-    _moves = str(play_status[_g_title]["series"]).strip("[]")
+def send_second_message(_g_title, _cur_cdt, _level):
+    _moves = str(play_status[_g_title]["series"][_level]).strip("[]")
     _moves = _moves.replace('-1', 'B')
     _cur_series = str(games[_g_title]).strip("[]")
     _cur_series = _cur_series.replace('-1', 'B')
     _title = _g_title.replace('_', ' ')
     txt = f"🏁 Finished - {_title}\n📊 Current Series : {_cur_series}\n👀 Repeation was: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
-    try:
-        bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
-    except:
-        print("try again(request telegram1)")
+    if gameMode == "REALGAME":
+        try:
+            bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
+        except:
+            print("try again(request telegram1)")
+    print(f"----------->  {_level}")
     print(txt)
     time.sleep(0.5)
     
-def send_middle_message(_g_title, _cur_cdt):
-    _moves = str(play_status[_g_title]["series"]).strip("[]")
+def send_middle_message(_g_title, _cur_cdt, _level):
+    _moves = str(play_status[_g_title]["series"][_level]).strip("[]")
     _moves = _moves.replace('-1', 'B')
     _cur_series = str(games[_g_title]).strip("[]")
     _cur_series = _cur_series.replace('-1', 'B')
@@ -244,12 +269,13 @@ def send_middle_message(_g_title, _cur_cdt):
         _hit = 'B'
     else:
         _hit = '0'
-    
+    print(f"----------->  {_level}")
     txt = f"👉 - {_title}\n🤑 Wow, You are Lucky! Ball hitted the {_hit}\n📊 Current Series : {_cur_series}\n👀 Repeation is: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n❗ Bet with initial amount on {reverse_key[_cur_cdt]}"
-    try:
-        bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
-    except:
-        print("try again(request telegram1)")
+    if gameMode =='REALGAME':
+        try:
+            bot.sendMessage(chat_id=CHANNEL_ID, text=txt)
+        except:
+            print("try again(request telegram1)")
     print(txt)
     time.sleep(0.5)
   
@@ -330,43 +356,44 @@ def startProcess():
             
             
             new_num = games[_g_title][-1]
-            save_history_data(_g_title, numbers, xx)
-            
-            
-            cur_cdt = find_repetition(_g_title)
-            
-            if cur_cdt and not play_status[_g_title]["flag"]:
-                play_status[_g_title]["flag"] = True
-                play_status[_g_title]["stage"] = 0
-                play_status[_g_title]["series"] = []
-                play_status[_g_title]["condition"] = cur_cdt
+            if gameMode == 'REALGAME':
+                save_history_data(_g_title, numbers, xx)
+            levels = ['gold', 'silver', 'bronze']
+            for my_level in levels:
+                cur_cdt = find_repetition(_g_title, my_level)
                 
-                print('\n'+15*"-----")
-                send_first_message(_g_title, cur_cdt)
-                print('\n'+15*"-----")
-                continue
-                
-            if play_status[_g_title]["flag"]:
-                pre_cdt = play_status[_g_title]["condition"]
-                play_status[_g_title]["series"].append(new_num)
-                play_status[_g_title]["stage"] +=1
-
-                if new_num in condition_list[pre_cdt]:
-                    continue
-                
-                if  new_num > 0:
-                    print('\n'+15*"-----")
-                    send_second_message(_g_title, play_status[_g_title]["condition"])
+                if cur_cdt and not play_status[_g_title]["flag"][my_level]:
+                    play_status[_g_title]["flag"][my_level] = True
+                    play_status[_g_title]["stage"][my_level] = 0
+                    play_status[_g_title]["series"][my_level] = []
+                    play_status[_g_title]["condition"][my_level] = cur_cdt
                     
-                    play_status[_g_title]["flag"] = False
-                    play_status[_g_title]["stage"] = 0
-                    play_status[_g_title]["series"] = []
-                    play_status[_g_title]["condition"] = None
-                elif new_num < 1 and play_status[_g_title]["stage"]>2:
                     print('\n'+15*"-----")
-                    send_middle_message(_g_title, play_status[_g_title]["condition"])
-                    play_status[_g_title]["stage"] = 0
-                    play_status[_g_title]["series"]= []
+                    send_first_message(_g_title, cur_cdt, my_level)
+                    print('\n'+15*"-----")
+                    continue
+                    
+                if play_status[_g_title]["flag"][my_level]:
+                    pre_cdt = play_status[_g_title]["condition"][my_level]
+                    play_status[_g_title]["series"][my_level].append(new_num)
+                    play_status[_g_title]["stage"][my_level] +=1
+
+                    if new_num in condition_list[pre_cdt]:
+                        continue
+                    
+                    if  new_num > 0:
+                        print('\n'+15*"-----")
+                        send_second_message(_g_title, play_status[_g_title]["condition"][my_level], my_level)
+                        
+                        play_status[_g_title]["flag"][my_level] = False
+                        play_status[_g_title]["stage"][my_level] = 0
+                        play_status[_g_title]["series"][my_level] = []
+                        play_status[_g_title]["condition"][my_level] = None
+                    elif new_num < 1 and play_status[_g_title]["stage"][my_level]>2:
+                        print('\n'+15*"-----")
+                        send_middle_message(_g_title, play_status[_g_title]["condition"][my_level], my_level)
+                        play_status[_g_title]["stage"][my_level] = 0
+                        play_status[_g_title]["series"][my_level]= []
 
         bar.index = 0
 
