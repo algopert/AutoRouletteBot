@@ -211,6 +211,7 @@ class AutoBet:
         # time.sleep(2)
         while True:  # bet to normal
             _not_betted = True
+            self.gameField.close_reality_check()
             for i in range(len(self.chip_list)):
                 _idx = len(self.chip_list) - 1 - i
                 if self.chip_list[_idx] > _amount or self.chip_list[_idx] == 0:
@@ -308,7 +309,7 @@ class AutoBet:
 
                 print(
                     f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
-
+                
                 self.bet_to_roulette(bet_amount, _bet_key)
 
                 if not _second_bet:
@@ -335,6 +336,7 @@ class AutoBet:
 
             while True:
                 numbers = self.gameField.get_numbers_from_game()
+                self.gameField.close_reality_check()
                 xx =  self.numbers_propagation(self.games[_g_title], numbers)
                 if xx> 0:
                     time.sleep(2.5)
@@ -373,7 +375,7 @@ class AutoBet:
                 else:
                     break
                 
-            if stage > 1 and new_num <= 0 and not _second_bet:
+            if zero_bet_amount > 0 and new_num <= 0:
                 if new_num == 0:  # for zero.
                     profit = 35*zero_bet_amount - lost - bet_amount
                 else:  # for bonus -1 ############################## insert to bonus
@@ -389,7 +391,7 @@ class AutoBet:
                     print("telegram error!")
                 stage = 0
                 lost = 0
-                continue
+                break
 
             lost += (bet_amount + zero_bet_amount)
 

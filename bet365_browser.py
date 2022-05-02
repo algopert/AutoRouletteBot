@@ -172,6 +172,7 @@ class Browser:
             # pass
     def close_mega_fire_modal(self):
         try:
+            time.sleep(0.3)
             self.single_item('(//div[@class="modal-body"])').find_elements(By.TAG_NAME, "use")[0].click()
             time.sleep(0.5)
             # print(close)
