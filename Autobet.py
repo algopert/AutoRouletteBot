@@ -44,7 +44,7 @@ class AutoBet:
                             "Dozen13": "2nd_Dozen",
                             "Dozen23": "1st_Dozen",
                             "Column12": "Top_Column",
-                            "Column13": "Bottom_Column",
+                            "Column13": "Middle_Column",
                             "Column23": "Bottom_Column"
                             }
         
@@ -180,7 +180,11 @@ class AutoBet:
         temps = org_list.copy()
         temps.reverse()
         sp = 7
-        fidx = self.find_index_list(temps, cur_list[sp:])
+        try:
+            fidx = self.find_index_list(temps, cur_list[sp:])
+        except:
+            print("for debugging numbders propagarion",temps, cur_list)
+            pass
         if fidx > sp or fidx < 0:
             org_list = cur_list.copy()
             org_list.reverse()
@@ -394,8 +398,8 @@ class AutoBet:
                     print("telegram error!")
                 break
             stage += 1
-            print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            print(_second_bet, self.max_round_2nd, stage)
+            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            # print(_second_bet, self.max_round_2nd, stage)
             if (stage >= self.max_round_1st and not _second_bet) or (stage >= self.max_round_2nd and _second_bet):
                 self.total_profit -= lost
                 msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(
