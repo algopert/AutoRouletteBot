@@ -1,7 +1,7 @@
 #import os
 import time
 import keyboard
-
+# pyinstaller --onefile --icon=download.ico --key=@@@ autobet.py
 from progress.bar import Bar
 from datetime import datetime, date
 from bet365_browser import Browser
