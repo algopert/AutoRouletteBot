@@ -277,7 +277,13 @@ class Browser:
                  "Black": "roulette-table-cell_side-black",
                  "Zero": "roulette-table-cell_straight-0",
                  "Zero0": "roulette-table-cell_straight-00",
-                 "Bonus": "roulette-table-cell_straight-bonus"
+                 "Bonus": "roulette-table-cell_straight-bonus",
+                 "1st_Dozen" : "roulette-table-cell_side-first-dozen",
+                 "2nd_Dozen" : "roulette-table-cell_side-second-dozen",
+                 "3rd_Dozen" : "roulette-table-cell_side-third-dozen",
+                 "Bottom_Column" : "roulette-table-cell_side-bottom-column",
+                 "Middle_Column" : "roulette-table-cell_side-middle-column",
+                 "Top_Column" : "roulette-table-cell_side-top-column"
                  }
         # print(20*'-----------')
         # for key in _cls_name.keys():
