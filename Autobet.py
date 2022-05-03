@@ -5,7 +5,7 @@ import keyboard
 from progress.bar import Bar
 from datetime import datetime, date
 from bet365_browser import Browser
-from backtest import Backtest
+# from backtest import Backtest
 from my_license import License
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
@@ -308,43 +308,34 @@ def play_roulette(_g_title, _cur_key):
     _bet_key = reverse_key[_cur_key]
     stage = 0
     lost = 0
-    _second_bet = False
-    bet_now = True
-    _second_check = 0
+    
     gameField.close_reality_check()
-    _2nd_wait_cnt = 3
-    if _cur_key == "Red" or _cur_key=="Black":
-        _2nd_wait_cnt = 4
+    
     while True:
         bet_amount = 0
-        if bet_now:
-            print("\n\t" + 20 * "---")
-            print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
+        print("\n\t" + 20 * "---")
+        print('\033[96m' + f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
-            if not _second_bet:
-                bet_amount = calc_normal_bet_amount(_g_title, stage)
-            else:
-                bet_amount = calc_normal_bet_amount_2nd(_g_title, stage)
+        bet_amount = calc_normal_bet_amount(_g_title, stage)
 
-            print(
-                f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
+        print(
+            f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
 
-            bet_to_roulette(bet_amount, _bet_key)
-            #print("betting here-----------------", bet_amount,_bet_key)
-            if not _second_bet:
-                zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
-                if zero_bet_amount > 0:
-                    if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                        print(
-                            f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
-                        bet_to_roulette(zero_bet_amount, 'Bonus')
-                    elif _g_title == 'American_Roulette':
-                        print(
-                            f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
-                        bet_to_roulette(zero_bet_amount, 'Zero0')
+        bet_to_roulette(bet_amount, _bet_key)
+        #print("betting here-----------------", bet_amount,_bet_key)
+        zero_bet_amount = calc_zero_bet_amount(_g_title, stage)
+        if zero_bet_amount > 0:
+            if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
+                print(
+                    f"\t 🙏  Betting to Bonus, ${zero_bet_amount/100.0}")
+                bet_to_roulette(zero_bet_amount, 'Bonus')
+            elif _g_title == 'American_Roulette':
+                print(
+                    f"\t 🙏  Betting to Zero2, ${zero_bet_amount/100.0}")
+                bet_to_roulette(zero_bet_amount, 'Zero0')
 
-                    print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
-                    bet_to_roulette(zero_bet_amount, 'Zero')
+            print(f"\t 🙏  Betting to Zero1, ${zero_bet_amount/100.0}")
+            bet_to_roulette(zero_bet_amount, 'Zero')
 
         while True:
             if numbers_propagation(games[_g_title], gameField.get_numbers_from_game()) > 0:
@@ -354,13 +345,7 @@ def play_roulette(_g_title, _cur_key):
         new_num = games[_g_title][-1]
         print(f"\n\t    New number is ", end='')
         print_color_text([new_num])
-        if _second_bet and _second_check < _2nd_wait_cnt and not bet_now:
-            if not new_num in condition_list[_cur_key]:
-                break
-            _second_check += 1
-            if _second_check == _2nd_wait_cnt:
-                bet_now = True
-            continue
+
         if (not new_num in condition_list[_cur_key]) and new_num > 0:
             profit = bet_amount - lost - zero_bet_amount
             
@@ -368,16 +353,16 @@ def play_roulette(_g_title, _cur_key):
             msg = f"\n\t🚨 Won with {new_num}\n" + "\t😁 Profit :   ${0}\n".format(round(
                 profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(total_profit/100.0, 1))
             print(msg)
-            bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+            try:
+                bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+            except:
+                pass
 
-            if _second_bet == True:
-                break
-            _second_bet = True
-            bet_now = False
             stage = 0
             lost = 0
-            continue
-        if stage > 1 and new_num <= 0 and not _second_bet:
+            break
+        
+        if stage > 1 and new_num <= 0:
             if new_num == 0:  # for zero.
                 profit = 35*zero_bet_amount - lost - bet_amount
             else:  # for bonus -1 ############################## insert to bonus
@@ -385,7 +370,10 @@ def play_roulette(_g_title, _cur_key):
             total_profit += profit
             msg = f"\n\t🚨 Won with Bonus!\n" + "\t😁 Profit :   ${0}\n".format(round(profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(total_profit/100.0, 1))
             print(msg)
-            bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+            try:
+                bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+            except:
+                pass
             stage = 0
             lost = 0
             continue
@@ -394,11 +382,14 @@ def play_roulette(_g_title, _cur_key):
 
         stage += 1
 
-        if (stage >= 8 and not _second_bet) or (stage >= 5 and _second_bet):
+        if stage >= 8:
             total_profit -= lost
             msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(total_profit/100.0, 1))
             print(msg)
-            bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+            try:
+                bot.sendMessage(chat_id=CHANNEL_ID, text=_g_title + '\n' + msg)
+            except:
+                pass
             stage = 0
             lost = 0
             continue

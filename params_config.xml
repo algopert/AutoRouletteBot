@@ -16,7 +16,7 @@
             <Parity> 7 </Parity>
             <Low> 7 </Low>
             <High> 7 </High>
-            <InitialAmount> 50 </InitialAmount>
+            
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
@@ -26,7 +26,7 @@
             <Parity> 7 </Parity>
             <Low> 7 </Low>
             <High> 7 </High>
-            <InitialAmount> 50 </InitialAmount>
+            
         </American_Roulette>
 
         <Auto_Roulette>
@@ -79,7 +79,7 @@
             <Parity> 8 </Parity>
             <Low> 9 </Low>
             <High> 9 </High>
-            <InitialAmount> 50 </InitialAmount>
+            
         </Greek_Quantum_Roulette>
 
         <Greek_Roulette>
@@ -107,7 +107,7 @@
             <Parity> 7 </Parity>
             <Low> 6 </Low>
             <High> 6 </High>
-            <InitialAmount> 50 </InitialAmount>
+            
         </Mega_Fire_Blaze_Roulette_Live>
 
         <Prestige_Roulette>
@@ -117,7 +117,7 @@
             <Parity> 8 </Parity>
             <Low> 7 </Low>
             <High> 7 </High>
-            <InitialAmount> 100 </InitialAmount>
+            
         </Prestige_Roulette>
 
         <Quantum_Auto_Roulette>
@@ -128,7 +128,6 @@
             <Low> 6 </Low>
             <High> 6 </High>
 
-            <InitialAmount> 50 </InitialAmount>
         </Quantum_Auto_Roulette>
 
         <Quantum_Roulette_Italiana>
@@ -139,7 +138,6 @@
             <Low> 7 </Low>
             <High> 7 </High>
 
-            <InitialAmount> 50 </InitialAmount>
         </Quantum_Roulette_Italiana>
 
         <Quantum_Roulette_Live>
@@ -206,7 +204,6 @@
             <Parity> 9 </Parity>
             <Low> 6 </Low>
             <High> 6 </High>
-            <InitialAmount> 50 </InitialAmount>
         </Super_Spin_Roulette>
 
         <Triumph_French_Roulette></Triumph_French_Roulette>
@@ -246,7 +243,7 @@
             <Parity> 10 </Parity>
             <Low> 10 </Low>
             <High> 10 </High>
-            <InitialAmount> 50 </InitialAmount>
+            <InitialAmount> 500 </InitialAmount>
         </Default>
     </Parameters>
 
