@@ -8,7 +8,7 @@ folder = './analyze_result'
 ####################################
 ####      remove all folers     ####
 #####vvvvvvvvvvvvvvvvvvvvvvvv#######
-
+##
 try:
     shutil.rmtree(folder)
 except OSError as e:
