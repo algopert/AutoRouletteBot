@@ -392,10 +392,22 @@ class AutoBet:
                 stage = 0
                 lost = 0
                 break
-
+            
             lost += (bet_amount + zero_bet_amount)
-
             stage += 1
+            
+            if zero_bet_amount==0 and new_num <= 0:
+                self.total_profit -= lost
+                msg = f"\n\t👺 Failed with Zero or Bonus\n" + "\t😡 Lost : -  ${0}\n".format(round(
+                    lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+                print(msg)
+                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                try:
+                    self.telegram_bot.sendMessage(chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                except:
+                    print("telegram error!")
+                break
+            
 
             if (stage >= self.max_round_1st and not _second_bet) or (stage >= self.max_round_2nd and _second_bet):
                 self.total_profit -= lost
