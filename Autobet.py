@@ -263,6 +263,10 @@ class AutoBet:
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
         while True:  # waiting for appearing another one number!
             numbers = self.gameField.get_numbers_from_game()
+            if not numbers:
+                print("Error for getting numners from game")
+                time.sleep(1)
+                continue
             # print("---------------------",numbers)
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
             xx = self.numbers_propagation(self.games[_g_title], numbers)
