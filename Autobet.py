@@ -260,8 +260,6 @@ class AutoBet:
         return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
-        if datetime.now().date() > date(2022, 5, 20):
-            quit()
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
         while True:  # waiting for appearing another one number!
             numbers = self.gameField.get_numbers_from_game()
@@ -372,10 +370,11 @@ class AutoBet:
                 break
                 
 
-            if zero_bet_amount > 0 and new_num <= 0:
+            if (zero_bet_amount > 0 and new_num <= 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num==-1):
+                
                 profit = 35*zero_bet_amount - lost - bet_amount
                 self.total_profit += profit
-                msg = f"\n\t🚨 Won with Zero or Bonus!\n" + "\t😁 Profit :   ${0}\n".format(round(
+                msg = f"\n\t🚨 Won with Zero!\n" + "\t😁 Profit :   ${0}\n".format(round(
                     profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
@@ -391,9 +390,9 @@ class AutoBet:
 
             lost += (bet_amount + zero_bet_amount)
 
-            if zero_bet_amount == 0 and new_num <= 0:
+            if zero_bet_amount == 0 and new_num == 0:
                 self.total_profit -= lost
-                msg = f"\n\t😩 The bot gives up with Zero or Bonus\n" + "\t🔥 Lost : -  ${0}\n".format(round(
+                msg = f"\n\t😩 The bot gives up with Zero\n" + "\t🔥 Lost : -  ${0}\n".format(round(
                     lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
