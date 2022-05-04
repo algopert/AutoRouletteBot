@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
 import re
-
+from datetime import datetime, date
 
 import telegram
 
@@ -55,9 +55,9 @@ class AutoBet:
         self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
         Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
-        self.CHANNEL_ID = '-1001531528873'
+        self.CHANNEL_ID = '-1001283488953'
         self.telegram_bot = telegram.Bot(
-            token='5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k')
+            token='5396266988:AAHcr6YcHYFN0NEO_rGlZjXe02QbaS7mlbw')
 
     def read_conditions(self):
 
@@ -260,6 +260,8 @@ class AutoBet:
         return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
+        if datetime.now().date() > date(2022, 5, 20):
+            quit()
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
         while True:  # waiting for appearing another one number!
             numbers = self.gameField.get_numbers_from_game()
