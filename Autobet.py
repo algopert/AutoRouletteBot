@@ -1,7 +1,7 @@
-#import os
+# import os
 import time
 import keyboard
-
+import sys
 from progress.bar import Bar
 from datetime import datetime, date
 from bet365_browser import Browser
@@ -57,7 +57,8 @@ reverse_key = {"Red": "Black",
                "Low": "High",
                "High": "Low"
                }
-
+def quit():
+    sys.exit()
 
 try:
     _license = License()
