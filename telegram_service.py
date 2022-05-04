@@ -231,7 +231,7 @@ def send_first_message(_g_title, _cur_cdt, _level):
     _cur_series = str(games[_g_title][:15]).strip("[]")
     _cur_series = _cur_series.replace('-1,', 'B,')
     _title = _g_title.replace('_', ' ')
-    txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Found Repeation: {text_key[_cur_cdt]}-{conditions[_g_title][_cur_cdt][_level]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
+    txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Repetition found: {text_key[_cur_cdt]}-{conditions[_g_title][_cur_cdt][_level]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
     if gameMode == "REALGAME":
         try:
             bot.sendMessage(chat_id=CHANNEL_ID[_level], text=txt)
@@ -249,7 +249,7 @@ def send_second_message(_g_title, _cur_cdt, _level):
     _cur_series = str(games[_g_title][:15]).strip("[]")
     _cur_series = _cur_series.replace('-1', 'B')
     _title = _g_title.replace('_', ' ')
-    txt = f"🏁 Finished - {_title}\n📊 Current Series : {_cur_series}\n👀 Repeation was: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
+    txt = f"🏁 Finished - {_title}\n📊 Current Series : {_cur_series}\n👀 Repetition was: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
     if gameMode == "REALGAME":
         try:
             bot.sendMessage(chat_id=CHANNEL_ID[_level], text=txt)
@@ -270,7 +270,7 @@ def send_middle_message(_g_title, _cur_cdt, _level):
     else:
         _hit = '0'
     print(f"----------->  {_level}")
-    txt = f"👉 - {_title}\n🤑 Wow, You are Lucky! Ball hitted the {_hit}\n📊 Current Series : {_cur_series}\n👀 Repeation is: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n❗ Bet with initial amount on {reverse_key[_cur_cdt]}"
+    txt = f"👉 - {_title}\n🤑 Wow, You are Lucky! Ball landed in the {_hit}\n📊 Current Series : {_cur_series}\n👀 Repetition is: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n❗ Quit or Bet with initial amount on {reverse_key[_cur_cdt]}"
     if gameMode =='REALGAME':
         try:
             bot.sendMessage(chat_id=CHANNEL_ID[_level], text=txt)

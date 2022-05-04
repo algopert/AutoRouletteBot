@@ -15,14 +15,14 @@ except OSError as e:
     print("Error: %s : %s" % (folder, e.strerror))
 
 Path(folder).mkdir(parents=True, exist_ok=True)        
-skip_titles = 'Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, Mega_Fire_Blaze_Roulette_Live, Zero_test'
+skip_titles = 'Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, bet365_Dutch_Roulette, Mega_Fire_Blaze_Roulette_Live, Zero_test'
 skip_list = skip_titles.replace(' ', '').split(',')
 
 ######^^^^^^^^^^^^^^^^^^^^^^#######
 
 gdata= {}
 max_limit_result = {}
-MAX_LENGTH = 21
+MAX_LENGTH = 35
 condition_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
                   "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
                   "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
