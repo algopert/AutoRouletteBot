@@ -383,6 +383,7 @@ class AutoBet:
                 if self.is_martingale:
                     break
                 else:
+                    stage += 1
                     continue
                 
 
