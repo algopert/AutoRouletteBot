@@ -2,7 +2,7 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> BACKTEST </gameMode>
+    <gameMode> SIMULATION </gameMode>
     <!-- Martingale  Paroli-->
     <strategy> Paroli </strategy>
     <!--TELEGRAM CONSOLE  -->
