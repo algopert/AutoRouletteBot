@@ -29,9 +29,9 @@ class AutoBet:
                                "Dozen12": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
                                "Dozen13": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
                                "Dozen23": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
-                               "Column12": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
-                               "Column13": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
-                               "Column23": [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]}
+                               "ColumnBtmMid": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
+                               "ColumnBtmTop": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
+                               "ColumnMidTop": [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]}
         self.chip_list = []
         self.skip_list = []
         self.reverse_key = {"Red": "Black",
@@ -43,9 +43,9 @@ class AutoBet:
                             "Dozen12": "3rd_Dozen",
                             "Dozen13": "2nd_Dozen",
                             "Dozen23": "1st_Dozen",
-                            "Column12": "Top_Column",
-                            "Column13": "Middle_Column",
-                            "Column23": "Bottom_Column"
+                            "ColumnBtmMid": "Top_Column",
+                            "ColumnBtmTop": "Middle_Column",
+                            "ColumnMidTop": "Bottom_Column"
                             }
         
 
@@ -73,6 +73,13 @@ class AutoBet:
             self.gameMode = 'SIMULATION'
         else:
             self.gameMode = 'READONLY'
+            
+        _strategy = myXMLtree.find('strategy').text
+        
+        self.is_martingale = False
+        if 'Martingale' in _strategy:
+            self.is_martingale = True
+        
 
         _outputMode = myXMLtree.find('outputMode').text
 
@@ -259,7 +266,7 @@ class AutoBet:
     def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
         return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
 
-    def play_roulette(self, _g_title, _cur_key):
+    def play_roulette(self, _g_title, _cur_key, _is_2nd_bet_type):
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
         while True:  # waiting for appearing another one number!
             numbers = self.gameField.get_numbers_from_game()
@@ -298,15 +305,10 @@ class AutoBet:
             else:
                 _txt += '  $' + str(int(x/100))
         print(_txt)
-
+        
         _bet_key = self.reverse_key[_cur_key]
         stage = 0
         lost = 0
-        
-        if _cur_key in ["Dozen12", "Dozen13", "Dozen23",  "Column12", "Column13",  "Column23"]:
-            _second_bet = True
-        else:
-            _second_bet = False
             
         self.gameField.close_reality_check()
         while True:
@@ -314,12 +316,14 @@ class AutoBet:
             print('\033[96m' +
                     f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
-            if not _second_bet:
-                bet_amount = self.calc_normal_bet_amount_1st(_g_title, stage)
-                zero_bet_amount = self.calc_zero_bet_amount_1st(_g_title, stage)
+            if self.is_martingale =='Martingale':
+                if not _is_2nd_bet_type:
+                    bet_amount = self.calc_normal_bet_amount_1st(_g_title, stage)
+                    zero_bet_amount = self.calc_zero_bet_amount_1st(_g_title, stage)
+                else:
+                    bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
+                    zero_bet_amount = self.calc_zero_bet_amount_2nd(_g_title, stage)
             else:
-                bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
-                zero_bet_amount = self.calc_zero_bet_amount_2nd(_g_title, stage)
 
             print( f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
 
@@ -352,7 +356,7 @@ class AutoBet:
             print(f"\n\t    New number is " + self.change_color_text([new_num]))
 
             if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
-                if _second_bet:
+                if _is_2nd_bet_type:
                     profit = 2 * bet_amount - lost - zero_bet_amount
                 else:
                     profit = bet_amount - lost - zero_bet_amount
@@ -404,8 +408,8 @@ class AutoBet:
                 break
             stage += 1
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            # print(_second_bet, self.max_round_2nd, stage)
-            if (stage >= self.max_round_1st and not _second_bet) or (stage >= self.max_round_2nd and _second_bet):
+            # print(_is_2nd_bet_type, self.max_round_2nd, stage)
+            if (stage >= self.max_round_1st and not _is_2nd_bet_type) or (stage >= self.max_round_2nd and _is_2nd_bet_type):
                 self.total_profit -= lost
                 msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(
                     lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
@@ -541,6 +545,15 @@ class AutoBet:
 
                 if not cur_cdt:
                     continue
+                
+                if cur_cdt in ["Dozen12", "Dozen13", "Dozen23",  "ColumnBtmMid", "ColumnBtmTop",  "ColumnMidTop"]:
+                    _is_2nd_bet_type = True
+                else:
+                    _is_2nd_bet_type = False
+                
+                if _is_2nd_bet_type and self.is_martingale !='Martingale':
+                    continue
+                
                 print('\n'+15*"-----")
 
                 print("   Game title : " + "\033[95m" + roul_title + "\033[0m")
@@ -554,6 +567,7 @@ class AutoBet:
                 # ---------------------------------------
                 print(f"\n\t    👀 found repetition : " +
                       '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}" + "\033[0m")
+                
                 # self.gameField.wait_key('a')
 
                 # if ppp == i:
@@ -565,7 +579,7 @@ class AutoBet:
                 if _g_title == 'Mega_Fire_Blaze_Roulette_Live' or _g_title == 'Super_Spin_Roulette':
                     self.gameField.close_mega_fire_modal()
 
-                self.play_roulette(_g_title, cur_cdt)
+                self.play_roulette(_g_title, cur_cdt, _is_2nd_bet_type)
 
                 # if self.gameMode != 'BACKTEST':
                 time.sleep(2)

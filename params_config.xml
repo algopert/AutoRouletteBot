@@ -3,7 +3,8 @@
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
     <gameMode> REALGAME </gameMode>
-
+    <!-- Martingale  Paroli-->
+    <strategy> Martingale </strategy>
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
     <SkipList> Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, Mega_Fire_Blaze_Roulette_Live</SkipList>
@@ -25,9 +26,9 @@
             <Dozen12> 14 </Dozen12>
             <Dozen13> 14 </Dozen13>
             <Dozen23> 14 </Dozen23>
-            <Column12> 14 </Column12>
-            <Column13> 14 </Column13>
-            <Column23> 14 </Column23>
+            <ColumnBtmMid> 14 </ColumnBtmMid>
+            <ColumnBtmTop> 14 </ColumnBtmTop>
+            <ColumnMidTop> 14 </ColumnMidTop>
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
@@ -40,9 +41,9 @@
             <Dozen12> 17 </Dozen12>
             <Dozen13> 17 </Dozen13>
             <Dozen23> 17 </Dozen23>
-            <Column12> 17 </Column12>
-            <Column13> 17 </Column13>
-            <Column23> 17 </Column23>
+            <ColumnBtmMid> 17 </ColumnBtmMid>
+            <ColumnBtmTop> 17 </ColumnBtmTop>
+            <ColumnMidTop> 17 </ColumnMidTop>
         </American_Roulette>
 
         <Auto_Roulette>
@@ -55,9 +56,9 @@
             <Dozen12> 18 </Dozen12>
             <Dozen13> 18 </Dozen13>
             <Dozen23> 19 </Dozen23>
-            <Column12> 18 </Column12>
-            <Column13> 18 </Column13>
-            <Column23> 18 </Column23>
+            <ColumnBtmMid> 18 </ColumnBtmMid>
+            <ColumnBtmTop> 18 </ColumnBtmTop>
+            <ColumnMidTop> 18 </ColumnMidTop>
         </Auto_Roulette>
         <bet365_Dutch_Roulette>
             <Red> 8 </Red>
@@ -69,9 +70,9 @@
             <Dozen12> 17 </Dozen12>
             <Dozen13> 17 </Dozen13>
             <Dozen23> 17 </Dozen23>
-            <Column12> 17 </Column12>
-            <Column13> 17 </Column13>
-            <Column23> 17 </Column23>
+            <ColumnBtmMid> 17 </ColumnBtmMid>
+            <ColumnBtmTop> 17 </ColumnBtmTop>
+            <ColumnMidTop> 17 </ColumnMidTop>
         </bet365_Dutch_Roulette>
         <bet365_Roulette>
             <Red> 7 </Red>
@@ -83,9 +84,9 @@
             <Dozen12> 18 </Dozen12>
             <Dozen13> 18 </Dozen13>
             <Dozen23> 18 </Dozen23>
-            <Column12> 18 </Column12>
-            <Column13> 18 </Column13>
-            <Column23> 18 </Column23>
+            <ColumnBtmMid> 18 </ColumnBtmMid>
+            <ColumnBtmTop> 18 </ColumnBtmTop>
+            <ColumnMidTop> 18 </ColumnMidTop>
         </bet365_Roulette>
         
         <Deutsches_Roulette>
@@ -98,9 +99,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Deutsches_Roulette>
 
         <Football_Roulette>
@@ -113,9 +114,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Football_Roulette>
 
         <!-- skip french -->
@@ -138,9 +139,9 @@
             <Dozen12> 13 </Dozen12>
             <Dozen13> 13 </Dozen13>
             <Dozen23> 13 </Dozen23>
-            <Column12> 13 </Column12>
-            <Column13> 13 </Column13>
-            <Column23> 13 </Column23>
+            <ColumnBtmMid> 13 </ColumnBtmMid>
+            <ColumnBtmTop> 13 </ColumnBtmTop>
+            <ColumnMidTop> 13 </ColumnMidTop>
         </Greek_Quantum_Roulette>
 
         <Greek_Roulette>
@@ -153,9 +154,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Greek_Roulette>
 
         <Hindi_Roulette>
@@ -168,9 +169,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Hindi_Roulette>
 
         <!-- skip -->
@@ -193,9 +194,9 @@
             <Dozen12> 19 </Dozen12>
             <Dozen13> 19 </Dozen13>
             <Dozen23> 19 </Dozen23>
-            <Column12> 19 </Column12>
-            <Column13> 19 </Column13>
-            <Column23> 19 </Column23>
+            <ColumnBtmMid> 19 </ColumnBtmMid>
+            <ColumnBtmTop> 19 </ColumnBtmTop>
+            <ColumnMidTop> 19 </ColumnMidTop>
             <InitialAmount> 100 </InitialAmount>
             <InitialZeroAmount> 100</InitialZeroAmount>
         </Prestige_Roulette>
@@ -210,9 +211,9 @@
             <Dozen12> 20 </Dozen12>
             <Dozen13> 20 </Dozen13>
             <Dozen23> 20 </Dozen23>
-            <Column12> 20 </Column12>
-            <Column13> 20 </Column13>
-            <Column23> 20 </Column23>
+            <ColumnBtmMid> 20 </ColumnBtmMid>
+            <ColumnBtmTop> 20 </ColumnBtmTop>
+            <ColumnMidTop> 20 </ColumnMidTop>
         </Quantum_Auto_Roulette>
 
         <Quantum_Roulette_Italiana>
@@ -225,9 +226,9 @@
             <Dozen12> 18 </Dozen12>
             <Dozen13> 18 </Dozen13>
             <Dozen23> 18 </Dozen23>
-            <Column12> 18 </Column12>
-            <Column13> 18 </Column13>
-            <Column23> 18 </Column23>
+            <ColumnBtmMid> 18 </ColumnBtmMid>
+            <ColumnBtmTop> 18 </ColumnBtmTop>
+            <ColumnMidTop> 18 </ColumnMidTop>
         </Quantum_Roulette_Italiana>
 
         <Quantum_Roulette_Live>
@@ -240,9 +241,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Quantum_Roulette_Live>
         <Roleta_Brasileira>
             <Red> 7 </Red>
@@ -254,9 +255,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 17 </Dozen23>
-            <Column12> 17 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 17 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Roleta_Brasileira>
         <Roulette>
             <Red> 9 </Red>
@@ -268,9 +269,9 @@
             <Dozen12> 20 </Dozen12>
             <Dozen13> 20 </Dozen13>
             <Dozen23> 20 </Dozen23>
-            <Column12> 20 </Column12>
-            <Column13> 20 </Column13>
-            <Column23> 30 </Column23>
+            <ColumnBtmMid> 20 </ColumnBtmMid>
+            <ColumnBtmTop> 20 </ColumnBtmTop>
+            <ColumnMidTop> 30 </ColumnMidTop>
         </Roulette>
         <Roulette_Italiana>
             <Red> 8 </Red>
@@ -282,9 +283,9 @@
             <Dozen12> 18 </Dozen12>
             <Dozen13> 18 </Dozen13>
             <Dozen23> 18 </Dozen23>
-            <Column12> 18 </Column12>
-            <Column13> 18 </Column13>
-            <Column23> 18 </Column23>
+            <ColumnBtmMid> 18 </ColumnBtmMid>
+            <ColumnBtmTop> 18 </ColumnBtmTop>
+            <ColumnMidTop> 18 </ColumnMidTop>
         </Roulette_Italiana>
         
         <Speed_Roulette>
@@ -297,9 +298,9 @@
             <Dozen12> 18 </Dozen12>
             <Dozen13> 18 </Dozen13>
             <Dozen23> 18 </Dozen23>
-            <Column12> 18 </Column12>
-            <Column13> 18 </Column13>
-            <Column23> 18 </Column23>
+            <ColumnBtmMid> 18 </ColumnBtmMid>
+            <ColumnBtmTop> 18 </ColumnBtmTop>
+            <ColumnMidTop> 18 </ColumnMidTop>
         </Speed_Roulette>
         <Spread_Bet_Roulette>
             <Red> 8 </Red>
@@ -311,9 +312,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Spread_Bet_Roulette>
 
         <Super_Spin_Roulette>
@@ -326,9 +327,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Super_Spin_Roulette>
 
         <Triumph_Roulette>
@@ -341,9 +342,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Triumph_Roulette>
         <Turkish_Roulette>
             <Red> 7 </Red>
@@ -355,9 +356,9 @@
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
-            <Column12> 15 </Column12>
-            <Column13> 15 </Column13>
-            <Column23> 15 </Column23>
+            <ColumnBtmMid> 15 </ColumnBtmMid>
+            <ColumnBtmTop> 15 </ColumnBtmTop>
+            <ColumnMidTop> 15 </ColumnMidTop>
         </Turkish_Roulette>
         <UK_Roulette>
             <Red> 7 </Red>
@@ -369,9 +370,9 @@
             <Dozen12> 22 </Dozen12>
             <Dozen13> 20 </Dozen13>
             <Dozen23> 20 </Dozen23>
-            <Column12> 22 </Column12>
-            <Column13> 20 </Column13>
-            <Column23> 20 </Column23>
+            <ColumnBtmMid> 22 </ColumnBtmMid>
+            <ColumnBtmTop> 20 </ColumnBtmTop>
+            <ColumnMidTop> 20 </ColumnMidTop>
         </UK_Roulette>
 
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
@@ -386,9 +387,9 @@
             <Dozen12> 150 </Dozen12>
             <Dozen13> 150 </Dozen13>
             <Dozen23> 150 </Dozen23>
-            <Column12> 150 </Column12>
-            <Column13> 150 </Column13>
-            <Column23> 150 </Column23>
+            <ColumnBtmMid> 150 </ColumnBtmMid>
+            <ColumnBtmTop> 150 </ColumnBtmTop>
+            <ColumnMidTop> 150 </ColumnMidTop>
             <InitialAmount> 50 </InitialAmount>
             <InitialZeroAmount>50</InitialZeroAmount>
         </Default>
