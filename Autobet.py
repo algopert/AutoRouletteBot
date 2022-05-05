@@ -280,7 +280,8 @@ class AutoBet:
             xx = self.numbers_propagation(self.games[_g_title], numbers)
             # print("xx is ", xx)
             if xx > 0:
-                time.sleep(2.5)
+                if self.gameMode!= 'BACKTEST':
+                    time.sleep(2.5)
                 
                 self.save_history_data(_g_title, numbers, xx)
                 break
@@ -354,7 +355,8 @@ class AutoBet:
                 self.gameField.close_reality_check()
                 xx = self.numbers_propagation(self.games[_g_title], numbers)
                 if xx > 0:
-                    time.sleep(2.5)
+                    if self.gameMode!= 'BACKTEST':
+                        time.sleep(2.5)
                     
                     self.save_history_data(_g_title, numbers, xx)
                     break
