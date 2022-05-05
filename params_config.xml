@@ -2,9 +2,9 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> REALGAME </gameMode>
+    <gameMode> BACKTEST </gameMode>
     <!-- Martingale  Paroli-->
-    <strategy> Martingale </strategy>
+    <strategy> Paroli </strategy>
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
     <SkipList> Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, Mega_Fire_Blaze_Roulette_Live</SkipList>
@@ -376,6 +376,21 @@
         </UK_Roulette>
 
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
+
+        <Zero_test> 
+            <Red> 5 </Red>
+            <Black> 5 </Black>
+            <Odd> 5 </Odd>
+            <Parity> 5 </Parity>
+            <Low> 5 </Low>
+            <High> 5 </High>
+            <Dozen12> 10 </Dozen12>
+            <Dozen13> 10 </Dozen13>
+            <Dozen23> 10 </Dozen23>
+            <ColumnBtmMid> 12 </ColumnBtmMid>
+            <ColumnBtmTop> 10 </ColumnBtmTop>
+            <ColumnMidTop> 10 </ColumnMidTop>
+        </Zero_test>
 
         <Default>
             <Red> 100 </Red>

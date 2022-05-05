@@ -160,6 +160,7 @@ class AutoBet:
 
         for i in range(cnt):
             qq = self.games[_g_title][-1-i]
+            
             if qq in self.condition_list[_key]:
                 continue
             flag_found = False
@@ -306,7 +307,11 @@ class AutoBet:
                 _txt += '  $' + str(int(x/100))
         print(_txt)
         
-        _bet_key = self.reverse_key[_cur_key]
+        if self.is_martingale: # if the strategy is martingale, use the reverse key. or use the current key
+            _bet_key = self.reverse_key[_cur_key]
+        else:
+            _bet_key = _cur_key
+        
         stage = 0
         lost = 0
             
@@ -316,7 +321,7 @@ class AutoBet:
             print('\033[96m' +
                     f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
-            if self.is_martingale =='Martingale':
+            if self.is_martingale:
                 if not _is_2nd_bet_type:
                     bet_amount = self.calc_normal_bet_amount_1st(_g_title, stage)
                     zero_bet_amount = self.calc_zero_bet_amount_1st(_g_title, stage)
@@ -324,6 +329,8 @@ class AutoBet:
                     bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
                     zero_bet_amount = self.calc_zero_bet_amount_2nd(_g_title, stage)
             else:
+                bet_amount = 50
+                zero_bet_amount = 0
 
             print( f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
 
@@ -355,7 +362,7 @@ class AutoBet:
             new_num = self.games[_g_title][-1]
             print(f"\n\t    New number is " + self.change_color_text([new_num]))
 
-            if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
+            if ((self.is_martingale and (not new_num in self.condition_list[_cur_key])) or (not self.is_martingale and (new_num in self.condition_list[_cur_key])))  and new_num > 0:
                 if _is_2nd_bet_type:
                     profit = 2 * bet_amount - lost - zero_bet_amount
                 else:
@@ -371,7 +378,10 @@ class AutoBet:
                             chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
-                break
+                if self.is_martingale:
+                    break
+                else:
+                    continue
                 
 
             if (zero_bet_amount > 0 and new_num <= 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num==-1):
@@ -390,7 +400,11 @@ class AutoBet:
                     print("telegram error!")
                 stage = 0
                 lost = 0
-                break
+                
+                if self.is_martingale:
+                    break
+                else:
+                    continue
 
             lost += (bet_amount + zero_bet_amount)
 
@@ -409,20 +423,24 @@ class AutoBet:
             stage += 1
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             # print(_is_2nd_bet_type, self.max_round_2nd, stage)
-            if (stage >= self.max_round_1st and not _is_2nd_bet_type) or (stage >= self.max_round_2nd and _is_2nd_bet_type):
+            if (self.is_martingale and ((stage >= self.max_round_1st and not _is_2nd_bet_type) or (stage >= self.max_round_2nd and _is_2nd_bet_type))) or not self.is_martingale:
                 self.total_profit -= lost
                 msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(
                     lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 stage = 0
                 lost = 0
-                continue
+                if self.is_martingale:
+                    continue
+                else:
+                    break
             
             # gameField.wait_key('a')
 
@@ -534,7 +552,7 @@ class AutoBet:
                 # print(xx)
                 # print(_g_title)
                 # print(self.games[_g_title])
-                # print(numbers)
+                #print(numbers)
                 
                 self.save_history_data(_g_title, numbers, xx)
 
@@ -542,7 +560,7 @@ class AutoBet:
                     continue
 
                 cur_cdt = self.find_repetition(_g_title)
-
+                # print(cur_cdt)
                 if not cur_cdt:
                     continue
                 
@@ -552,6 +570,7 @@ class AutoBet:
                     _is_2nd_bet_type = False
                 
                 if _is_2nd_bet_type and self.is_martingale !='Martingale':
+                    print('hi')
                     continue
                 
                 print('\n'+15*"-----")
@@ -581,15 +600,13 @@ class AutoBet:
 
                 self.play_roulette(_g_title, cur_cdt, _is_2nd_bet_type)
 
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
-                time.sleep(1)
-                self.gameField.close_page()
-
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
+                if self.gameMode != 'BACKTEST':
+                    time.sleep(2)
+                    self.gameField.close_reality_check()
+                    time.sleep(1)
+                    self.gameField.close_page()
+                    time.sleep(2)
+                    self.gameField.close_reality_check()
                 break
 
             bar.index = 0
