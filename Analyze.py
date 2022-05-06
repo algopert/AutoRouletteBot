@@ -15,7 +15,7 @@ except OSError as e:
     print("Error: %s : %s" % (folder, e.strerror))
 
 Path(folder).mkdir(parents=True, exist_ok=True)        
-skip_titles = 'Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, bet365_Dutch_Roulette, Mega_Fire_Blaze_Roulette_Live, Zero_test'
+skip_titles = 'Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Zero_test'
 skip_list = skip_titles.replace(' ', '').split(',')
 
 ######^^^^^^^^^^^^^^^^^^^^^^#######

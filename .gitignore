@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
@@ -13,6 +14,7 @@ develop-eggs/
 analyze_result/
 history/
 Test_purpose/
+__pycache__/
 dist/
 downloads/
 eggs/
