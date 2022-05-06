@@ -152,8 +152,15 @@
  
 # cprint("Attention!", 'red', attrs=['bold'], file=sys.stderr)
 
-import re
+# import re
 
-text = "  1, 3, 10, 30, 90, 270, 810 "
-sr = [int(s) for s in re.findall(r'\b\d+\b', text)]
-print(sr)
+# text = "  1, 3, 10, 30, 90, 270, 810 "
+# sr = [int(s) for s in re.findall(r'\b\d+\b', text)]
+# print(sr)
+
+tt = {}
+
+tt[1] = 'aa'
+tt[2] = 'bb'
+
+print(tt)

@@ -60,12 +60,13 @@ class AutoBet:
                             "Column13": "Middle_Column",
                             "Column23": "Bottom_Column"
                             }
+        self.read_conditions()
+        if self.gameMode !='BACKTEST':
+            self.path_history = './history'
+            Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
-        self.path_history = './history'
-        Path(self.path_history).mkdir(parents=True, exist_ok=True)
-
-        self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
-        Path(self.path_history).mkdir(parents=True, exist_ok=True)
+            self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
+            Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
         self.CHANNEL_ID = '-1001531528873'
         self.telegram_bot = telegram.Bot(

@@ -10,9 +10,6 @@ folder = './analyze_result'
 gdata= {}
 
 
-
-
-
 filename = f"backtest_data/all_history.csv"
 with open(filename, 'w+') as f:
     f.close()
@@ -33,15 +30,10 @@ with open(filename, 'a') as f:  # save first input of series
             con_file = open(real_path + '/' + file, 'r')
             Lines = con_file.readlines()
             con_file.close()
+            f.write('-2\n')
             for _item in Lines:
                 # print(Lines)
                 f.write(_item)
- 
-    
-    
     
     f.close()
-                        
-                
-    
     
