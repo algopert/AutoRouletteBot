@@ -32,6 +32,19 @@ class AutoBet:
                                "Column12": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
                                "Column13": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
                                "Column23": [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]}
+        self.each_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
+                          "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
+                          "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
+                          "Parity": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
+                          "Low": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+                          "High": [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
+                        #   "1st_Dozen": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                        #   "2nd_Dozen": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+                        #   "3rd_Dozen": [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
+                        #   "Top_Column": [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
+                        #   "Middle_Column": [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
+                        #   "Bottom_Column": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]
+                          }
         self.chip_list = []
         self.skip_list = []
         self.reverse_key = {"Red": "Black",
@@ -47,7 +60,6 @@ class AutoBet:
                             "Column13": "Middle_Column",
                             "Column23": "Bottom_Column"
                             }
-        
 
         self.path_history = './history'
         Path(self.path_history).mkdir(parents=True, exist_ok=True)
@@ -101,7 +113,6 @@ class AutoBet:
             r'\b\d+\b', myXMLtree.find('_2nd_stage_sr').text)]
         self.bet_zero_amount_2nd = [int(s) for s in re.findall(
             r'\b\d+\b', myXMLtree.find('_2nd_stage_00').text)]
-        
 
         self.max_round_1st = len(self.bet_normal_amount_1st)
         if self.max_round_1st != len(self.bet_zero_amount_1st):
@@ -112,17 +123,6 @@ class AutoBet:
         if self.max_round_2nd != len(self.bet_zero_amount_2nd):
             print("Mismatched bet amount of 2nd stage!!!")
             quit()
-
-
-
-
-        # print(self.bet_normal_amount_1st)
-        # print(self.bet_zero_amount_1st)
-        # print(self.bet_normal_amount_2nd)
-        # print(self.bet_zero_amount_2nd)
-
-        # print(self.skip_cnt_2nd_stage)
-        # quit()
 
     def change_color_text(self, _list):
         _text = ""
@@ -139,7 +139,6 @@ class AutoBet:
         return _text
 
     def exist_condition(self, _g_title, _key):
-
         try:
             self.conditions[_g_title][_key]
         except:
@@ -161,7 +160,31 @@ class AutoBet:
             return _key
         return None
 
+    def find_another_max_condtion(self, _g_title, _key):
+        _max_key = {}
+        _max_key['key'] = None
+        _max_key['len'] = 0
+        for key in self.each_list.keys():
+            if key == _key:
+                continue
+            i = 1
+            while True:
+                try:
+                    _new_num = self.games[_g_title][-i]
+                except:
+                    break
+                if not (_new_num in self.each_list[key]):
+                    break
+
+                if _max_key['len'] < i:
+                    _max_key['len'] = i
+                    _max_key['key'] = key
+                i += 1
+
+        return _max_key
+
     # if the repetition exists, return key : eg: "Red"
+
     def find_repetition(self, _g_title):
         for key in self.condition_list.keys():
             if self.exist_condition(_g_title, key) != None:
@@ -183,7 +206,7 @@ class AutoBet:
         try:
             fidx = self.find_index_list(temps, cur_list[sp:])
         except:
-            print("for debugging numbders propagarion",temps, cur_list)
+            print("for debugging numbders propagarion", temps, cur_list)
             pass
         if fidx > sp or fidx < 0:
             org_list = cur_list.copy()
@@ -264,7 +287,7 @@ class AutoBet:
         while True:  # waiting for appearing another one number!
             numbers = self.gameField.get_numbers_from_game()
             if not numbers:
-                print("Error for getting numners from game")
+                print("Error for getting numbers from game")
                 time.sleep(1)
                 continue
             # print("---------------------",numbers)
@@ -272,8 +295,9 @@ class AutoBet:
             xx = self.numbers_propagation(self.games[_g_title], numbers)
             # print("xx is ", xx)
             if xx > 0:
-                time.sleep(2.5)
-                
+                if self.gameMode!="BACKTEST":
+                    time.sleep(2.5)
+
                 self.save_history_data(_g_title, numbers, xx)
                 break
 
@@ -299,43 +323,73 @@ class AutoBet:
                 _txt += '  $' + str(int(x/100))
         print(_txt)
 
-        _bet_key = self.reverse_key[_cur_key]
+        
         stage = 0
         lost = 0
-        
+
         if _cur_key in ["Dozen12", "Dozen13", "Dozen23",  "Column12", "Column13",  "Column23"]:
             _second_bet = True
         else:
             _second_bet = False
-            
+
         self.gameField.close_reality_check()
+        
+        flag_switch = False
+        
         while True:
+            ano_key = self.find_another_max_condtion(_g_title, _cur_key)
+            
+            if stage==0:
+                next_max_key =  ano_key
+                
+            elif ano_key['len'] > next_max_key['len']:
+                next_max_key = ano_key
+            
+            print("next max key = ", next_max_key['key'], next_max_key['len'])
+            
             print("\n\t" + 20 * "---")
             print('\033[96m' +
-                    f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
+                  f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
 
             if not _second_bet:
                 bet_amount = self.calc_normal_bet_amount_1st(_g_title, stage)
-                zero_bet_amount = self.calc_zero_bet_amount_1st(_g_title, stage)
+                zero_bet_amount = self.calc_zero_bet_amount_1st(
+                    _g_title, stage)
             else:
                 bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
-                zero_bet_amount = self.calc_zero_bet_amount_2nd(_g_title, stage)
-
-            print( f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
+                zero_bet_amount = self.calc_zero_bet_amount_2nd(
+                    _g_title, stage)
+                
+            # if stage==5:
+            #     flag_switch = True
+                
+            # if flag_switch:
+            #     _bet_key = self.reverse_key[next_max_key["key"]]
+            # else:
+            #     
+            _bet_key = self.reverse_key[_cur_key]
+            # if stage>4 and self.gameMode=='BACKTEST':
+            #     time.sleep(2)    
+            print(
+                f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
 
             self.bet_to_roulette(bet_amount, _bet_key)
-                
+            
+
             if zero_bet_amount > 0:
                 if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                    print(f"\t 🙏  Betting to \033[93m$Bonus, {zero_bet_amount/100.0}\033[0m")
+                    print(
+                        f"\t 🙏  Betting to \033[93m$Bonus, {zero_bet_amount/100.0}\033[0m")
                     lost += zero_bet_amount
                     self.bet_to_roulette(zero_bet_amount, 'Bonus')
                 elif _g_title == 'American_Roulette':
-                    print(f"\t 🙏  Betting to \033[93mZero2, ${zero_bet_amount/100.0}\033[0m")
+                    print(
+                        f"\t 🙏  Betting to \033[93mZero2, ${zero_bet_amount/100.0}\033[0m")
                     lost += zero_bet_amount
                     self.bet_to_roulette(zero_bet_amount, 'Zero0')
 
-                print(f"\t 🙏  Betting to \033[93mZero1, ${zero_bet_amount/100.0}\033[0m")
+                print(
+                    f"\t 🙏  Betting to \033[93mZero1, ${zero_bet_amount/100.0}\033[0m")
                 self.bet_to_roulette(zero_bet_amount, 'Zero')
 
             while True:
@@ -343,15 +397,17 @@ class AutoBet:
                 self.gameField.close_reality_check()
                 xx = self.numbers_propagation(self.games[_g_title], numbers)
                 if xx > 0:
-                    time.sleep(2.5)
-                    
+                    if self.gameMode!='BACKTEST':
+                        time.sleep(2.5)
+
                     self.save_history_data(_g_title, numbers, xx)
                     break
 
             new_num = self.games[_g_title][-1]
-            print(f"\n\t    New number is " + self.change_color_text([new_num]))
+            print(f"\n\t    New number is " +
+                  self.change_color_text([new_num]))
 
-            if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
+            if new_num in self.each_list[_bet_key] and new_num > 0:
                 if _second_bet:
                     profit = 2 * bet_amount - lost - zero_bet_amount
                 else:
@@ -367,11 +423,17 @@ class AutoBet:
                             chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
-                break
-                
+                    
+                if flag_switch:
+                    flag_switch = False
+                    lost = 0
+                    stage = 0
+                    continue
+                else:
+                    break
 
-            if (zero_bet_amount > 0 and new_num <= 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num==-1):
-                
+            if (zero_bet_amount > 0 and new_num <= 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num == -1):
+
                 profit = 35*zero_bet_amount - lost - bet_amount
                 self.total_profit += profit
                 msg = f"\n\t🚨 Won with Zero!\n" + "\t😁 Profit :   ${0}\n".format(round(
@@ -397,11 +459,28 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 break
+            
+            # if  flag_switch and not (new_num in self.each_list[_cur_key]):
+            #     self.total_profit -= lost
+            #     msg = f"\n\t😬 The bot gave up with {new_num}\n" + "\t🥶 Lost : -  ${0}\n".format(round(
+            #         lost/100.0, 1)) + "\t👹 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+            #     print(msg)
+            #     msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+            #     try:
+            #         if self.gameMode != 'BACKTEST':
+            #             self.telegram_bot.sendMessage(
+            #                 chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+            #     except:
+            #         print("telegram error!")
+            #     break
+                
+            
             stage += 1
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             # print(_second_bet, self.max_round_2nd, stage)
@@ -412,14 +491,16 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 stage = 0
                 lost = 0
                 continue
             
+
             # gameField.wait_key('a')
 
         print("\n\tBet is over!")
@@ -439,7 +520,8 @@ class AutoBet:
             self.conditions[_g_title]['InitialZeroAmount'] = self.conditions['Default']['InitialZeroAmount']
 
     def save_history_data(self, _g_title, numbers, cnt):
-        if self.gameMode == 'BACKTEST': return
+        if self.gameMode == 'BACKTEST':
+            return
         try:
             self.filenames[_g_title]
         except:
@@ -531,7 +613,7 @@ class AutoBet:
                 # print(_g_title)
                 # print(self.games[_g_title])
                 # print(numbers)
-                
+
                 self.save_history_data(_g_title, numbers, xx)
 
                 if self.gameMode == 'READONLY':
@@ -567,15 +649,13 @@ class AutoBet:
 
                 self.play_roulette(_g_title, cur_cdt)
 
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
-                time.sleep(1)
-                self.gameField.close_page()
-
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
+                if self.gameMode != 'BACKTEST':
+                    time.sleep(2)
+                    self.gameField.close_reality_check()
+                    time.sleep(1)
+                    self.gameField.close_page()
+                    time.sleep(2)
+                    self.gameField.close_reality_check()
                 break
 
             bar.index = 0

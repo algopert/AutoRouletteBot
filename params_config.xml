@@ -2,14 +2,14 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> REALGAME </gameMode>
+    <gameMode> BACKTEST </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> CONSOLE </outputMode>
     <SkipList> Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Speed_Auto_Roulette, Mega_Fire_Blaze_Roulette_Live</SkipList>
 
-    <_1st_stage_sr>   1, 3, 10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr>
-    <_1st_stage_00>   0, 0,  1,  2,  5,  10,  25 ,  50,  100,  220 </_1st_stage_00>
+    <_1st_stage_sr>   1, 3, 10, 25, 60, 150, 350 , 800, 1800 </_1st_stage_sr>
+    <_1st_stage_00>   0, 0,  1,  2,  5,  10,  25 ,  50,  100 </_1st_stage_00>
     
     <_2nd_stage_sr> 1, 3, 5, 10, 20, 40, 70, 120, 250, 500, 1000, 2000 </_2nd_stage_sr>
     <_2nd_stage_00> 0, 1, 1,  2,  3,  5, 10,  14,  25,  50,  100,  200 </_2nd_stage_00>
@@ -377,20 +377,20 @@
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
 
         <Default>
-            <Red> 100 </Red>
-            <Black> 100 </Black>
-            <Odd> 100 </Odd>
-            <Parity> 100 </Parity>
-            <Low> 100 </Low>
-            <High> 100 </High>
+            <Red> 9 </Red>
+            <Black> 9 </Black>
+            <Odd> 9 </Odd>
+            <Parity> 9 </Parity>
+            <Low> 9 </Low>
+            <High> 9 </High>
             <Dozen12> 150 </Dozen12>
             <Dozen13> 150 </Dozen13>
             <Dozen23> 150 </Dozen23>
             <Column12> 150 </Column12>
             <Column13> 150 </Column13>
             <Column23> 150 </Column23>
-            <InitialAmount> 50 </InitialAmount>
-            <InitialZeroAmount>50</InitialZeroAmount>
+            <InitialAmount> 100 </InitialAmount>
+            <InitialZeroAmount> 100 </InitialZeroAmount>
         </Default>
     </Parameters>
 
