@@ -1,6 +1,6 @@
 import time
 from progress.bar import Bar
-import bet365_browser  # import Browser
+# import bet365_browser  # import Browser
 import backtest  # import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
@@ -48,12 +48,12 @@ class AutoBet:
                             "Column23": "Bottom_Column"
                             }
         
+        if self.gameMode != 'BACKTEST':
+            self.path_history = './history'
+            Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
-        self.path_history = './history'
-        Path(self.path_history).mkdir(parents=True, exist_ok=True)
-
-        self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
-        Path(self.path_history).mkdir(parents=True, exist_ok=True)
+            self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
+            Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
         self.CHANNEL_ID = '-1001531528873'
         self.telegram_bot = telegram.Bot(
@@ -147,19 +147,33 @@ class AutoBet:
 
         cnt = self.conditions[_g_title][_key]
         glen = len(self.games[_g_title])
-        if cnt > glen:
-            return None
+        # if cnt > glen:
+        #     return None
         flag_found = True
-
-        for i in range(cnt):
-            qq = self.games[_g_title][-1-i]
+        
+        i = 0
+        _existed_list = []
+        while True:
+            try:
+                qq = self.games[_g_title][-1-i]
+            except:
+                return None
+            i+=1
             if qq in self.condition_list[_key]:
+                if qq in _existed_list:
+                    continue
+                _existed_list.append(qq)
+                cnt -=1
+                if cnt==0:
+                    break
                 continue
             flag_found = False
             break
-        if flag_found:
-            return _key
-        return None
+        
+        if not flag_found:
+            return None
+        ############## Remove the repetition.
+        return _key
 
     # if the repetition exists, return key : eg: "Red"
     def find_repetition(self, _g_title):
@@ -179,7 +193,7 @@ class AutoBet:
     def numbers_propagation(self, org_list, cur_list):
         temps = org_list.copy()
         temps.reverse()
-        sp = 7
+        sp = 5
         try:
             fidx = self.find_index_list(temps, cur_list[sp:])
         except:
@@ -217,8 +231,7 @@ class AutoBet:
         # print(self.chip_list)
 
         print("\t   The balance is \033[93m$" + str(balance) + '\033[0m')
-        # print(, end='')
-        # time.sleep(2)
+        
         while True:  # bet to normal
             _not_betted = True
             self.gameField.close_reality_check()
@@ -243,7 +256,7 @@ class AutoBet:
 
             if _not_betted:
                 break
-        # time.sleep(2)
+        
 
         # quit()
 
@@ -272,8 +285,8 @@ class AutoBet:
             xx = self.numbers_propagation(self.games[_g_title], numbers)
             # print("xx is ", xx)
             if xx > 0:
-                time.sleep(2.5)
-                
+                if self.gameMode != 'BACKTEST':
+                    time.sleep(2.5)
                 self.save_history_data(_g_title, numbers, xx)
                 break
 
@@ -343,8 +356,8 @@ class AutoBet:
                 self.gameField.close_reality_check()
                 xx = self.numbers_propagation(self.games[_g_title], numbers)
                 if xx > 0:
-                    time.sleep(2.5)
-                    
+                    if self.gameMode != 'BACKTEST':
+                        time.sleep(2.5)
                     self.save_history_data(_g_title, numbers, xx)
                     break
 
@@ -412,12 +425,14 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 stage = 0
                 lost = 0
+                quit()
                 continue
             
             # gameField.wait_key('a')
@@ -567,15 +582,13 @@ class AutoBet:
 
                 self.play_roulette(_g_title, cur_cdt)
 
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
-                time.sleep(1)
-                self.gameField.close_page()
-
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
+                if self.gameMode != 'BACKTEST':
+                    time.sleep(2)
+                    self.gameField.close_reality_check()
+                    time.sleep(1)
+                    self.gameField.close_page()
+                    time.sleep(2)
+                    self.gameField.close_reality_check()
                 break
 
             bar.index = 0

@@ -2,10 +2,10 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> SIMULATION </gameMode>
+    <gameMode> BACKTEST </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
-    <outputMode> SIMULATION </outputMode>
+    <outputMode> CONSOLE </outputMode>
     <SkipList> BET365_Trivia_Show, Triumph_French_Roulette , Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette</SkipList>
 
     <_1st_stage_sr>   1, 3, 10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr>
@@ -398,12 +398,12 @@
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
 
         <Default>
-            <Red> 100 </Red>
-            <Black> 100 </Black>
-            <Odd> 100 </Odd>
-            <Parity> 100 </Parity>
-            <Low> 100 </Low>
-            <High> 100 </High>
+            <Red> 7 </Red>
+            <Black> 7 </Black>
+            <Odd> 7 </Odd>
+            <Parity> 7 </Parity>
+            <Low> 7 </Low>
+            <High> 7 </High>
             <Dozen12> 150 </Dozen12>
             <Dozen13> 150 </Dozen13>
             <Dozen23> 150 </Dozen23>
