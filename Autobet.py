@@ -190,10 +190,10 @@ class AutoBet:
                 return i
         return -1
 
-    def numbers_propagation(self, org_list, cur_list):
+    def numbers_propagation(self, org_list, cur_list, sp):
         temps = org_list.copy()
         temps.reverse()
-        sp = 5
+        #sp = 3
         try:
             fidx = self.find_index_list(temps, cur_list[sp:])
         except:
@@ -282,7 +282,7 @@ class AutoBet:
                 continue
             # print("---------------------",numbers)
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
-            xx = self.numbers_propagation(self.games[_g_title], numbers)
+            xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
             # print("xx is ", xx)
             if xx > 0:
                 if self.gameMode != 'BACKTEST':
@@ -293,6 +293,7 @@ class AutoBet:
         if not self.exist_condition(_g_title, _cur_key):
             print("\tThe bot has canceled the bet.")
             return
+        
 
         print("\tThe bot decided to bet with Number :  " +
               self.change_color_text([self.games[_g_title][-1]]))
@@ -354,8 +355,10 @@ class AutoBet:
             while True:
                 numbers = self.gameField.get_numbers_from_game()
                 self.gameField.close_reality_check()
-                xx = self.numbers_propagation(self.games[_g_title], numbers)
+                xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
                 if xx > 0:
+                    print(self.games[_g_title])
+                    print(numbers)
                     if self.gameMode != 'BACKTEST':
                         time.sleep(2.5)
                     self.save_history_data(_g_title, numbers, xx)
@@ -531,7 +534,7 @@ class AutoBet:
                     self.games[_g_title].reverse()
 
                 # -------------------------------------------
-                xx = self.numbers_propagation(self.games[_g_title], numbers)
+                xx = self.numbers_propagation(self.games[_g_title], numbers, 5)
 
                 if xx == 0:
                     continue
