@@ -1,6 +1,6 @@
 import time
 from progress.bar import Bar
-# import bet365_browser  # import Browser
+#import bet365_browser  # import Browser
 import backtest  # import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
@@ -47,7 +47,7 @@ class AutoBet:
                             "Column13": "Middle_Column",
                             "Column23": "Bottom_Column"
                             }
-        
+        self.read_conditions()
         if self.gameMode != 'BACKTEST':
             self.path_history = './history'
             Path(self.path_history).mkdir(parents=True, exist_ok=True)
@@ -271,33 +271,64 @@ class AutoBet:
 
     def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
         return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
-
-    def play_roulette(self, _g_title, _cur_key):
+    
+    def decide_to_bet(self, _g_title, _cur_key):
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
-        while True:  # waiting for appearing another one number!
-            numbers = self.gameField.get_numbers_from_game()
-            if not numbers:
-                print("Error for getting numners from game")
-                time.sleep(1)
-                continue
-            # print("---------------------",numbers)
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
-            xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
-            # print("xx is ", xx)
-            if xx > 0:
+        while True:
+            while True:  # waiting for appearing another one number!
+                numbers = self.gameField.get_numbers_from_game()
+                if not numbers:
+                    print("Error for getting numners from game")
+                    time.sleep(1)
+                    continue
+                # print("---------------------",numbers)
+                # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
+                xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
+                # print("xx is ", xx)
+                if xx > 0:
+                    if self.gameMode != 'BACKTEST':
+                        time.sleep(2.5)
+                    self.save_history_data(_g_title, numbers, xx)
+                    break
+        
+            new_num = self.games[_g_title][-1]
+            if not new_num in self.condition_list[_cur_key]:
+                print("\tThe bot has canceled the betting with : ", self.change_color_text([new_num]))
+                return False
+            
+            i = 2
+            _flag_decided = False
+            while True:
+                try:
+                    pre_num = self.games[_g_title][-i]
+                except:
+                    _flag_decided = True
+                    break
+                    # return True
+                
+                if not pre_num in self.condition_list[_cur_key]:
+                    _flag_decided = True
+                    break
+                    
+                if pre_num == new_num:
+                    _flag_decided = False
+                    break
+            
+                i +=1
+            
+            if not _flag_decided:
+                print("\tThe bot is waiting for another number! Current Number : " + self.change_color_text([new_num]))
                 if self.gameMode != 'BACKTEST':
                     time.sleep(2.5)
-                self.save_history_data(_g_title, numbers, xx)
-                break
+                continue
 
-        if not self.exist_condition(_g_title, _cur_key):
-            print("\tThe bot has canceled the bet.")
-            return
+            print("\tThe bot decided to bet with Number :  " + self.change_color_text([new_num]))
+            return True
+
         
-
-        print("\tThe bot decided to bet with Number :  " +
-              self.change_color_text([self.games[_g_title][-1]]))
-
+    def play_roulette(self, _g_title, _cur_key):
+        if not self.decide_to_bet(_g_title, _cur_key):
+            return
         self.chip_list = self.gameField.get_chip_reference()
         if not self.chip_list:
             print('Faied to update chip_list!')
@@ -351,21 +382,49 @@ class AutoBet:
 
                 print(f"\t 🙏  Betting to \033[93mZero1, ${zero_bet_amount/100.0}\033[0m")
                 self.bet_to_roulette(zero_bet_amount, 'Zero')
-
+            
+            _flag_danger = False
+            _flag_avoid = True
             while True:
-                numbers = self.gameField.get_numbers_from_game()
-                self.gameField.close_reality_check()
-                xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
-                if xx > 0:
-                    print(self.games[_g_title])
-                    print(numbers)
-                    if self.gameMode != 'BACKTEST':
-                        time.sleep(2.5)
-                    self.save_history_data(_g_title, numbers, xx)
+                while True:
+                    numbers = self.gameField.get_numbers_from_game()
+                    self.gameField.close_reality_check()
+                    xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
+                    if xx > 0:
+                        # print(self.games[_g_title])
+                        # print(numbers)
+                        if self.gameMode != 'BACKTEST':
+                            time.sleep(2.5)
+                        self.save_history_data(_g_title, numbers, xx)
+                        break
+                if _flag_danger and not new_num in self.condition_list[_cur_key]:
+                    _flag_avoid = False
                     break
-
-            new_num = self.games[_g_title][-1]
-            print(f"\n\t    New number is " + self.change_color_text([new_num]))
+                    
+                new_num = self.games[_g_title][-1]
+                print(f"\n\t    New number is : " + self.change_color_text([new_num]))
+                if stage < 3 and (new_num in self.games[_g_title][-3:-1]):
+                    #print(new_num, self.games[_g_title][-4:-1])
+                    _flag_danger = True
+                    print("\tChecked danger, so bot decided to wait one round without betting!")
+                    continue
+                _flag_danger = False
+                break
+            
+            if not _flag_avoid:
+                self.total_profit -= lost
+                msg = f"\n\t😩 The bot is failed to avoid the danger\n" + "\t🔥 Lost : -  ${0}\n".format(round(
+                    lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+                print(msg)
+                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                try:
+                    if self.gameMode != 'BACKTEST':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                except:
+                    print("telegram error!")
+                break
+                
 
             if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
                 if _second_bet:
@@ -413,8 +472,9 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 break

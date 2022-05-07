@@ -125,7 +125,14 @@ class Browser:
         return self.get_history_numbers(f'(//div[@class="lobby-table__container"])[position() = {index + 1}]//div[contains(@class,"roulette-history")]', 10)
     
     def get_numbers_from_game(self):
-        return self.get_history_numbers('//div[@class="roulette-game-area__history-line"]/div', 10)
+        while True:
+            xx = self.get_history_numbers('//div[@class="roulette-game-area__history-line"]/div', 10)
+            if not xx:
+                print*"get numnber from game error occurred!"
+                time.sleep(0.2)
+                continue
+            break
+        return xx
             
 
     def close_page(self):
