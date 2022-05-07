@@ -397,26 +397,33 @@ class AutoBet:
                             time.sleep(2.5)
                         self.save_history_data(_g_title, numbers, xx)
                         break
+                    
+                new_num = self.games[_g_title][-1]
+                if new_num == -2:
+                    continue
+                
                 if _flag_danger and not new_num in self.condition_list[_cur_key]:
                     _flag_avoid = False
                     break
-                    
-                new_num = self.games[_g_title][-1]
+                
                 print(f"\n\t    New number is : " + self.change_color_text([new_num]))
-                if stage < 3 and (new_num in self.games[_g_title][-3:-1]):
+                if stage < 3 and (new_num in self.games[_g_title][-4:-1]):
                     #print(new_num, self.games[_g_title][-4:-1])
                     _flag_danger = True
-                    print("\tChecked danger, so bot decided to wait one round without betting!")
+                    print("\t 🚫  Checked danger, so bot decided to wait one round without betting!")
                     continue
                 _flag_danger = False
                 break
-            
+            # print("current lost is :",lost)
             if not _flag_avoid:
+                lost += bet_amount + zero_bet_amount
                 self.total_profit -= lost
                 msg = f"\n\t😩 The bot is failed to avoid the danger\n" + "\t🔥 Lost : -  ${0}\n".format(round(
-                    lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+                    lost/100.0, 1)) + "\t☘️  Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                if self.gameMode == 'BACKTEST':
+                    time.sleep(5)
                 try:
                     if self.gameMode != 'BACKTEST':
                         self.telegram_bot.sendMessage(
@@ -445,7 +452,7 @@ class AutoBet:
                 break
                 
 
-            if (zero_bet_amount > 0 and new_num <= 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num==-1):
+            if (zero_bet_amount > 0 and new_num == 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num==-1):
                 
                 profit = 35*zero_bet_amount - lost - bet_amount
                 self.total_profit += profit
@@ -468,9 +475,10 @@ class AutoBet:
             if zero_bet_amount == 0 and new_num == 0:
                 self.total_profit -= lost
                 msg = f"\n\t😩 The bot gives up with Zero\n" + "\t🔥 Lost : -  ${0}\n".format(round(
-                    lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+                    lost/100.0, 1)) + "\t☘️  Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                
                 try:
                     if self.gameMode != 'BACKTEST':
                         self.telegram_bot.sendMessage(
@@ -487,6 +495,8 @@ class AutoBet:
                     lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+                if self.gameMode == 'BACKTEST':
+                    quit()
                 try:
                     if self.gameMode != 'BACKTEST':
                         self.telegram_bot.sendMessage(
@@ -495,7 +505,8 @@ class AutoBet:
                     print("telegram error!")
                 stage = 0
                 lost = 0
-                quit()
+                if self.gameMode == 'BACKTEST':
+                    time.sleep(5)
                 continue
             
             # gameField.wait_key('a')
