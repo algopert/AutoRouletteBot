@@ -48,12 +48,13 @@ class AutoBet:
                             "Column23": "Bottom_Column"
                             }
         
+        self.read_conditions()
+        if self.gameMode !='BACKTEST':
+            self.path_history = './history'
+            Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
-        self.path_history = './history'
-        Path(self.path_history).mkdir(parents=True, exist_ok=True)
-
-        self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
-        Path(self.path_history).mkdir(parents=True, exist_ok=True)
+            self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
+            Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
         self.CHANNEL_ID = '-1001531528873'
         self.telegram_bot = telegram.Bot(
@@ -73,6 +74,10 @@ class AutoBet:
             self.gameMode = 'SIMULATION'
         else:
             self.gameMode = 'READONLY'
+            
+            
+        self.dangerLevel = myXMLtree.find('dangerLevel').text.replace(' ', '')
+        
 
         _outputMode = myXMLtree.find('outputMode').text
 
@@ -145,7 +150,9 @@ class AutoBet:
         except:
             self.conditions[_g_title][_key] = self.conditions['Default'][_key]
 
-        cnt = self.conditions[_g_title][_key]
+        _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
+        
+        cnt = self.conditions[_g_title][_key] + _delta[self.dangerLevel]
         glen = len(self.games[_g_title])
         if cnt > glen:
             return None
@@ -176,10 +183,10 @@ class AutoBet:
                 return i
         return -1
 
-    def numbers_propagation(self, org_list, cur_list):
+    def numbers_propagation(self, org_list, cur_list, sp):
         temps = org_list.copy()
         temps.reverse()
-        sp = 7
+        #sp = 3
         try:
             fidx = self.find_index_list(temps, cur_list[sp:])
         except:
@@ -269,7 +276,7 @@ class AutoBet:
                 continue
             # print("---------------------",numbers)
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
-            xx = self.numbers_propagation(self.games[_g_title], numbers)
+            xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
             # print("xx is ", xx)
             if xx > 0:
                 time.sleep(2.5)
@@ -341,7 +348,7 @@ class AutoBet:
             while True:
                 numbers = self.gameField.get_numbers_from_game()
                 self.gameField.close_reality_check()
-                xx = self.numbers_propagation(self.games[_g_title], numbers)
+                xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
                 if xx > 0:
                     time.sleep(2.5)
                     
@@ -390,7 +397,7 @@ class AutoBet:
 
             lost += (bet_amount + zero_bet_amount)
 
-            if zero_bet_amount == 0 and new_num == 0:
+            if zero_bet_amount == 0 and new_num <= 0:
                 self.total_profit -= lost
                 msg = f"\n\t😩 The bot gives up with Zero\n" + "\t🔥 Lost : -  ${0}\n".format(round(
                     lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
@@ -443,7 +450,7 @@ class AutoBet:
         try:
             self.filenames[_g_title]
         except:
-
+            
             self.filenames[_g_title] = f"{self.path_history}/{_g_title}.csv"
             with open(self.filenames[_g_title], 'w+') as f:
                 f.close()
@@ -516,7 +523,7 @@ class AutoBet:
                     self.games[_g_title].reverse()
 
                 # -------------------------------------------
-                xx = self.numbers_propagation(self.games[_g_title], numbers)
+                xx = self.numbers_propagation(self.games[_g_title], numbers, 5)
 
                 if xx == 0:
                     continue
@@ -552,8 +559,10 @@ class AutoBet:
                       self.change_color_text(self.games[_g_title]))
 
                 # ---------------------------------------
+                
+                _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
                 print(f"\n\t    👀 found repetition : " +
-                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}" + "\033[0m")
+                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {_delta[self.dangerLevel]} " + "\033[0m")
                 # self.gameField.wait_key('a')
 
                 # if ppp == i:
