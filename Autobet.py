@@ -50,11 +50,14 @@ class AutoBet:
         
         self.read_conditions()
         if self.gameMode !='BACKTEST':
-            self.path_history = './history'
+            self.path_history = './giant_history'
             Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
-            self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
-            Path(self.path_history).mkdir(parents=True, exist_ok=True)
+            self.filename = self.path_history + '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime()) + '.csv'
+
+            with open(self.filename, 'w+') as f:
+                f.close()
+
 
         self.CHANNEL_ID = '-1001531528873'
         self.telegram_bot = telegram.Bot(
@@ -445,17 +448,10 @@ class AutoBet:
             self.conditions[_g_title]['InitialAmount'] = self.conditions['Default']['InitialAmount']
             self.conditions[_g_title]['InitialZeroAmount'] = self.conditions['Default']['InitialZeroAmount']
 
-    def save_history_data(self, _g_title, numbers, cnt):
+    def save_history_data(self, numbers, cnt):
         if self.gameMode == 'BACKTEST': return
-        try:
-            self.filenames[_g_title]
-        except:
-            
-            self.filenames[_g_title] = f"{self.path_history}/{_g_title}.csv"
-            with open(self.filenames[_g_title], 'w+') as f:
-                f.close()
 
-        with open(self.filenames[_g_title], 'a') as f:  # save first input of series
+        with open(self.filename, 'a') as f:  # save first input of series
             for i in range(cnt):
                 f.write(str(numbers[cnt-i-1]) + '\n')
             f.close()
@@ -473,37 +469,26 @@ class AutoBet:
         self.gameField.switch_to_giant_roulette()
         print("end")
         
-        numbers = self.gameField.get_numbers_from_game()
-        
-        
-        
         while True:
             self.read_conditions()
             self.gameField.close_reality_check()
 
             numbers = self.gameField.get_history_numbers()
-            
             # -------------------------------------------
             if not len(self.gnlist):
                 self.gnlist = numbers.copy()
                 self.gnlist.reverse()
             xx = self.numbers_propagation(self.gnlist, numbers)
-            
-            
             if xx == 0:
                 continue
         
-        
             print(15*"-----")
             print("new number is  : ", self.gnlist[-1])
-        #         # print(_g_title)
-        #         # print(self.gnlist[_g_title])
-        #         # print(numbers)
-                
-        #         self.save_history_data(_g_title, numbers, xx)
+            
+            self.save_history_data(numbers, xx)
 
-        #         if self.gameMode == 'READONLY':
-        #             continue
+            if self.gameMode == 'READONLY':
+                continue
 
         #         cur_cdt = self.find_repetition(_g_title)
 
