@@ -475,7 +475,8 @@ class AutoBet:
         
         while True:
             try:
-                pp = self.gameField.multi_items('//div[@class="swl-history-line__item-text"]/div')
+                pp = self.gameField.multi_items('//div[@class="swl-history-line__item-text"]') #swl-history-line
+                # print(pp)
                 print("len =  :", len(pp))
                 str =""
                 for _item in pp:
