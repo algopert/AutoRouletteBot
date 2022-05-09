@@ -491,6 +491,21 @@ class AutoBet:
 
             if self.gameMode == 'READONLY':
                 continue
+            
+            self.chip_list = self.gameField.get_chip_reference()
+            if not self.chip_list:
+                print('Faied to update chip_list!')
+                return
+
+            _txt = '\tChip list updated :'
+            for x in self.chip_list:
+                if x == 0:
+                    continue
+                if x < 100:
+                    _txt += '  $' + str(round(x/100.0, 1))
+                else:
+                    _txt += '  $' + str(int(x/100))
+            print(_txt)
 
         #         cur_cdt = self.find_repetition(_g_title)
 
