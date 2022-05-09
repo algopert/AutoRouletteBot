@@ -470,6 +470,10 @@ class AutoBet:
 
         self.gameField.open()
 
+        self.switch_to_giant_roulette()
+        print("end")
+        quit()
+        
         bar = Bar('Processing')
         ppp = -1
         while True:

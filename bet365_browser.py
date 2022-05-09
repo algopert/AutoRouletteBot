@@ -144,7 +144,21 @@ class Browser:
         except:
             pass
         return "No name"
-
+    def switch_to_giant_roulette(self):
+        self.click_item('//div[@class="lobby-category-item__name"][text()="GAME SHOWS"]')
+        time.sleep(0.5)
+        ltcnt = self.refresh_lobby_table()  # Item count of Lobby Table
+        for i in range(ltcnt):
+            roul_title = self.get_roullete_name(i)
+            _g_title = roul_title.strip().replace(" ", "_").replace("?", "")
+            print(_g_title)
+            if _g_title == "Spin_a_Win":
+                self.join_roulette(i)
+                time.sleep(5)
+                return
+        # Spin a Win
+        
+        
     def switch_tabs(self):
         # print("-------------------------------switch ----------------------------------")
         # skip_list.clear()
