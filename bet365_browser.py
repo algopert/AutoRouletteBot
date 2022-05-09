@@ -96,6 +96,7 @@ class Browser:
             ii = (ii+1) % 2
             if _series_que[0] == _series_que[1]:
                 return _series_que[0].copy()
+            time.sleep(0.3)
         
 
     def get_numbers_from_dashboard(self, index):
