@@ -106,14 +106,14 @@ class Browser:
         while True:
             try:
                 pp = self.multi_items('//div[@class="swl-history-line__item-text"]')
-                str =""
-                for _id in range(46):
-                    str += pp[_id].text + ", "
+                _str =""
+                for _id in range(40):
+                    _str += pp[_id].text + ", "
+                _str += pp[40].text
+                # print(_str)
+                _str = _str.replace('x7','-7').replace('x2', '-2')
+                return list(map(int, _str.split(',')))
                 
-                str = str.replace('x7','-7').replace('x2', '-2')
-                
-                sr = [int(s) for s in re.findall(r'\b\d+\b', str)]
-                return sr
             except:
                 time.sleep(0.3)
            
