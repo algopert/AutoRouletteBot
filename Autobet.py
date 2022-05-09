@@ -470,7 +470,7 @@ class AutoBet:
 
         self.gameField.open()
 
-        self.switch_to_giant_roulette()
+        self.gameField.switch_to_giant_roulette()
         print("end")
         quit()
         
