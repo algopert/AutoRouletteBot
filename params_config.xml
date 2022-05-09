@@ -37,12 +37,12 @@
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Red> 10 </Red>
+            <Black> 10 </Black>
+            <Odd> 10 </Odd>
+            <Parity> 10 </Parity>
+            <Low> 10 </Low>
+            <High> 10 </High>
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
@@ -196,12 +196,12 @@
         </Mega_Fire_Blaze_Roulette_Live>
 
         <Prestige_Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Red> 10 </Red>
+            <Black> 10 </Black>
+            <Odd> 10 </Odd>
+            <Parity> 10 </Parity>
+            <Low> 10 </Low>
+            <High> 10 </High>
             <Dozen12> 19 </Dozen12>
             <Dozen13> 19 </Dozen13>
             <Dozen23> 19 </Dozen23>
