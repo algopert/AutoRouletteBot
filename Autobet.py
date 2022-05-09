@@ -487,7 +487,7 @@ class AutoBet:
             if not len(self.gnlist):
                 self.gnlist = numbers.copy()
                 self.gnlist.reverse()
-            xx = self.numbers_propagation(self.gnlist, numbers, 2)
+            xx = self.numbers_propagation(self.gnlist, numbers)
             
             
             if xx == 0:
