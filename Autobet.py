@@ -14,7 +14,7 @@ import telegram
 class AutoBet:
     def __init__(self):
         self.total_profit = 0
-        self.games = {}
+        # self.games = {}
         self.filenames = {}
         self.gameField = None
         self.conditions = {}
@@ -472,128 +472,97 @@ class AutoBet:
 
         self.gameField.switch_to_giant_roulette()
         print("end")
-        quit()
         
-        bar = Bar('Processing')
-        ppp = -1
+        while True:
+            try:
+                pp = self.gameField.multi_items('//div[@class="swl-history-line__item-text"]/div')
+                print("len =  :", len(pp))
+                str =""
+                for _item in pp:
+                    str += ",   " + _item.text
+                print(str)
+            except:
+                print("error")
+                
+            time.sleep(5)
+        
+        
         while True:
             self.read_conditions()
             self.gameField.close_reality_check()
-            self.gameField.switch_tabs()
-            ltcnt = self.gameField.refresh_lobby_table()  # Item count of Lobby Table
-            bar.max = ltcnt
-            # print(f"Total game's count is   : {ltcnt}")
-            # if self.gameMode != 'BACKTEST':
-            #     if not check_expiration_time():
-            #         quit()
 
-            for i in range(ltcnt):
-                bar.next()
-
-                roul_title = self.gameField.get_roullete_name(i)
-                _g_title = roul_title.strip().replace(" ", "_").replace("?", "")
-
-                if _g_title in self.skip_list:  # if the game is in the skip list, Skip!!!!
-                    continue
-
-                if roul_title == "No name":
-                    # print(roul_title)
-                    print("No name! index is : {0}".format(i))
-                    continue
-
-                numbers = self.gameField.get_numbers_from_dashboard(i)
-                if not numbers:
-                    continue
-                if roul_title != self.gameField.get_roullete_name(i):
-                    print("Name is mismatched, so it is breaked")
-                    # quit()
-                    break
-
-                # you can divide the read_condition functions to 2 part or check this part!!! error must be occured!
-                if(numbers == "failed"):
-                    # kill_app()
-                    self.skip_list.append(roul_title)
-                    # print(" Skip {0}".format(roul_title))
-                    continue
-
-                # end of while
-
-                self.correct_initial_amount(_g_title)
-
-                try:
-                    self.games[_g_title]  # if the _g_title is new
-                except KeyError:
-                    self.games[_g_title] = numbers.copy()
-                    self.games[_g_title].reverse()
-
+            numbers = self.gameField.get_numbers_from_dashboard(i)
                 # -------------------------------------------
-                xx = self.numbers_propagation(self.games[_g_title], numbers, 5)
+        #     xx = self.numbers_propagation(self.games[_g_title], numbers, 5)
+            
+            
+            
 
-                if xx == 0:
-                    continue
-                if xx < 0:
-                    self.games[_g_title] = numbers.copy()
-                    self.games[_g_title].reverse()
-                    numbers.append(-2)
-                    xx = 11
+        #         if xx == 0:
+        #             continue
+        #         if xx < 0:
+        #             self.games[_g_title] = numbers.copy()
+        #             self.games[_g_title].reverse()
+        #             numbers.append(-2)
+        #             xx = 11
 
-                # print(15*"-----")
-                # print(xx)
-                # print(_g_title)
-                # print(self.games[_g_title])
-                # print(numbers)
+        #         # print(15*"-----")
+        #         # print(xx)
+        #         # print(_g_title)
+        #         # print(self.games[_g_title])
+        #         # print(numbers)
                 
-                self.save_history_data(_g_title, numbers, xx)
+        #         self.save_history_data(_g_title, numbers, xx)
 
-                if self.gameMode == 'READONLY':
-                    continue
+        #         if self.gameMode == 'READONLY':
+        #             continue
 
-                cur_cdt = self.find_repetition(_g_title)
+        #         cur_cdt = self.find_repetition(_g_title)
 
-                if not cur_cdt:
-                    continue
-                print('\n'+15*"-----")
+        #         if not cur_cdt:
+        #             continue
+        #         print('\n'+15*"-----")
 
-                print("   Game title : " + "\033[95m" + roul_title + "\033[0m")
-                # print(f"\tpropagation {xx}")
-                print('\tCurrent number:      ' +
-                      self.change_color_text([numbers[0]]))
+        #         print("   Game title : " + "\033[95m" + roul_title + "\033[0m")
+        #         # print(f"\tpropagation {xx}")
+        #         print('\tCurrent number:      ' +
+        #               self.change_color_text([numbers[0]]))
 
-                print('\tHistory   list:      ' +
-                      self.change_color_text(self.games[_g_title]))
+        #         print('\tHistory   list:      ' +
+        #               self.change_color_text(self.games[_g_title]))
 
-                # ---------------------------------------
+        #         # ---------------------------------------
                 
-                _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
-                print(f"\n\t    👀 found repetition : " +
-                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {_delta[self.dangerLevel]} " + "\033[0m")
-                # self.gameField.wait_key('a')
+        #         _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
+        #         print(f"\n\t    👀 found repetition : " +
+        #               '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {_delta[self.dangerLevel]} " + "\033[0m")
+        #         # self.gameField.wait_key('a')
 
-                # if ppp == i:
-                #     continue  # option.....
-                # ppp = i
+        #         # if ppp == i:
+        #         #     continue  # option.....
+        #         # ppp = i
 
-                #  Logic in the Game ##########################################################
-                self.gameField.join_roulette(i)
-                if _g_title == 'Mega_Fire_Blaze_Roulette_Live' or _g_title == 'Super_Spin_Roulette':
-                    self.gameField.close_mega_fire_modal()
+        #         #  Logic in the Game ##########################################################
+        #         self.gameField.join_roulette(i)
+        #         if _g_title == 'Mega_Fire_Blaze_Roulette_Live' or _g_title == 'Super_Spin_Roulette':
+        #             self.gameField.close_mega_fire_modal()
 
-                self.play_roulette(_g_title, cur_cdt)
+        #         self.play_roulette(_g_title, cur_cdt)
 
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
-                time.sleep(1)
-                self.gameField.close_page()
+        #         # if self.gameMode != 'BACKTEST':
+        #         time.sleep(2)
+        #         self.gameField.close_reality_check()
+        #         time.sleep(1)
+        #         self.gameField.close_page()
 
-                # if self.gameMode != 'BACKTEST':
-                time.sleep(2)
-                self.gameField.close_reality_check()
-                break
+        #         # if self.gameMode != 'BACKTEST':
+        #         time.sleep(2)
+        #         self.gameField.close_reality_check()
+        #         break
 
-            bar.index = 0
+        #     bar.index = 0
 
-        bar.finish()
+        # bar.finish()
 
 
 # _autobet = AutoBet()
