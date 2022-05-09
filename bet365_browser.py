@@ -88,37 +88,14 @@ class Browser:
     def sub_item(self, item, xpath):
         return item.find_element(By.XPATH, xpath)
     
-    def get_history_numbers(self, xpath, cnt):  ########### modify the number and symbol
+    def get_history_numbers(self):  ########### modify the number and symbol
         ii = 0
         _series_que = [[], []]
         while True:
-            _series_que[ii].clear()
-            for kp in range(cnt):
-                try:
-                    _item = self.single_item(xpath + f'/div[{kp+1}]/div/div').text
-                except:
-                    return None
-                        
-                        
-                if _item.isdigit():
-                    _series_que[ii].append(int(_item))
-                else:
-                    try:
-                        _item = self.single_item(xpath + f'/div[{kp+1}]/div[2]/div').text
-                        # print("------------------ covered number----------------")
-                        if _item.isdigit():
-                            _series_que[ii].append(int(_item))
-                        else:
-                            _series_que[ii].append(-1)
-                    except:
-                        _series_que[ii].append(-1)
-                    
-
+            _series_que[ii] = self.get_numbers_from_game()
             ii = (ii+1) % 2
             if _series_que[0] == _series_que[1]:
                 return _series_que[0].copy()
-
-        
         
 
     def get_numbers_from_dashboard(self, index):
@@ -126,14 +103,19 @@ class Browser:
     
     def get_numbers_from_game(self):
         while True:
-            xx = self.get_history_numbers('//div[@class="roulette-game-area__history-line"]/div', 10)
-            if not xx:
-                print("get numnber from game error occurred!")
-                time.sleep(0.2)
-                continue
-            break
-        return xx
-            
+            try:
+                pp = self.multi_items('//div[@class="swl-history-line__item-text"]')
+                str =""
+                for _id in range(46):
+                    str += pp[_id].text + ", "
+                
+                str = str.replace('x7','-7').replace('x2', '-2')
+                
+                sr = [int(s) for s in re.findall(r'\b\d+\b', str)]
+                return sr
+            except:
+                time.sleep(0.3)
+           
 
     def close_page(self):
         self.click_item('//div[@class="close-button header__close-button"]')

@@ -14,7 +14,7 @@ import telegram
 class AutoBet:
     def __init__(self):
         self.total_profit = 0
-        # self.games = {}
+        self.gnlist = []
         self.filenames = {}
         self.gameField = None
         self.conditions = {}
@@ -153,13 +153,13 @@ class AutoBet:
         _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
         
         cnt = self.conditions[_g_title][_key] + _delta[self.dangerLevel]
-        glen = len(self.games[_g_title])
+        glen = len(self.gnlist[_g_title])
         if cnt > glen:
             return None
         flag_found = True
 
         for i in range(cnt):
-            qq = self.games[_g_title][-1-i]
+            qq = self.gnlist[_g_title][-1-i]
             if qq in self.condition_list[_key]:
                 continue
             flag_found = False
@@ -183,10 +183,10 @@ class AutoBet:
                 return i
         return -1
 
-    def numbers_propagation(self, org_list, cur_list, sp):
+    def numbers_propagation(self, org_list, cur_list):
         temps = org_list.copy()
         temps.reverse()
-        #sp = 3
+        sp = 3
         try:
             fidx = self.find_index_list(temps, cur_list[sp:])
         except:
@@ -202,7 +202,7 @@ class AutoBet:
         for jj in range(fidx):
             org_list.append(cur_list[fidx-jj-1])
 
-        while len(org_list) > 30:
+        while len(org_list) > 100:
             org_list.pop(0)
 
         return fidx
@@ -275,8 +275,8 @@ class AutoBet:
                 time.sleep(1)
                 continue
             # print("---------------------",numbers)
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",games[_g_title])
-            xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
+            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",gnlist[_g_title])
+            xx = self.numbers_propagation(self.gnlist[_g_title], numbers, 2)
             # print("xx is ", xx)
             if xx > 0:
                 time.sleep(2.5)
@@ -289,7 +289,7 @@ class AutoBet:
             return
 
         print("\tThe bot decided to bet with Number :  " +
-              self.change_color_text([self.games[_g_title][-1]]))
+              self.change_color_text([self.gnlist[_g_title][-1]]))
 
         self.chip_list = self.gameField.get_chip_reference()
         if not self.chip_list:
@@ -348,14 +348,14 @@ class AutoBet:
             while True:
                 numbers = self.gameField.get_numbers_from_game()
                 self.gameField.close_reality_check()
-                xx = self.numbers_propagation(self.games[_g_title], numbers, 2)
+                xx = self.numbers_propagation(self.gnlist[_g_title], numbers, 2)
                 if xx > 0:
                     time.sleep(2.5)
                     
                     self.save_history_data(_g_title, numbers, xx)
                     break
 
-            new_num = self.games[_g_title][-1]
+            new_num = self.gnlist[_g_title][-1]
             print(f"\n\t    New number is " + self.change_color_text([new_num]))
 
             if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
@@ -473,43 +473,31 @@ class AutoBet:
         self.gameField.switch_to_giant_roulette()
         print("end")
         
-        while True:
-            try:
-                pp = self.gameField.multi_items('//div[@class="swl-history-line__item-text"]/div')
-                print("len =  :", len(pp))
-                str =""
-                for _item in pp:
-                    str += ",   " + _item.text
-                print(str)
-            except:
-                print("error")
-                
-            time.sleep(5)
+        numbers = self.gameField.get_numbers_from_game()
+        
         
         
         while True:
             self.read_conditions()
             self.gameField.close_reality_check()
 
-            numbers = self.gameField.get_numbers_from_dashboard(i)
-                # -------------------------------------------
-        #     xx = self.numbers_propagation(self.games[_g_title], numbers, 5)
+            numbers = self.gameField.get_history_numbers()
+            
+            # -------------------------------------------
+            if not len(self.gnlist):
+                self.gnlist = numbers.copy()
+                self.gnlist.reverse()
+            xx = self.numbers_propagation(self.gnlist, numbers, 2)
             
             
-            
-
-        #         if xx == 0:
-        #             continue
-        #         if xx < 0:
-        #             self.games[_g_title] = numbers.copy()
-        #             self.games[_g_title].reverse()
-        #             numbers.append(-2)
-        #             xx = 11
-
-        #         # print(15*"-----")
-        #         # print(xx)
+            if xx == 0:
+                continue
+        
+        
+            print(15*"-----")
+            print("new number is  : ", self.gnlist[-1])
         #         # print(_g_title)
-        #         # print(self.games[_g_title])
+        #         # print(self.gnlist[_g_title])
         #         # print(numbers)
                 
         #         self.save_history_data(_g_title, numbers, xx)
@@ -529,7 +517,7 @@ class AutoBet:
         #               self.change_color_text([numbers[0]]))
 
         #         print('\tHistory   list:      ' +
-        #               self.change_color_text(self.games[_g_title]))
+        #               self.change_color_text(self.gnlist[_g_title]))
 
         #         # ---------------------------------------
                 

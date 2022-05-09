@@ -154,6 +154,11 @@
 
 import re
 
-text = "  1, 3, 10, 30, 90, 270, 810 "
-sr = [int(s) for s in re.findall(r'\b\d+\b', text)]
+# text = "  1, 3, 10, 30, 90, 270, 810 "
+# sr = [int(s) for s in re.findall(r'\b\d+\b', text)]
+# print(sr)
+
+
+xx = '1,   5,   2,   1,   1,   2,   1,   10,   1,   1,   1,   2,   5,   1,   1,   20,   2,   1,   2,   10,   5,   1,   2,   1,   40,   1,   10,   10,   2,   2,   2,   20,   10,   1,   1,   1,   1,   2,   10,   1,   2,   1,   -2,   20,   10,   40'
+sr = [int(s) for s in re.findall(r'\b\d+\b', xx)]
 print(sr)
