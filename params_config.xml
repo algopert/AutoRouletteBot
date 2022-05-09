@@ -5,7 +5,7 @@
     <gameMode> REALGAME </gameMode>
 
     <!-- LOW MIDDLE HIGH -->
-    <dangerLevel> LOW </dangerLevel>
+    <dangerLevel> HIGH </dangerLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
@@ -19,30 +19,13 @@
     <_2nd_stage_00> 0, 1, 1,  2,  3,  5, 10,  14,  25,  50,  100,  200 </_2nd_stage_00>
 
     <Parameters>
-        <Age_Of_The_Gods_Bonus_Roulette>
-            <Red> 8 </Red>
-            <Black> 8 </Black>
-            <Odd> 8 </Odd>
-            <Parity> 8 </Parity>
-            <Low> 8 </Low>
-            <High> 8 </High>
-            <Dozen12> 14 </Dozen12>
-            <Dozen13> 14 </Dozen13>
-            <Dozen23> 14 </Dozen23>
-            <Column12> 14 </Column12>
-            <Column13> 14 </Column13>
-            <Column23> 14 </Column23>
-            <InitialAmount> 100 </InitialAmount>
-            <InitialZeroAmount>100 </InitialZeroAmount>
-        </Age_Of_The_Gods_Bonus_Roulette>
-
         <American_Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Red> 10 </Red>
+            <Black> 10 </Black>
+            <Odd> 10 </Odd>
+            <Parity> 10 </Parity>
+            <Low> 10 </Low>
+            <High> 10 </High>
             <Dozen12> 15 </Dozen12>
             <Dozen13> 15 </Dozen13>
             <Dozen23> 15 </Dozen23>
@@ -110,12 +93,12 @@
         </Deutsches_Roulette>
 
         <Football_Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Red> 11 </Red>
+            <Black> 11 </Black>
+            <Odd> 11 </Odd>
+            <Parity> 11 </Parity>
+            <Low> 11 </Low>
+            <High> 11 </High>
             <Dozen12> 16 </Dozen12>
             <Dozen13> 16 </Dozen13>
             <Dozen23> 16 </Dozen23>
@@ -196,12 +179,12 @@
         </Mega_Fire_Blaze_Roulette_Live>
 
         <Prestige_Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Red> 11 </Red>
+            <Black> 11 </Black>
+            <Odd> 11 </Odd>
+            <Parity> 11 </Parity>
+            <Low> 11 </Low>
+            <High> 11 </High>
             <Dozen12> 19 </Dozen12>
             <Dozen13> 19 </Dozen13>
             <Dozen23> 19 </Dozen23>
