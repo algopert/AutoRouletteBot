@@ -53,12 +53,8 @@ text_key = {"Red": "RED",
                }
 
 
+flag_save = False
 
-path_history = './history'
-Path(path_history).mkdir(parents=True, exist_ok=True)
-
-path_history+='/' +  strftime("%Y_%m_%d_%H_%M_%S", gmtime())
-Path(path_history).mkdir(parents=True, exist_ok=True)
 
 
 play_status = {}
@@ -193,7 +189,7 @@ def find_index_list(tgt, src):
 def numbers_propagation(org_list, cur_list):
     temps = org_list.copy()
     temps.reverse()
-    sp = 7
+    sp = 3
     fidx = find_index_list(temps, cur_list[sp:])
     if fidx > sp or fidx < 0:
         org_list = cur_list.copy()
@@ -212,6 +208,17 @@ def numbers_propagation(org_list, cur_list):
 
 
 def save_history_data(_g_title, numbers, cnt):
+    if gameMode == 'BACKTEST':
+        return
+    global flag_save
+    
+    if not flag_save:
+        path_history = './history'
+        Path(path_history).mkdir(parents=True, exist_ok=True)
+
+        path_history+='/' +  strftime("%Y_%m_%d_%H_%M_%S", gmtime())
+        Path(path_history).mkdir(parents=True, exist_ok=True)
+        flag_save = True
     global filenames
     try:
         filenames[_g_title]
@@ -249,7 +256,7 @@ def send_second_message(_g_title, _cur_cdt, _level):
     _cur_series = str(games[_g_title][:15]).strip("[]")
     _cur_series = _cur_series.replace('-1', 'B')
     _title = _g_title.replace('_', ' ')
-    txt = f"🏁 Finished - {_title}\n📊 Current Series : {_cur_series}\n👀 Repetition was: {text_key[_cur_cdt]}\n⚡️ Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
+    txt = f"🏁 Finished - {_title}\n📊 Past Series : {_cur_series}\n👀 Repetition was: {text_key[_cur_cdt]}\n⚡️ New Moves: {_moves}\n🤑 We won with the number: {games[_g_title][-1]}"
     if gameMode == "REALGAME":
         try:
             bot.sendMessage(chat_id=CHANNEL_ID[_level], text=txt)
@@ -300,7 +307,7 @@ def startProcess():
     
     while True:
         read_conditions()
-        gameField.close_time_limit_and_confirm()
+        gameField.close_reality_check()
         gameField.switch_tabs()
         ltcnt = gameField.refresh_lobby_table()  # Item count of Lobby Table
         bar.max = ltcnt
@@ -389,11 +396,14 @@ def startProcess():
                         play_status[_g_title]["stage"][my_level] = 0
                         play_status[_g_title]["series"][my_level] = []
                         play_status[_g_title]["condition"][my_level] = None
-                    elif new_num < 1 and play_status[_g_title]["stage"][my_level]>2:
+                    elif new_num < 1:
                         print('\n'+15*"-----")
                         send_middle_message(_g_title, play_status[_g_title]["condition"][my_level], my_level)
+                       
+                        play_status[_g_title]["flag"][my_level] = False
                         play_status[_g_title]["stage"][my_level] = 0
-                        play_status[_g_title]["series"][my_level]= []
+                        play_status[_g_title]["series"][my_level] = []
+                        play_status[_g_title]["condition"][my_level] = None
 
         bar.index = 0
 

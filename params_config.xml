@@ -4,8 +4,8 @@
     <!--BACKTEST REALGAME READONLY SIMULATION-->
     <gameMode> REALGAME </gameMode>
 
-    <!-- LOW MIDDLE HIGH -->
-    <dangerLevel> LOW </dangerLevel>
+    <!-- D2 D1 MID P1 P2 P3 -->
+    <dangerLevel> MID </dangerLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
@@ -20,12 +20,12 @@
 
     <Parameters>
         <Age_Of_The_Gods_Bonus_Roulette>
-            <Red> 8 </Red>
-            <Black> 8 </Black>
-            <Odd> 8 </Odd>
-            <Parity> 8 </Parity>
-            <Low> 8 </Low>
-            <High> 8 </High>
+            <Red> 18 </Red>
+            <Black> 18 </Black>
+            <Odd> 18 </Odd>
+            <Parity> 18 </Parity>
+            <Low> 18 </Low>
+            <High> 18 </High>
             <Dozen12> 14 </Dozen12>
             <Dozen13> 14 </Dozen13>
             <Dozen23> 14 </Dozen23>
@@ -110,12 +110,12 @@
         </Deutsches_Roulette>
 
         <Football_Roulette>
-            <Red> 9 </Red>
-            <Black> 9 </Black>
-            <Odd> 9 </Odd>
-            <Parity> 9 </Parity>
-            <Low> 9 </Low>
-            <High> 9 </High>
+            <Red> 11 </Red>
+            <Black> 11 </Black>
+            <Odd> 11 </Odd>
+            <Parity> 11 </Parity>
+            <Low> 11 </Low>
+            <High> 11 </High>
             <Dozen12> 16 </Dozen12>
             <Dozen13> 16 </Dozen13>
             <Dozen23> 16 </Dozen23>
@@ -141,12 +141,12 @@
             <Parity> 11 </Parity>
             <Low> 11 </Low>
             <High> 11 </High>
-            <Dozen12> 13 </Dozen12>
-            <Dozen13> 13 </Dozen13>
-            <Dozen23> 13 </Dozen23>
-            <Column12> 13 </Column12>
-            <Column13> 13 </Column13>
-            <Column23> 13 </Column23>
+            <Dozen12> 15 </Dozen12>
+            <Dozen13> 15 </Dozen13>
+            <Dozen23> 15 </Dozen23>
+            <Column12> 15 </Column12>
+            <Column13> 15 </Column13>
+            <Column23> 15 </Column23>
         </Greek_Quantum_Roulette>
 
         <Greek_Roulette>

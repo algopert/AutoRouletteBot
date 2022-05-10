@@ -32,6 +32,11 @@ class AutoBet:
                                "Column12": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
                                "Column13": [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
                                "Column23": [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]}
+        
+        
+        self.cdt_delta = {"D2": -2, "D1": -1, "MID": 0, "P1": 1, "P2": 2 , "P3": 3 }
+        _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
+        
         self.chip_list = []
         self.skip_list = []
         self.reverse_key = {"Red": "Black",
@@ -150,9 +155,9 @@ class AutoBet:
         except:
             self.conditions[_g_title][_key] = self.conditions['Default'][_key]
 
-        _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
         
-        cnt = self.conditions[_g_title][_key] + _delta[self.dangerLevel]
+        
+        cnt = self.conditions[_g_title][_key] + self.cdt_delta[self.dangerLevel]
         glen = len(self.games[_g_title])
         if cnt > glen:
             return None
@@ -560,9 +565,9 @@ class AutoBet:
 
                 # ---------------------------------------
                 
-                _delta = {"LOW": -1, "MIDDLE": 0, "HIGH": 1 }
+                
                 print(f"\n\t    👀 found repetition : " +
-                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {_delta[self.dangerLevel]} " + "\033[0m")
+                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {self.cdt_delta[self.dangerLevel]} " + "\033[0m")
                 # self.gameField.wait_key('a')
 
                 # if ppp == i:
