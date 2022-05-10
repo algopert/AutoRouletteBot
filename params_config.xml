@@ -5,7 +5,7 @@
     <gameMode> REALGAME </gameMode>
 
     <!-- LOW MIDDLE HIGH -->
-    <dangerLevel> LOW </dangerLevel>
+    <dangerLevel> HIGH </dangerLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
