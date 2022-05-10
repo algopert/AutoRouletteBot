@@ -24,7 +24,8 @@ games = {}
 filenames = {}
 
 global gameField
-
+global path_history
+path_history = ''
 conditions = {}
 gameMode = 'BACKTEST'
 outputMode = 'CONSOLE'
@@ -234,7 +235,7 @@ def save_history_data(_g_title, numbers, cnt):
     if gameMode == 'BACKTEST':
         return
     global flag_save
-
+    global path_history
     if not flag_save:
         path_history = './history'
         Path(path_history).mkdir(parents=True, exist_ok=True)
@@ -242,6 +243,7 @@ def save_history_data(_g_title, numbers, cnt):
         path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
         Path(path_history).mkdir(parents=True, exist_ok=True)
         flag_save = True
+        
     global filenames
     try:
         filenames[_g_title]
