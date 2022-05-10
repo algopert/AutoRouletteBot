@@ -406,18 +406,18 @@
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
 
         <Default>
-            <Red> 100 </Red>
-            <Black> 100 </Black>
-            <Odd> 100 </Odd>
-            <Parity> 100 </Parity>
-            <Low> 100 </Low>
-            <High> 100 </High>
-            <Dozen12> 150 </Dozen12>
-            <Dozen13> 150 </Dozen13>
-            <Dozen23> 150 </Dozen23>
-            <Column12> 150 </Column12>
-            <Column13> 150 </Column13>
-            <Column23> 150 </Column23>
+            <Red> 9 </Red>
+            <Black> 9 </Black>
+            <Odd> 9 </Odd>
+            <Parity> 9 </Parity>
+            <Low> 9 </Low>
+            <High> 9 </High>
+            <Dozen12> 9 </Dozen12>
+            <Dozen13> 9 </Dozen13>
+            <Dozen23> 9 </Dozen23>
+            <Column12> 9 </Column12>
+            <Column13> 9 </Column13>
+            <Column23> 9 </Column23>
             <InitialAmount> 100 </InitialAmount>
             <InitialZeroAmount> 100 </InitialZeroAmount>
         </Default>
