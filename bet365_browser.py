@@ -1,3 +1,4 @@
+from argparse import Action
 import os
 import time
 from selenium import webdriver
@@ -5,6 +6,7 @@ import chromedriver_autoinstaller
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 import keyboard
 import re
 
@@ -14,6 +16,7 @@ class Browser:
     def __init__(self):
         self.driver = []
         self.lobby_table = []
+        self.first_number_element = None
 
     def open(self):
         dirr = os.path.abspath(os.curdir).rsplit("\\", 1)[0] + "\\userdata"
@@ -112,10 +115,13 @@ class Browser:
                 _str += pp[40].text
                 # print(_str)
                 _str = _str.replace('x7','-7').replace('x2', '-2')
+                self.first_number_element = pp[0]
                 return list(map(int, _str.split(',')))
                 
             except:
                 time.sleep(0.3)
+                
+        
            
 
     def close_page(self):
@@ -300,6 +306,11 @@ class Browser:
             print(f"error for clicking the key {_key}")
             print(e)
         # print(20*'-----------')
+    def double_click_for_action(self):
+        actionChains = ActionChains(self.driver)
+        actionChains.double_click(self.first_number_element).perform()
+        
+        
         
 
 

@@ -1,5 +1,5 @@
-import Autobet 
+import Giant_bet 
 
 if __name__ == "__main__":
-    _autobet = Autobet.AutoBet()
+    _autobet = Giant_bet.AutoBet()
     _autobet.startProcess()
