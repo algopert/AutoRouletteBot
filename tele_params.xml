@@ -2,7 +2,7 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> BACKTEST </gameMode>
+    <gameMode> REALGAME </gameMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
     <dangerLevel> MID </dangerLevel>
@@ -412,12 +412,12 @@
             <Parity> 9 </Parity>
             <Low> 9 </Low>
             <High> 9 </High>
-            <Dozen12> 9 </Dozen12>
-            <Dozen13> 9 </Dozen13>
-            <Dozen23> 9 </Dozen23>
-            <Column12> 9 </Column12>
-            <Column13> 9 </Column13>
-            <Column23> 9 </Column23>
+            <Dozen12> 19 </Dozen12>
+            <Dozen13> 19 </Dozen13>
+            <Dozen23> 19 </Dozen23>
+            <Column12> 19 </Column12>
+            <Column13> 19 </Column13>
+            <Column23> 19 </Column23>
             <InitialAmount> 100 </InitialAmount>
             <InitialZeroAmount> 100 </InitialZeroAmount>
         </Default>

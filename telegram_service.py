@@ -2,7 +2,7 @@ import time
 
 from progress.bar import Bar
 
-#from bet365_browser import Browser
+from bet365_browser import Browser
 from backtest import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
