@@ -57,19 +57,14 @@ class Backtest:
 
         return _data
 
-    def get_numbers_from_game(self):
+    def get_history_numbers(self):
         try:
-            _data = self.gdata[self.title_list[self.joinedIndex]
-                               ][self.pos_list[self.joinedIndex]: self.pos_list[self.joinedIndex]+10]
+            _data = self.gdata[self.list_pos: self.list_pos + 40]
         except:
             quit()
         _data.reverse()
-        for i in range(len(self.pos_list)):
-            self.pos_update_cnt[i] += 1
-            if self.pos_update_cnt[i] > 5 + randrange(3):
-                self.pos_list[i] += 1
-                self.pos_update_cnt[i] = 0
-
+        self.list_pos +=1
+        time.sleep(0.5)
         return _data
 
     def close_page(self):

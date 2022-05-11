@@ -1,6 +1,6 @@
 import time
 from progress.bar import Bar
-import bet365_browser  # import Browser
+# import bet365_browser  # import Browser
 import backtest  # import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
@@ -172,7 +172,7 @@ class AutoBet:
         return None
 
     # if the repetition exists, return key : eg: "Red"
-    def find_repetition(self, _g_title):
+    def find_repetition(self):
         for key in self.condition_list.keys():
             if self.exist_condition(_g_title, key) != None:
                 return key
@@ -487,6 +487,8 @@ class AutoBet:
             print(15*"-----")
             print("new number is  : ", self.gnlist[-1])
             
+            cur_cdt = self.find_repetition()
+            
             self.save_history_data(numbers, xx)
 
             if self.gameMode == 'READONLY':
@@ -507,7 +509,7 @@ class AutoBet:
                     _txt += '  $' + str(int(x/100))
             print(_txt)
 
-        #         cur_cdt = self.find_repetition(_g_title)
+            cur_cdt = self.find_repetition()
 
         #         if not cur_cdt:
         #             continue
