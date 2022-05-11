@@ -1,6 +1,6 @@
 import time
 from progress.bar import Bar
-# import bet365_browser  # import Browser
+import bet365_browser  # import Browser
 import backtest  # import Backtest
 import xml.etree.ElementTree as ET
 from time import gmtime, strftime
@@ -89,41 +89,7 @@ class AutoBet:
         else:
             self.outputMode = 'CONSOLE'
 
-        self.skip_list = myXMLtree.find(
-            'SkipList').text.replace(' ', '').split(',')
-        # print("skip list ", self.skip_list)
-        ############       Read parameters       ###############
-        params = myXMLtree.find('Parameters')
-        for child in params:
-            # print(child.tag)
-            self.conditions[child.tag] = {}
-            for item in child:
-                # print("\t", item.tag, item.text)
-                self.conditions[child.tag][item.tag] = int(item.text)
-
-        self.bet_normal_amount_1st = [int(s) for s in re.findall(
-            r'\b\d+\b', myXMLtree.find('_1st_stage_sr').text)]
-        self.bet_zero_amount_1st = [int(s) for s in re.findall(
-            r'\b\d+\b', myXMLtree.find('_1st_stage_00').text)]
-        self.bet_normal_amount_2nd = [int(s) for s in re.findall(
-            r'\b\d+\b', myXMLtree.find('_2nd_stage_sr').text)]
-        self.bet_zero_amount_2nd = [int(s) for s in re.findall(
-            r'\b\d+\b', myXMLtree.find('_2nd_stage_00').text)]
-        
-
-        self.max_round_1st = len(self.bet_normal_amount_1st)
-        if self.max_round_1st != len(self.bet_zero_amount_1st):
-            print("Mismatched bet amount of 1st stage!!!")
-            quit()
-
-        self.max_round_2nd = len(self.bet_normal_amount_2nd)
-        if self.max_round_2nd != len(self.bet_zero_amount_2nd):
-            print("Mismatched bet amount of 2nd stage!!!")
-            quit()
-
-
-
-
+      
         # print(self.bet_normal_amount_1st)
         # print(self.bet_zero_amount_1st)
         # print(self.bet_normal_amount_2nd)
