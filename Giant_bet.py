@@ -453,8 +453,7 @@ class AutoBet:
             print(15*"-----")
             print("new number is  : ", self.gnlist[-1])
             
-            cur_cdt = self.find_repetition()
-            
+     
             self.save_history_data(numbers, xx)
 
             if self.gameMode == 'READONLY':
@@ -475,7 +474,7 @@ class AutoBet:
                     _txt += '  $' + str(int(x/100))
             print(_txt)
 
-            cur_cdt = self.find_repetition()
+            # cur_cdt = self.find_repetition()
 
         #         if not cur_cdt:
         #             continue

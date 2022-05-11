@@ -309,6 +309,7 @@ class Browser:
     def double_click_for_action(self):
         actionChains = ActionChains(self.driver)
         actionChains.double_click(self.first_number_element).perform()
+        print("double clicked!")
         
         
         
