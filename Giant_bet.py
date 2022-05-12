@@ -41,6 +41,7 @@ class AutoBet:
         self.cdt_delta = {"D2": -2, "D1": -1,
                           "MID": 0, "P1": 1, "P2": 2, "P3": 3}
         
+        self.chip_pre_idx = 1
         
         self.read_conditions()
         if self.gameMode != 'BACKTEST':
@@ -199,7 +200,7 @@ class AutoBet:
             # return
             _amount = balance*100
 
-        pre_idx = -1
+        
         # print(self.chip_list)
 
         print("\t   The balance is \033[93m$" + str(balance) + '\033[0m')
@@ -210,15 +211,28 @@ class AutoBet:
             self.gameField.close_reality_check()
             for i in range(len(self.chip_list)):
                 _idx = len(self.chip_list) - 1 - i
-                if self.chip_list[_idx] > _amount or self.chip_list[_idx] == 0:
+                if self.chip_list[_idx] > _amount or self.chip_list[_idx] == 0 or self.chip_list[_idx] == 25:
                     continue
 
                 # self.gameField.close_reality_check()
-                if pre_idx != _idx:
-                    self.gameField.select_chip(_idx)
-                    # print(f"clicked chip{self.chip_list[_idx]}")
+                if self.chip_pre_idx != _idx:
+                    
+                    while True:
+                        if _idx > self.chip_pre_idx+2:
+                            self.chip_pre_idx+=2
+                            self.gameField.select_chip(self.chip_pre_idx)
+                        elif _idx<self.chip_pre_idx-2:
+                            self.chip_pre_idx-=2
+                            self.gameField.select_chip(self.chip_pre_idx)
+                        else:
+                            break
+                    if self.chip_pre_idx != _idx:
+                        self.chip_pre_idx = _idx
+                        self.gameField.select_chip(self.chip_pre_idx)
+                    
+                    print(f"clicked chip{self.chip_list[_idx]}, index is {_idx}")
                     self.gameField.close_reality_check()
-                    pre_idx = _idx
+                        
                 _not_betted = False
                 # self.gameField.close_reality_check()
                 self.gameField.click_key(_key)
