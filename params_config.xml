@@ -5,7 +5,7 @@
     <gameMode> REALGAME </gameMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
-    <dangerLevel> MID </dangerLevel>
+    <dangerLevel> D1 </dangerLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
@@ -196,12 +196,12 @@
         </Mega_Fire_Blaze_Roulette_Live>
 
         <Prestige_Roulette>
-            <Red> 10 </Red>
-            <Black> 10 </Black>
-            <Odd> 10 </Odd>
-            <Parity> 10 </Parity>
-            <Low> 10 </Low>
-            <High> 10 </High>
+            <Red> 11 </Red>
+            <Black> 11 </Black>
+            <Odd> 11 </Odd>
+            <Parity> 11 </Parity>
+            <Low> 11 </Low>
+            <High> 11 </High>
             <Dozen12> 19 </Dozen12>
             <Dozen13> 19 </Dozen13>
             <Dozen23> 19 </Dozen23>
@@ -335,12 +335,12 @@
             <Parity> 12 </Parity>
             <Low> 12 </Low>
             <High> 12 </High>
-            <Dozen12> 18 </Dozen12>
-            <Dozen13> 18 </Dozen13>
-            <Dozen23> 18 </Dozen23>
-            <Column12> 18 </Column12>
-            <Column13> 18 </Column13>
-            <Column23> 18 </Column23>
+            <Dozen12> 118 </Dozen12>
+            <Dozen13> 118 </Dozen13>
+            <Dozen23> 118 </Dozen23>
+            <Column12> 118 </Column12>
+            <Column13> 118 </Column13>
+            <Column23> 118 </Column23>
         </Spread_Bet_Roulette>
 
         <Super_Spin_Roulette>
