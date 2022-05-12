@@ -5,7 +5,7 @@
     <gameMode> REALGAME </gameMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
-    <dangerLevel> D1 </dangerLevel>
+    <dangerLevel> MID </dangerLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
