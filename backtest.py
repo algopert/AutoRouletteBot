@@ -66,7 +66,7 @@ class Backtest:
             quit()
         _data.reverse()
         self.list_pos +=1
-        time.sleep(0.5)
+        # time.sleep(0.1)
         return _data
 
     def close_page(self):

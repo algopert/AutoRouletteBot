@@ -2,14 +2,13 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> REALGAME </gameMode>
+    <gameMode> BACKTEST </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
     <dangerLevel> D1 </dangerLevel>
-
     
     <Odd> 4 </Odd>
     <Even> 4 </Even>

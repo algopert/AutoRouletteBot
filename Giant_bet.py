@@ -87,6 +87,8 @@ class AutoBet:
             r'\b\d+\b', myXMLtree.find('series1').text)]
         self.series2 = [int(s) for s in re.findall(
             r'\b\d+\b', myXMLtree.find('series2').text)]
+        
+        self.initial_amount = int(myXMLtree.find('initialAmount').text.replace(' ', ''))
 
 
         _outputMode = myXMLtree.find('outputMode').text
@@ -183,9 +185,11 @@ class AutoBet:
         return fidx
 
     def bet_to_roulette(self, _amount, _key):
+        
+        print("bet to [", _key, "],  amount is :", '  $' + str(round(_amount/100, 1)))
+        
         if self.gameMode == 'SIMULATION':
             return
-
         balance = self.gameField.get_balance()
         # print(15*"-------")
 
@@ -450,7 +454,23 @@ class AutoBet:
         print("end")
         
         self.total_profit = 0
+        _temp_multiplier = 1
         
+        self.chip_list = self.gameField.get_chip_reference()
+        if not self.chip_list:
+            print('Faied to update chip_list!')
+            return
+
+        _txt = '\tChip list updated :'
+        for x in self.chip_list:
+            if x == 0:
+                continue
+            if x < 100:
+                _txt += '  $' + str(round(x/100.0, 2))
+            else:
+                _txt += '  $' + str(int(x/100))
+        print(_txt)
+
         while True:
             self.read_conditions()
             self.gameField.close_reality_check()
@@ -467,28 +487,20 @@ class AutoBet:
                 continue
             self.gameField.double_click_for_action()
             print(15*"-----")
-            print("new number is  : ", self.gnlist[-1])
+            new_num = self.gnlist[-1]
+            print("new number is  : ", new_num)
 
             self.save_history_data(numbers, xx)
 
             if self.gameMode == 'READONLY':
                 continue
 
-            self.chip_list = self.gameField.get_chip_reference()
-            if not self.chip_list:
-                print('Faied to update chip_list!')
-                return
 
-            _txt = '\tChip list updated :'
-            for x in self.chip_list:
-                if x == 0:
-                    continue
-                if x < 100:
-                    _txt += '  $' + str(round(x/100.0, 1))
-                else:
-                    _txt += '  $' + str(int(x/100))
-            print(_txt)
-
+            
+            if new_num== -2 or new_num== -7:
+                _temp_multiplier *= abs(new_num)
+                continue
+            
             cur_cdt = self.find_repetition()
             print(cur_cdt)
             for _cdt in self.condition_list.keys():
@@ -501,19 +513,21 @@ class AutoBet:
                 if self.bet_flag[_cdt] and not _cdt in cur_cdt:
                     print("bet is completed : ", _bet_key)
 
-                    _profit = _series[self.bet_stage[_bet_key]] * self.ratio[_bet_key] - self.bet_lost[_bet_key]
-                    print("Profit is : ------   ", _profit)
+                    _profit = _series[self.bet_stage[_bet_key]] * self.ratio[_bet_key] * _temp_multiplier*self.initial_amount - self.bet_lost[_bet_key]
+                    
+                    print("Profit is : ------     $"+ str(round(_profit/100, 3)))
                     self.total_profit += _profit
                     self.bet_stage[_bet_key] = 0
                     self.bet_flag[_cdt] = False
-                    print(">>  Total Profit is :", self.total_profit)
+                    print(">>  Total Profit is :   $"+ str(round(self.total_profit/100, 3)))
                 elif self.bet_flag[_cdt] and _cdt in cur_cdt:
-                    
-                    self.bet_lost[_bet_key] += _series[self.bet_stage[_bet_key]]
-                    print("lost is : in ",_bet_key, ",  amount is :",self.bet_lost[_bet_key])
+                    self.bet_lost[_bet_key] += _series[self.bet_stage[_bet_key]] * self.initial_amount
+                    print("lost is : in ",_bet_key, ",  amount is :  $" + str(round(self.bet_lost[_bet_key]/100,1)))
                     print("bet again")
                     self.bet_stage[_bet_key] +=1
-                    print("bet to [", _bet_key, "], amount is :", _series[self.bet_stage[_bet_key]])
+                    
+                    _bet_amount = _series[self.bet_stage[_bet_key]] * self.initial_amount
+                    self.bet_to_roulette(_bet_amount, _bet_key)
 
             for _cdt in cur_cdt:
                 if not self.bet_flag[_cdt]:
@@ -529,6 +543,8 @@ class AutoBet:
                     else:
                         _series = self.series2
                     
-                    print("bet to [", _bet_key, "],  amount is :", _series[self.bet_stage[_bet_key]])
-                    
-                    
+                    _bet_amount = _series[self.bet_stage[_bet_key]] * self.initial_amount
+                    self.bet_to_roulette(_bet_amount, _bet_key)
+            # if _temp_multiplier!=1:
+            #     time.sleep(20)        
+            _temp_multiplier = 1         

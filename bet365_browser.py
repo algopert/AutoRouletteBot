@@ -279,26 +279,20 @@ class Browser:
     def click_key(self, _key):
         # return
         _cls_name = {
-                 "Low": "roulette-table-cell_side-low",
-                 "High": "roulette-table-cell_side-high",
-                 "Odd": "roulette-table-cell_side-odd",
-                 "Parity": "roulette-table-cell_side-even",
-                 "Red": "roulette-table-cell_side-red",
-                 "Black": "roulette-table-cell_side-black",
-                 "Zero": "roulette-table-cell_straight-0",
-                 "Zero0": "roulette-table-cell_straight-00",
-                 "Bonus": "roulette-table-cell_straight-bonus",
-                 "1st_Dozen" : "roulette-table-cell_side-first-dozen",
-                 "2nd_Dozen" : "roulette-table-cell_side-second-dozen",
-                 "3rd_Dozen" : "roulette-table-cell_side-third-dozen",
-                 "Bottom_Column" : "roulette-table-cell_side-bottom-column",
-                 "Middle_Column" : "roulette-table-cell_side-middle-column",
-                 "Top_Column" : "roulette-table-cell_side-top-column"
+                 "Num1": "swl-bet-place__bet-place-1",
+                 "Num2": "swl-bet-place__bet-place-2",
+                 "Num5": "swl-bet-place__bet-place-5",
+                 "Num10": "swl-bet-place__bet-place-10",
+                 "Num20": "swl-bet-place__bet-place-20",
+                 "Num40": "swl-bet-place__bet-place-40",
+                 "Odd": "swl-bet-place__bet-place-odd",
+                 "Even": "swl-bet-place__bet-place-even",
+                 "multiplier": "swl-bet-place__bet-place-multiplier"
                  }
         # print(20*'-----------')
         # for key in _cls_name.keys():
         try:
-            self.single_item('(//div[@class="roulette-game-area__main-digital-table"])').find_element(By.CLASS_NAME, _cls_name[_key]).click()
+            self.single_item('(//div[@class="swl-digital-table"])').find_element(By.CLASS_NAME, _cls_name[_key]).click()
             time.sleep(0.3)
             # print(f"click {_key}")
             # print(item)
