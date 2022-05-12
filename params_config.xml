@@ -8,12 +8,12 @@
     <outputMode> TELEGRAM </outputMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
-    <dangerLevel> D1 </dangerLevel>
+    <dangerLevel> MID </dangerLevel>
     
-    <Odd> 4 </Odd>
+    <Odd> 3 </Odd>
     <Even> 4 </Even>
-    <None2> 8 </None2>
-    <None1> 5 </None1>
+    <None2> 10 </None2>
+    <None1> 3 </None1>
 
     <initialAmount> 10 </initialAmount>
     <series2> 1, 2, 3, 6, 12, 25, 50, 100, 200, 400, 800, 1500, 2800, 5200, 10000 </series2>
