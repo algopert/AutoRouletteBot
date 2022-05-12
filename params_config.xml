@@ -2,7 +2,7 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> BACKTEST </gameMode>
+    <gameMode> REALGAME </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
@@ -13,7 +13,7 @@
     
     <Odd> 4 </Odd>
     <Even> 4 </Even>
-    <None2> 5 </None2>
+    <None2> 10 </None2>
     <None1> 5 </None1>
 
     <initialAmount> 10 </initialAmount>
