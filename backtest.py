@@ -28,18 +28,17 @@ class Backtest:
         self.switch_tabs()
 
         _path = './backtest_data'
+        
         for file in os.listdir(_path):
             if not file.endswith(".csv"):
                 continue
             con_file = open(_path + '/' + file, 'r')
             Lines = con_file.readlines()
             con_file.close()
-            _key = file[:-4]
-
-            self.title_list.append(_key)
-            self.pos_list.append(0)
-            self.pos_update_cnt.append(0)
-            self.gdata[_key] = list(map(int, Lines))
+        print(Lines)
+        self.list_pos = 0 
+        self.gdata = list(map(int, Lines))
+        print(self.gdata)
 
     def get_numbers_from_dashboard(self, index):
 
@@ -56,7 +55,10 @@ class Backtest:
             self.pos_update_cnt[index] = 0
 
         return _data
-
+    def switch_to_giant_roulette(self):
+        print("switched to giant roulette")
+    def double_click_for_action(self):
+        print("double_click_for_action")
     def get_history_numbers(self):
         try:
             _data = self.gdata[self.list_pos: self.list_pos + 40]

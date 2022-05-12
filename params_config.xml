@@ -2,15 +2,22 @@
 <metadata>
 
     <!--BACKTEST REALGAME READONLY SIMULATION-->
-    <gameMode> REALGAME </gameMode>
-
-    <!-- LOW MIDDLE HIGH -->
-    <dangerLevel> HIGH </dangerLevel>
+    <gameMode> BACKTEST </gameMode>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
 
-    <noneTwoLength> 4 </noneTwoLength>
+    <!-- D2 D1 MID P1 P2 P3 -->
+    <dangerLevel> D1 </dangerLevel>
+
     
+    <Odd> 4 </Odd>
+    <Even> 4 </Even>
+    <None2> 5 </None2>
+    <None1> 5 </None1>
+
+    <initialAmount> 10 </initialAmount>
+    <series2> 1, 2, 3, 6, 12, 25, 50, 100, 200, 400, 800, 1500, 2800, 5200, 10000 </series2>
+    <series1> 1, 2, 5, 12, 30, 80, 200, 500, 1200, 3000, 8000</series1>
 
 </metadata>
