@@ -302,7 +302,9 @@ class Browser:
         # print(20*'-----------')
     def double_click_for_action(self):
         actionChains = ActionChains(self.driver)
-        actionChains.double_click(self.first_number_element).perform()
+        
+        ele =self.single_item('(//div[@class=""video-player"])')
+        actionChains.double_click(ele).perform()
         print("double clicked!")
         
         
