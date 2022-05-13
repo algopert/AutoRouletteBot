@@ -37,8 +37,8 @@
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
-            <Red> 10 </Red>
-            <Black> 10 </Black>
+            <Red> 13 </Red>
+            <Black> 13 </Black>
             <Odd> 10 </Odd>
             <Parity> 10 </Parity>
             <Low> 10 </Low>
@@ -52,8 +52,8 @@
         </American_Roulette>
 
         <Auto_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -66,8 +66,8 @@
             <Column23> 18 </Column23>
         </Auto_Roulette>
         <bet365_Dutch_Roulette>
-            <Red> 12 </Red>
-            <Black> 12 </Black>
+            <Red> 15 </Red>
+            <Black> 15 </Black>
             <Odd> 12 </Odd>
             <Parity> 12 </Parity>
             <Low> 12 </Low>
@@ -80,8 +80,8 @@
             <Column23> 17 </Column23>
         </bet365_Dutch_Roulette>
         <bet365_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -95,8 +95,8 @@
         </bet365_Roulette>
         
         <Deutsches_Roulette>
-            <Red> 13 </Red>
-            <Black> 13 </Black>
+            <Red> 15 </Red>
+            <Black> 15 </Black>
             <Odd> 13 </Odd>
             <Parity> 13 </Parity>
             <Low> 13 </Low>
@@ -110,8 +110,8 @@
         </Deutsches_Roulette>
 
         <Football_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -135,9 +135,8 @@
         </French_Roulette>
 
         <Greek_Quantum_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
-            <Odd> 11 </Odd>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
             <High> 11 </High>
@@ -150,8 +149,8 @@
         </Greek_Quantum_Roulette>
 
         <Greek_Roulette>
-            <Red> 12 </Red>
-            <Black> 12 </Black>
+            <Red> 15 </Red>
+            <Black> 15 </Black>
             <Odd> 12 </Odd>
             <Parity> 12 </Parity>
             <Low> 12 </Low>
@@ -165,8 +164,8 @@
         </Greek_Roulette>
 
         <Hindi_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -196,8 +195,8 @@
         </Mega_Fire_Blaze_Roulette_Live>
 
         <Prestige_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -213,8 +212,8 @@
         </Prestige_Roulette>
 
         <Quantum_Auto_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -228,8 +227,8 @@
         </Quantum_Auto_Roulette>
 
         <Quantum_Roulette_Italiana>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -243,8 +242,8 @@
         </Quantum_Roulette_Italiana>
 
         <Quantum_Roulette_Live>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -257,8 +256,8 @@
             <Column23> 16 </Column23>
         </Quantum_Roulette_Live>
         <Roleta_Brasileira>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -271,8 +270,8 @@
             <Column23> 15 </Column23>
         </Roleta_Brasileira>
         <Roulette>
-            <Red> 12 </Red>
-            <Black> 12 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 12 </Odd>
             <Parity> 12 </Parity>
             <Low> 12 </Low>
@@ -285,8 +284,8 @@
             <Column23> 30 </Column23>
         </Roulette>
         <Roulette_Italiana>
-            <Red> 12 </Red>
-            <Black> 12 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 12 </Odd>
             <Parity> 12 </Parity>
             <Low> 12 </Low>
@@ -300,8 +299,8 @@
         </Roulette_Italiana>
 
         <Speed_Auto_Roulette>
-            <Red> 13 </Red>
-            <Black> 13 </Black>
+            <Red> 16 </Red>
+            <Black> 16 </Black>
             <Odd> 13 </Odd>
             <Parity> 13 </Parity>
             <Low> 13 </Low>
@@ -315,8 +314,8 @@
         </Speed_Auto_Roulette>
             
         <Speed_Roulette>
-            <Red> 12 </Red>
-            <Black> 12 </Black>
+            <Red> 15 </Red>
+            <Black> 15 </Black>
             <Odd> 12 </Odd>
             <Parity> 12 </Parity>
             <Low> 12 </Low>
@@ -329,8 +328,8 @@
             <Column23> 18 </Column23>
         </Speed_Roulette>
         <Spread_Bet_Roulette>
-            <Red> 12 </Red>
-            <Black> 12 </Black>
+            <Red> 15 </Red>
+            <Black> 15 </Black>
             <Odd> 12 </Odd>
             <Parity> 12 </Parity>
             <Low> 12 </Low>
@@ -344,8 +343,8 @@
         </Spread_Bet_Roulette>
 
         <Super_Spin_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -359,8 +358,8 @@
         </Super_Spin_Roulette>
 
         <Triumph_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -373,8 +372,8 @@
             <Column23> 15 </Column23>
         </Triumph_Roulette>
         <Turkish_Roulette>
-            <Red> 11 </Red>
-            <Black> 11 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 11 </Odd>
             <Parity> 11 </Parity>
             <Low> 11 </Low>
@@ -387,8 +386,8 @@
             <Column23> 15 </Column23>
         </Turkish_Roulette>
         <UK_Roulette>
-            <Red> 10 </Red>
-            <Black> 10 </Black>
+            <Red> 14 </Red>
+            <Black> 14 </Black>
             <Odd> 10 </Odd>
             <Parity> 10 </Parity>
             <Low> 10 </Low>
