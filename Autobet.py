@@ -54,16 +54,14 @@ class AutoBet:
                             }
         
         self.read_conditions()
+        self.telegram_bot = telegram.Bot(token=self.bot_token)
+        
         if self.gameMode !='BACKTEST':
             self.path_history = './history'
             Path(self.path_history).mkdir(parents=True, exist_ok=True)
 
             self.path_history += '/' + strftime("%Y_%m_%d_%H_%M_%S", gmtime())
             Path(self.path_history).mkdir(parents=True, exist_ok=True)
-
-        self.CHANNEL_ID = '-1001531528873'
-        self.telegram_bot = telegram.Bot(
-            token='5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k')
 
     def read_conditions(self):
 
@@ -83,6 +81,8 @@ class AutoBet:
             
         self.dangerLevel = myXMLtree.find('dangerLevel').text.replace(' ', '')
         
+        self.CHANNEL_ID = '-100' + myXMLtree.find('channel_ID').text.replace(' ', '')
+        self.bot_token = myXMLtree.find('botToken').text.replace(' ', '')
 
         _outputMode = myXMLtree.find('outputMode').text
 
@@ -374,7 +374,7 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    if self.gameMode != 'BACKTEST':
+                    if self.gameMode != 'BACKTEST' and self.outputMode=='TELEGRAM':
                         self.telegram_bot.sendMessage(
                             chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
@@ -391,7 +391,7 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    if self.gameMode != 'BACKTEST':
+                    if self.gameMode != 'BACKTEST' and self.outputMode=='TELEGRAM':
                         self.telegram_bot.sendMessage(
                             chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
@@ -409,8 +409,9 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST' and self.outputMode=='TELEGRAM':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 break
@@ -424,8 +425,9 @@ class AutoBet:
                 print(msg)
                 msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
                 try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+                    if self.gameMode != 'BACKTEST' and self.outputMode=='TELEGRAM':
+                        self.telegram_bot.sendMessage(
+                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
                 except:
                     print("telegram error!")
                 stage = 0

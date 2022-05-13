@@ -17,7 +17,10 @@
     
     <_2nd_stage_sr> 1, 3, 5, 10, 20, 40, 70, 120, 250, 500, 1000, 2000 </_2nd_stage_sr>
     <_2nd_stage_00> 0, 1, 1,  2,  3,  5, 10,  14,  25,  50,  100,  200 </_2nd_stage_00>
-
+    
+    <channel_ID> 1531528873 </channel_ID>
+    <botToken> 5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k </botToken>
+    
     <Parameters>
         <Age_Of_The_Gods_Bonus_Roulette>
             <Red> 6 </Red>
