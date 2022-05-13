@@ -23,7 +23,7 @@
             <Red> 6 </Red>
             <Black> 6 </Black>
             <Odd> 6 </Odd>
-            <Parity> 6 </Parity>
+            <Even> 6 </Even>
             <Low> 6 </Low>
             <High> 6 </High>
             <Dozen12> 14 </Dozen12>
@@ -32,15 +32,15 @@
             <Column12> 14 </Column12>
             <Column13> 14 </Column13>
             <Column23> 14 </Column23>
-            <InitialAmount> 100 </InitialAmount>
-            <InitialZeroAmount>100 </InitialZeroAmount>
+            <1st_InitialAmount> 100 </1st_InitialAmount>
+            <2nd_InitialAmount> 100 </2nd_InitialAmount>
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
             <Red> 13 </Red>
             <Black> 13 </Black>
             <Odd> 10 </Odd>
-            <Parity> 10 </Parity>
+            <Even> 10 </Even>
             <Low> 10 </Low>
             <High> 10 </High>
             <Dozen12> 15 </Dozen12>
@@ -55,7 +55,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 20 </Dozen12>
@@ -69,7 +69,7 @@
             <Red> 15 </Red>
             <Black> 15 </Black>
             <Odd> 12 </Odd>
-            <Parity> 12 </Parity>
+            <Even> 12 </Even>
             <Low> 12 </Low>
             <High> 12 </High>
             <Dozen12> 17 </Dozen12>
@@ -83,7 +83,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 18 </Dozen12>
@@ -92,13 +92,15 @@
             <Column12> 18 </Column12>
             <Column13> 18 </Column13>
             <Column23> 18 </Column23>
+            <1st_InitialAmount> 200 </1st_InitialAmount>
+            <2nd_InitialAmount> 100 </2nd_InitialAmount>
         </bet365_Roulette>
         
         <Deutsches_Roulette>
             <Red> 15 </Red>
             <Black> 15 </Black>
             <Odd> 13 </Odd>
-            <Parity> 13 </Parity>
+            <Even> 13 </Even>
             <Low> 13 </Low>
             <High> 13 </High>
             <Dozen12> 20 </Dozen12>
@@ -113,7 +115,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 16 </Dozen12>
@@ -129,7 +131,7 @@
             <Red> 99 </Red>
             <Black> 99 </Black>
             <Odd> 99 </Odd>
-            <Parity> 7 </Parity>
+            <Even> 7 </Even>
             <Low> 99 </Low>
             <High> 99 </High>
         </French_Roulette>
@@ -137,7 +139,7 @@
         <Greek_Quantum_Roulette>
             <Red> 14 </Red>
             <Black> 14 </Black>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 15 </Dozen12>
@@ -152,7 +154,7 @@
             <Red> 15 </Red>
             <Black> 15 </Black>
             <Odd> 12 </Odd>
-            <Parity> 12 </Parity>
+            <Even> 12 </Even>
             <Low> 12 </Low>
             <High> 12 </High>
             <Dozen12> 15 </Dozen12>
@@ -167,7 +169,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 18 </Dozen12>
@@ -183,7 +185,7 @@
             <Red> 100 </Red>
             <Black> 100 </Black>
             <Odd> 100 </Odd>
-            <Parity> 100 </Parity>
+            <Even> 100 </Even>
             <Low> 100 </Low>
             <High> 100 </High>
             <Dozen12> 190 </Dozen12>
@@ -198,7 +200,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 19 </Dozen12>
@@ -207,15 +209,15 @@
             <Column12> 19 </Column12>
             <Column13> 19 </Column13>
             <Column23> 19 </Column23>
-            <InitialAmount> 100 </InitialAmount>
-            <InitialZeroAmount> 100</InitialZeroAmount>
+            <1st_InitialAmount> 100 </1st_InitialAmount>
+            <2nd_InitialAmount> 100</2nd_InitialAmount>
         </Prestige_Roulette>
 
         <Quantum_Auto_Roulette>
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 20 </Dozen12>
@@ -230,7 +232,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 18 </Dozen12>
@@ -245,7 +247,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 16 </Dozen12>
@@ -259,7 +261,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 15 </Dozen12>
@@ -273,7 +275,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 12 </Odd>
-            <Parity> 12 </Parity>
+            <Even> 12 </Even>
             <Low> 12 </Low>
             <High> 12 </High>
             <Dozen12> 20 </Dozen12>
@@ -287,7 +289,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 12 </Odd>
-            <Parity> 12 </Parity>
+            <Even> 12 </Even>
             <Low> 12 </Low>
             <High> 12 </High>
             <Dozen12> 18 </Dozen12>
@@ -302,7 +304,7 @@
             <Red> 16 </Red>
             <Black> 16 </Black>
             <Odd> 13 </Odd>
-            <Parity> 13 </Parity>
+            <Even> 13 </Even>
             <Low> 13 </Low>
             <High> 13 </High>
             <Dozen12> 22 </Dozen12>
@@ -317,7 +319,7 @@
             <Red> 15 </Red>
             <Black> 15 </Black>
             <Odd> 12 </Odd>
-            <Parity> 12 </Parity>
+            <Even> 12 </Even>
             <Low> 12 </Low>
             <High> 12 </High>
             <Dozen12> 18 </Dozen12>
@@ -331,7 +333,7 @@
             <Red> 15 </Red>
             <Black> 15 </Black>
             <Odd> 12 </Odd>
-            <Parity> 12 </Parity>
+            <Even> 12 </Even>
             <Low> 12 </Low>
             <High> 12 </High>
             <Dozen12> 118 </Dozen12>
@@ -346,7 +348,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 15 </Dozen12>
@@ -361,7 +363,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 15 </Dozen12>
@@ -375,7 +377,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 11 </Odd>
-            <Parity> 11 </Parity>
+            <Even> 11 </Even>
             <Low> 11 </Low>
             <High> 11 </High>
             <Dozen12> 15 </Dozen12>
@@ -389,7 +391,7 @@
             <Red> 14 </Red>
             <Black> 14 </Black>
             <Odd> 10 </Odd>
-            <Parity> 10 </Parity>
+            <Even> 10 </Even>
             <Low> 10 </Low>
             <High> 10 </High>
             <Dozen12> 22 </Dozen12>
@@ -398,8 +400,8 @@
             <Column12> 22 </Column12>
             <Column13> 20 </Column13>
             <Column23> 20 </Column23>
-            <InitialAmount> 100 </InitialAmount>
-            <InitialZeroAmount> 100 </InitialZeroAmount>
+            <1st_InitialAmount> 100 </1st_InitialAmount>
+            <2nd_InitialAmount> 100 </2nd_InitialAmount>
         </UK_Roulette>
 
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
@@ -408,7 +410,7 @@
             <Red> 100 </Red>
             <Black> 100 </Black>
             <Odd> 100 </Odd>
-            <Parity> 100 </Parity>
+            <Even> 100 </Even>
             <Low> 100 </Low>
             <High> 100 </High>
             <Dozen12> 150 </Dozen12>
@@ -417,8 +419,8 @@
             <Column12> 150 </Column12>
             <Column13> 150 </Column13>
             <Column23> 150 </Column23>
-            <InitialAmount> 50 </InitialAmount>
-            <InitialZeroAmount> 50 </InitialZeroAmount>
+            <1st_InitialAmount> 50 </1st_InitialAmount>
+            <2nd_InitialAmount> 50 </2nd_InitialAmount>
         </Default>
     </Parameters>
 

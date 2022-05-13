@@ -23,7 +23,7 @@ class AutoBet:
         self.condition_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
                                "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
                                "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
-                               "Parity": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
+                               "Even": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
                                "Low": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
                                "High": [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
                                "Dozen12": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
@@ -41,8 +41,8 @@ class AutoBet:
         self.skip_list = []
         self.reverse_key = {"Red": "Black",
                             "Black": "Red",
-                            "Odd": "Parity",
-                            "Parity": "Odd",
+                            "Odd": "Even",
+                            "Even": "Odd",
                             "Low": "High",
                             "High": "Low",
                             "Dozen12": "3rd_Dozen",
@@ -260,16 +260,16 @@ class AutoBet:
         # quit()
 
     def calc_normal_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['InitialAmount'] * self.bet_normal_amount_1st[_stage]
+        return self.conditions[_g_title]['1st_InitialAmount'] * self.bet_normal_amount_1st[_stage]
 
     def calc_normal_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['InitialAmount'] * self.bet_normal_amount_2nd[_stage]
+        return self.conditions[_g_title]['2nd_InitialAmount'] * self.bet_normal_amount_2nd[_stage]
 
     def calc_zero_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_1st[_stage]
+        return self.conditions[_g_title]['1st_InitialAmount'] * self.bet_zero_amount_1st[_stage]
 
     def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
+        return self.conditions[_g_title]['2nd_InitialAmount'] * self.bet_zero_amount_2nd[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
@@ -444,11 +444,11 @@ class AutoBet:
         except:
             self.conditions[_g_title] = {}
         try:
-            self.conditions[_g_title]['InitialAmount']
-            self.conditions[_g_title]['InitialZeroAmount']
+            self.conditions[_g_title]['1st_InitialAmount']
+            self.conditions[_g_title]['2nd_InitialAmount']
         except:
-            self.conditions[_g_title]['InitialAmount'] = self.conditions['Default']['InitialAmount']
-            self.conditions[_g_title]['InitialZeroAmount'] = self.conditions['Default']['InitialZeroAmount']
+            self.conditions[_g_title]['1st_InitialAmount'] = self.conditions['Default']['1st_InitialAmount']
+            self.conditions[_g_title]['2nd_InitialAmount'] = self.conditions['Default']['2nd_InitialAmount']
 
     def save_history_data(self, _g_title, numbers, cnt):
         if self.gameMode == 'BACKTEST': return
