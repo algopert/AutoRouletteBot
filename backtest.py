@@ -35,10 +35,10 @@ class Backtest:
             con_file = open(_path + '/' + file, 'r')
             Lines = con_file.readlines()
             con_file.close()
-        print(Lines)
+        # print(Lines)
         self.list_pos = 0 
         self.gdata = list(map(int, Lines))
-        print(self.gdata)
+        # print(self.gdata)
 
     def get_numbers_from_dashboard(self, index):
 
@@ -58,7 +58,8 @@ class Backtest:
     def switch_to_giant_roulette(self):
         print("switched to giant roulette")
     def double_click_for_action(self):
-        print("double_click_for_action")
+        pass
+        #print("double_click_for_action")
     def get_history_numbers(self):
         try:
             _data = self.gdata[self.list_pos: self.list_pos + 40]
@@ -94,7 +95,7 @@ class Backtest:
         # pass
 
     def get_balance(self):
-        dollar = "R$ 1234.56"
+        dollar = "R$ 800.56"
         return float(re.findall('[0-9.]+', dollar)[0])
 
     def select_chip(self, _index):
