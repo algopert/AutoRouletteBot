@@ -7,10 +7,13 @@ except ImportError:
 
 from Cython.Distutils import build_ext
 
-ext_modules = [Extension("Autobet", ["Autobet.pyx"]), Extension(
-    "bet365_browser", ["bet365_browser.pyx"])]
+ext_modules = [
+    Extension("Autobet", ["Autobet.pyx"]), 
+    Extension("bet365_browser", ["bet365_browser.pyx"])]
 
 setup(
-    name='Generic model class',
+    name='Auto bet classes',
     cmdclass={'build_ext': build_ext},
     ext_modules=ext_modules)
+
+#python setup.py build_ext --inplace
