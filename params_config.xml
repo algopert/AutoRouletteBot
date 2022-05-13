@@ -5,7 +5,7 @@
     <gameMode> REALGAME </gameMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
-    <dangerLevel> D1 </dangerLevel>
+    <riskLevel> D2 </riskLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
@@ -32,8 +32,8 @@
             <Column12> 14 </Column12>
             <Column13> 14 </Column13>
             <Column23> 14 </Column23>
-            <1st_InitialAmount> 100 </1st_InitialAmount>
-            <2nd_InitialAmount> 100 </2nd_InitialAmount>
+            <InitialAmount_1st> 100 </InitialAmount_1st>
+            <InitialAmount_2nd> 100 </InitialAmount_2nd>
         </Age_Of_The_Gods_Bonus_Roulette>
 
         <American_Roulette>
@@ -92,8 +92,8 @@
             <Column12> 18 </Column12>
             <Column13> 18 </Column13>
             <Column23> 18 </Column23>
-            <1st_InitialAmount> 200 </1st_InitialAmount>
-            <2nd_InitialAmount> 100 </2nd_InitialAmount>
+            <InitialAmount_1st> 200 </InitialAmount_1st>
+            <InitialAmount_2nd> 100 </InitialAmount_2nd>
         </bet365_Roulette>
         
         <Deutsches_Roulette>
@@ -209,8 +209,8 @@
             <Column12> 19 </Column12>
             <Column13> 19 </Column13>
             <Column23> 19 </Column23>
-            <1st_InitialAmount> 100 </1st_InitialAmount>
-            <2nd_InitialAmount> 100</2nd_InitialAmount>
+            <InitialAmount_1st> 100 </InitialAmount_1st>
+            <InitialAmount_2nd> 100</InitialAmount_2nd>
         </Prestige_Roulette>
 
         <Quantum_Auto_Roulette>
@@ -400,8 +400,8 @@
             <Column12> 22 </Column12>
             <Column13> 20 </Column13>
             <Column23> 20 </Column23>
-            <1st_InitialAmount> 100 </1st_InitialAmount>
-            <2nd_InitialAmount> 100 </2nd_InitialAmount>
+            <InitialAmount_1st> 100 </InitialAmount_1st>
+            <InitialAmount_2nd> 100 </InitialAmount_2nd>
         </UK_Roulette>
 
         <Who_Wants_To_Be_a_Millionaire_Roulette></Who_Wants_To_Be_a_Millionaire_Roulette>
@@ -419,8 +419,8 @@
             <Column12> 150 </Column12>
             <Column13> 150 </Column13>
             <Column23> 150 </Column23>
-            <1st_InitialAmount> 50 </1st_InitialAmount>
-            <2nd_InitialAmount> 50 </2nd_InitialAmount>
+            <InitialAmount_1st> 50 </InitialAmount_1st>
+            <InitialAmount_2nd> 50 </InitialAmount_2nd>
         </Default>
     </Parameters>
 

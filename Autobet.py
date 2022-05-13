@@ -81,7 +81,7 @@ class AutoBet:
             self.gameMode = 'READONLY'
             
             
-        self.dangerLevel = myXMLtree.find('dangerLevel').text.replace(' ', '')
+        self.riskLevel = myXMLtree.find('riskLevel').text.replace(' ', '')
         
 
         _outputMode = myXMLtree.find('outputMode').text
@@ -157,7 +157,7 @@ class AutoBet:
 
         
         
-        cnt = self.conditions[_g_title][_key] + self.cdt_delta[self.dangerLevel]
+        cnt = self.conditions[_g_title][_key] + self.cdt_delta[self.riskLevel]
         glen = len(self.games[_g_title])
         if cnt > glen:
             return None
@@ -260,16 +260,16 @@ class AutoBet:
         # quit()
 
     def calc_normal_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['1st_InitialAmount'] * self.bet_normal_amount_1st[_stage]
+        return self.conditions[_g_title]['InitialAmount_1st'] * self.bet_normal_amount_1st[_stage]
 
     def calc_normal_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['2nd_InitialAmount'] * self.bet_normal_amount_2nd[_stage]
+        return self.conditions[_g_title]['InitialAmount_2nd'] * self.bet_normal_amount_2nd[_stage]
 
     def calc_zero_bet_amount_1st(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['1st_InitialAmount'] * self.bet_zero_amount_1st[_stage]
+        return self.conditions[_g_title]['InitialAmount_1st'] * self.bet_zero_amount_1st[_stage]
 
     def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
-        return self.conditions[_g_title]['2nd_InitialAmount'] * self.bet_zero_amount_2nd[_stage]
+        return self.conditions[_g_title]['InitialAmount_2nd'] * self.bet_zero_amount_2nd[_stage]
 
     def play_roulette(self, _g_title, _cur_key):
         print("\n\tPlease wait! The bot is deciding whether to place a bet...")
@@ -444,11 +444,11 @@ class AutoBet:
         except:
             self.conditions[_g_title] = {}
         try:
-            self.conditions[_g_title]['1st_InitialAmount']
-            self.conditions[_g_title]['2nd_InitialAmount']
+            self.conditions[_g_title]['InitialAmount_1st']
+            self.conditions[_g_title]['InitialAmount_2nd']
         except:
-            self.conditions[_g_title]['1st_InitialAmount'] = self.conditions['Default']['1st_InitialAmount']
-            self.conditions[_g_title]['2nd_InitialAmount'] = self.conditions['Default']['2nd_InitialAmount']
+            self.conditions[_g_title]['InitialAmount_1st'] = self.conditions['Default']['InitialAmount_1st']
+            self.conditions[_g_title]['InitialAmount_2nd'] = self.conditions['Default']['InitialAmount_2nd']
 
     def save_history_data(self, _g_title, numbers, cnt):
         if self.gameMode == 'BACKTEST': return
@@ -567,7 +567,7 @@ class AutoBet:
                 
                 
                 print(f"\n\t    👀 found repetition : " +
-                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {self.cdt_delta[self.dangerLevel]} " + "\033[0m")
+                      '\033[93m' + f"{cur_cdt} - {self.conditions[_g_title][cur_cdt]}  , Delta : {self.cdt_delta[self.riskLevel]} " + "\033[0m")
                 # self.gameField.wait_key('a')
 
                 # if ppp == i:

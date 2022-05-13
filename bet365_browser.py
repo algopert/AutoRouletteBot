@@ -47,7 +47,7 @@ class Browser:
         while True:
             if keyboard.is_pressed("q"):
                 break
-        print("Robyurii Bet365 bot ver.10.0")
+        print("Bet365 Automatic Roulette Bot ver.10.0")
         self.driver.implicitly_wait(0)
         open("results.html", "w", encoding="utf8").write(
             self.driver.page_source)
@@ -117,7 +117,7 @@ class Browser:
             ii = (ii+1) % 2
             if _series_que[0] == _series_que[1]:
                 return _series_que[0].copy()
-
+            time.sleep(0.1)
         
         
 
