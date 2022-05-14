@@ -5,15 +5,15 @@
     <gameMode> REALGAME </gameMode>
 
     <!-- D2 D1 MID P1 P2 P3 -->
-    <riskLevel> D2 </riskLevel>
+    <riskLevel> MID </riskLevel>
 
     <!--TELEGRAM CONSOLE  -->
     <outputMode> TELEGRAM </outputMode>
     <SkipList> BET365_Trivia_Show, Triumph_French_Roulette , Age_Of_The_Gods_Bonus_Roulette, Football_French_Roulette, French_Roulette , Who_Wants_To_Be_a_Millionaire_Roulette, Mega_Fire_Blaze_Roulette_Live, bet365_Dutch_Roulette </SkipList>
     <!-- # 1, 3,  -->
     <!-- 0, 0,   -->
-    <_1st_stage_sr> 1, 3, 10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr> 
-    <_1st_stage_00> 0, 0,  1,  2,  5,  10,  25 ,  50,  100,  220 </_1st_stage_00>
+    <_1st_stage_sr>  10, 25, 60, 150, 350 , 800, 1800, 4000 </_1st_stage_sr> 
+    <_1st_stage_00>  1,  2,  5,  10,  25 ,  50,  100,  220 </_1st_stage_00>
     
     <_2nd_stage_sr> 1, 3, 5, 10, 20, 40, 70, 120, 250, 500, 1000, 2000 </_2nd_stage_sr>
     <_2nd_stage_00> 0, 1, 1,  2,  3,  5, 10,  14,  25,  50,  100,  200 </_2nd_stage_00>
@@ -92,7 +92,7 @@
             <Column12> 18 </Column12>
             <Column13> 18 </Column13>
             <Column23> 18 </Column23>
-            <InitialAmount_1st> 200 </InitialAmount_1st>
+            <InitialAmount_1st> 100 </InitialAmount_1st>
             <InitialAmount_2nd> 100 </InitialAmount_2nd>
         </bet365_Roulette>
         
@@ -303,10 +303,10 @@
         <Speed_Auto_Roulette>
             <Red> 16 </Red>
             <Black> 16 </Black>
-            <Odd> 13 </Odd>
-            <Even> 13 </Even>
-            <Low> 13 </Low>
-            <High> 13 </High>
+            <Odd> 16 </Odd>
+            <Even> 16 </Even>
+            <Low> 16 </Low>
+            <High> 16 </High>
             <Dozen12> 22 </Dozen12>
             <Dozen13> 22 </Dozen13>
             <Dozen23> 22 </Dozen23>
