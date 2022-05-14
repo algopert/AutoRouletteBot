@@ -279,7 +279,7 @@ class Browser:
                  "Low": "roulette-table-cell_side-low",
                  "High": "roulette-table-cell_side-high",
                  "Odd": "roulette-table-cell_side-odd",
-                 "Parity": "roulette-table-cell_side-even",
+                 "Even": "roulette-table-cell_side-even",
                  "Red": "roulette-table-cell_side-red",
                  "Black": "roulette-table-cell_side-black",
                  "Zero": "roulette-table-cell_straight-0",
