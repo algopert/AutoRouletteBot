@@ -149,8 +149,9 @@ for _time_stamp in time_stamp_list:
                         _row.append(history_data[_title][_time_stamp][_cond_key][i+1])
                     except:
                         print("None exist",_title, _time_stamp, _cond_key)
-                        quit()
                         break
+                        #quit()
+                        
                 writer.writerow(_row)
                 
 ##############################################################        
