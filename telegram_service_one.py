@@ -12,7 +12,7 @@ import telegram
 global skip_list
 
 CHANNEL_ID = {}
-CHANNEL_ID['gold'] = '-1001640416979'
+CHANNEL_ID['gold'] = '-1001689518256'
 CHANNEL_ID['silver'] = '-1001627327757'
 CHANNEL_ID['bronze'] = '-1001628795108'
 TOKEN = '5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k'
@@ -35,7 +35,7 @@ delta_level_val={"gold": 0, "silver": 3, "broze": 3}
 condition_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
                   "Black": [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
                   "Odd": [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
-                  "Parity": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
+                  "Even": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
                   "Low": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
                   "High": [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36],
                   "Dozen12": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
@@ -49,8 +49,8 @@ condition_list = {"Red": [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30,
 skip_list = []
 reverse_key = {"Red": "Black",
                "Black": "Red",
-               "Odd": "Parity",
-               "Parity": "Odd",
+               "Odd": "Even",
+               "Even": "Odd",
                "Low": "High",
                "High": "Low",
                "Dozen12": "3rd-12",
@@ -63,7 +63,7 @@ reverse_key = {"Red": "Black",
 text_key = {"Red": "RED",
             "Black": "BLACK",
             "Odd": "ODD",
-            "Parity": "EVEN",
+            "Even": "EVEN",
             "High": "HIGH(19-36)",
             "Low": "LOW(1-18)",
             "Dozen12": "Dozen-1&2",
@@ -392,7 +392,8 @@ def startProcess():
             if gameMode == 'REALGAME':
                 save_history_data(_g_title, numbers, xx)
 
-            levels = ['gold'] #, 'silver', 'bronze']
+            levels = ['gold'] #[, 'silver', 'bronze']
+            #levels = ['silver']
             for my_level in levels:
                 cur_cdt = find_repetition(_g_title, my_level)
 
