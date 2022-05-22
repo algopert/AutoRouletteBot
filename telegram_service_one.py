@@ -12,7 +12,7 @@ import telegram
 global skip_list
 
 CHANNEL_ID = {}
-CHANNEL_ID['gold'] = '-1001689518256'
+CHANNEL_ID['gold'] = '-1001640416979'
 CHANNEL_ID['silver'] = '-1001627327757'
 CHANNEL_ID['bronze'] = '-1001628795108'
 TOKEN = '5363359521:AAG4p79YyooiqFgQnlxgcu73tFqUse8eH1k'
@@ -53,12 +53,12 @@ reverse_key = {"Red": "Black",
                "Even": "Odd",
                "Low": "High",
                "High": "Low",
-               "Dozen12": "3rd-12",
-               "Dozen13": "2nd-12",
-               "Dozen23": "1st-12",
-               "Column12": "Top-Col",
-               "Column13": "Mid-Col",
-               "Column23": "Bot-Col"
+               "Dozen12": "3rd-Dozen",
+               "Dozen13": "2nd-Dozen",
+               "Dozen23": "1st-Dozen",
+               "Column12": "Top-Column",
+               "Column13": "Middle-Column",
+               "Column23": "Bottom-Column"
                }
 text_key = {"Red": "RED",
             "Black": "BLACK",
@@ -80,13 +80,15 @@ flag_save = False
 length_view = 10
 
 play_status = {}
-
+riskLevel = 0
+cdt_delta = {"D2": -2, "D1": -1, "MID": 0, "P1": 1, "P2": 2 , "P3": 3 }
 
 def read_conditions():
     global conditions
     global gameMode
     global outputMode
     global skip_list
+    global riskLevel
     myXMLtree = ET.parse('tele_params.xml')
 
     _gameMode = myXMLtree.find('gameMode').text
@@ -106,7 +108,7 @@ def read_conditions():
         outputMode = 'TELEGRAM'
     else:
         outputMode = 'CONSOLE'
-
+    riskLevel = myXMLtree.find('riskLevel').text.replace(' ', '')
     skip_list = myXMLtree.find('SkipList').text.replace(' ', '').split(',')
     # print("skip list ", skip_list)
     ############       Read parameters       ###############
@@ -174,7 +176,7 @@ def exist_condition(_g_title, _key, _level):
         play_status[_g_title]["series"]['silver'] = []
         play_status[_g_title]["series"]['bronze'] = []
 
-    cnt = conditions[_g_title][_key][_level]
+    cnt = conditions[_g_title][_key][_level] + cdt_delta[riskLevel]
     glen = len(games[_g_title])
     if cnt > glen:
         return None
@@ -263,7 +265,7 @@ def send_first_message(_g_title, _cur_cdt, _level):
     _cur_series = str(games[_g_title][-length_view:]).strip("[]")
     _cur_series = _cur_series.replace('-1,', 'B,')
     _title = _g_title.replace('_', ' ')
-    txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Repetition found: {text_key[_cur_cdt]} - {conditions[_g_title][_cur_cdt][_level]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
+    txt = f"🚨 Room Title: {_title}\n📊 Current Series : {_cur_series}\n👀 Repetition found: {text_key[_cur_cdt]} - {conditions[_g_title][_cur_cdt][_level] + cdt_delta[riskLevel]}\n🙏 Let's join and Bet on: {reverse_key[_cur_cdt]}  !!!"
     if gameMode == "REALGAME":
         try:
             bot.sendMessage(chat_id=CHANNEL_ID[_level], text=txt)
