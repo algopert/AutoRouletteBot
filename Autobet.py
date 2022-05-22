@@ -405,21 +405,21 @@ class AutoBet:
                 lost = 0
                 break
 
-            lost += (bet_amount + zero_bet_amount)
+            # lost += (bet_amount + zero_bet_amount)
 
-            if zero_bet_amount == 0 and new_num <= 0:
-                self.total_profit -= lost
-                msg = f"\n\t😩 The bot gives up with Zero\n" + "\t🔥 Lost : -  ${0}\n".format(round(
-                    lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
-                print(msg)
-                msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
-                try:
-                    if self.gameMode != 'BACKTEST' and self.outputMode=='TELEGRAM':
-                        self.telegram_bot.sendMessage(
-                            chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
-                except:
-                    print("telegram error!")
-                break
+            # if zero_bet_amount == 0 and new_num <= 0:
+            #     self.total_profit -= lost
+            #     msg = f"\n\t😩 The bot gives up with Zero\n" + "\t🔥 Lost : -  ${0}\n".format(round(
+            #         lost/100.0, 1)) + "\t☘️ Total profit:   ${0}".format(round(self.total_profit/100.0, 1))
+            #     print(msg)
+            #     msg += f"\nParam: {_cur_key} - {self.conditions[_g_title][_cur_key]} stage: {stage+1}"
+            #     try:
+            #         if self.gameMode != 'BACKTEST' and self.outputMode=='TELEGRAM':
+            #             self.telegram_bot.sendMessage(
+            #                 chat_id=self.CHANNEL_ID, text=_g_title + '\n' + msg)
+            #     except:
+            #         print("telegram error!")
+            #     break
             stage += 1
             # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             # print(_second_bet, self.max_round_2nd, stage)
